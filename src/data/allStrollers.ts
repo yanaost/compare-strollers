@@ -6,6 +6,7 @@ export const allStrollers: StrollersFeatures[] = [
         modelName: 'Dragonfly',
         alternativeModelNames: [],
         brand: 'Bugaboo',
+        imagePath: "../../public/hubPlus.png",
         basics: {
             type: ['Pushchair (seat and chassis only)', '2in1 stroller system', '3in1 stroller system'],
             strollerWeight: 11.5,
@@ -28,6 +29,7 @@ export const allStrollers: StrollersFeatures[] = [
         modelName: 'Yoyo2',
         alternativeModelNames: [],
         brand: 'Babyzen',
+        imagePath: "../../public/hubPlus.png",
         basics: {
             type: ['Pushchair (seat and chassis only)'],
             strollerWeight: 6.2,
@@ -50,6 +52,7 @@ export const allStrollers: StrollersFeatures[] = [
         modelName: 'Aer+',
         alternativeModelNames: [],
         brand: 'Joolz',
+        imagePath: "../../public/hubPlus.png",
         basics: {
             type: ['Pushchair (seat and chassis only)'],
             strollerWeight: 6,
@@ -72,21 +75,27 @@ export const allStrollers: StrollersFeatures[] = [
         modelName: 'Hub+',
         alternativeModelNames: [],
         brand: 'Joolz',
-        basics: {
-            type: ['Pushchair (seat and chassis only)', '2in1 stroller system', '3in1 stroller system'],
-            strollerWeight: 11.5,
-            unfoldedDimensions: {
-                height: 106,
-                width: 53,
-                length: 85,
-            },
-            foldedDimensions: {
-                height: 66,
-                width: 53,
-                length: 34
-            },
-            chassisMaterial: 'aluminum',
-            countryOfOrigin: 'netherlands',
-        }
+        imagePath: "../../public/hubPlus.png",
+        groups: [
+            {   
+                group: {key: "basics", title: " the basics"},
+                fields: [{key, title, value}, {}],
+                type: ['Pushchair (seat and chassis only)', '2in1 stroller system', '3in1 stroller system'],
+                strollerWeight: 11.5,
+                unfoldedDimensions: {
+                    height: 106,
+                    width: 53,
+                    length: 85,
+                },
+                foldedDimensions: {
+                    height: 66,
+                    width: 53,
+                    length: 34
+                },
+                chassisMaterial: 'aluminum',
+                countryOfOrigin: 'netherlands',
+            }
+
+        ],
     },
 ];

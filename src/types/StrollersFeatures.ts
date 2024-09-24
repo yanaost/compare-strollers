@@ -3,6 +3,7 @@ export type StrollersFeatures = {
     modelName: string,
     alternativeModelNames?: string[]
     brand: string,
+    imagePath: string,
     basics : {
         type: BasicsType[],
         strollerWeight: number,
