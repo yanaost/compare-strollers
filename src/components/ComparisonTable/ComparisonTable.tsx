@@ -1,6 +1,5 @@
 import { Box, Collapse, IconButton, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import hubPlus from "../../assets/hubPlus.png";
 
 import { DeleteOutline, ExpandLess, ExpandMore } from "@mui/icons-material";
 import { useState } from "react";
@@ -103,8 +102,8 @@ const StyledTableCell = styled("div")(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   width: "100%",
-  flexGrow: 0, //+
-  flexShrink: 0, //+
+  flexGrow: 0,
+  flexShrink: 0,
   paddingRight: 4,
   paddingLeft: 4,
   flexBasis: "50%",
@@ -425,45 +424,33 @@ export const ComparisonTable: React.FC<Props> = ({
       </ComparisonStickyHeader>
       <SectionContainer>
         <Section sx={{ flexWrap: "nowrap" }}>
-          {" "}
-          <ProductContainer>
-            <Product>
-              <ImageContainer>
-                <Figure>
-                  <Image alt="stroller" src={hubPlus} />
-                </Figure>
-              </ImageContainer>
-              <ProductName>
-                <ProductNameText>DragonFly</ProductNameText>
-              </ProductName>
-              <ProductDescription>
-                <ProductDescriptionList>
-                  <ProductDescriptionListItem>
-                    The most comfortable city pram with an innovative compact
-                    fold
-                  </ProductDescriptionListItem>
-                </ProductDescriptionList>
-              </ProductDescription>
-            </Product>
-          </ProductContainer>
-          <ProductContainer>
-            <Product>
-              <ImageContainer>
-                <Figure>
-                  <Image alt="stroller" src={hubPlus} />
-                </Figure>{" "}
-              </ImageContainer>
-            </Product>
-          </ProductContainer>
-          <ProductContainer>
-            <Product>
-              <ImageContainer>
-                <Figure>
-                  <Image alt="stroller" src={hubPlus} />
-                </Figure>{" "}
-              </ImageContainer>
-            </Product>
-          </ProductContainer>
+          {strollersDataToShow.map((stroller) => {
+            return (
+              <ProductContainer>
+                <Product>
+                  <ImageContainer>
+                    <Figure>
+                      <Image
+                        alt={`${stroller?.brand} ${stroller?.modelName} stroller`}
+                        src={stroller?.imagePath}
+                      />
+                    </Figure>
+                  </ImageContainer>
+                  <ProductName>
+                    <ProductNameText>{stroller?.modelName}</ProductNameText>
+                  </ProductName>
+                  <ProductDescription>
+                    <ProductDescriptionList>
+                      <ProductDescriptionListItem>
+                        The most comfortable city pram with an innovative
+                        compact fold
+                      </ProductDescriptionListItem>
+                    </ProductDescriptionList>
+                  </ProductDescription>
+                </Product>
+              </ProductContainer>
+            );
+          })}
         </Section>
       </SectionContainer>
 
@@ -475,13 +462,13 @@ export const ComparisonTable: React.FC<Props> = ({
           alignItems="center"
         >
           <SectionContainerShadow>
-            <AccordionTitle>Title</AccordionTitle>
+            <AccordionTitle>The Basics</AccordionTitle>
             <IconButton onClick={() => setIsOpen(!isOpen)}>
-              {isOpen ? <ExpandMore /> : <ExpandLess />}
+              {!isOpen ? <ExpandMore /> : <ExpandLess />}
             </IconButton>
           </SectionContainerShadow>
         </SectionContainer>
-        <Collapse in={!isOpen}>
+        <Collapse in={!!isOpen}>
           {rows.map((row) => (
             <StyledTableRow key={row.name}>
               <SectionContainer>
@@ -509,7 +496,7 @@ export const ComparisonTable: React.FC<Props> = ({
           alignItems="center"
         >
           <SectionContainerShadow>
-            <AccordionTitle>Title</AccordionTitle>
+            <AccordionTitle>The Seat</AccordionTitle>
             <IconButton onClick={() => setIsOpen(!isOpen)}>
               {isOpen ? <ExpandMore /> : <ExpandLess />}
             </IconButton>

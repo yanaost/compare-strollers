@@ -114,7 +114,7 @@ export const AppBarSearch: React.FC<Props> = ({
           <Search>
             <SearchIconWrapper
               sx={{
-                float: { xs: "left", sm: "left" },
+                float: "left",
               }}
             >
               <SearchIcon />
