@@ -271,29 +271,74 @@ export const ComparisonTable: React.FC<Props> = ({
 
   const strollersDataToShow = getStrollersDataToShow(strollersIdsToCompare);
 
-  //prepare data for accordion
-  //from this format: [
-  //     {group: {key: "basics", title: "the basics"}, fields: [{key, title, value}, {key, title, value}]}
-  // ]
-
-  // final result ==>>>
-  //[
-  //  {
-  // rowTitle: {}
-  // rows: [{ "stroller weight", "7.9", "8.9", "20"},{ "stroller weight", "7.9", "8.9", "20"},]
-  //  },
-  //
-  //]
-
-  console.log("strollersDataToShow", strollersDataToShow);
-
   const modifyStrollersDataForAccordions = (ids: number[]) => {
-    let filteredData = ids.map((id) =>
+    const filteredData = ids.map((id) =>
       allStrollers.find((stroller) => stroller.id === id)
     );
 
-    return filteredData;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    type AccordionDataRow = { title: string; key: string; values: any[] };
+
+    type AccordionsData = {
+      key: string;
+      title: string;
+      rows?: AccordionDataRow[];
+    };
+
+    const accordionsData: AccordionsData[] = [];
+    const accordionGroupKeys: string[] = [];
+
+    filteredData.forEach((stroller, index) => {
+      stroller!.groups.forEach((group) => {
+        if (index === 0 || !accordionGroupKeys.includes(group.group.key)) {
+          accordionsData.push(group.group);
+          accordionGroupKeys.push(group.group.key);
+        }
+      });
+    });
+
+    accordionsData.forEach((accordionGroup) => {
+      accordionGroup.rows = [];
+
+      filteredData.forEach((stroller, strollerIndex) => {
+        const currentStrollerGroup = stroller!.groups.find(
+          (strollerGroup) => strollerGroup.group.key === accordionGroup.key
+        );
+
+        currentStrollerGroup?.fields.forEach((field) => {
+          const existingRow = accordionGroup.rows!.find(
+            (row) => row.key === field.key
+          );
+
+          if (existingRow) {
+            if (existingRow.values.length < strollerIndex) {
+              const missingValuesArray = new Array(
+                strollerIndex - existingRow.values.length
+              ).fill("");
+              existingRow.values.push(...missingValuesArray);
+            }
+
+            existingRow.values.push(field.value);
+          } else {
+            const valuesArray = new Array(strollerIndex).fill("");
+            valuesArray.push(field.value);
+
+            accordionGroup.rows!.push({
+              title: field.title,
+              key: field.key,
+              values: valuesArray,
+            });
+          }
+        });
+      });
+    });
+
+    console.log("accordionsData", accordionsData);
+
+    return accordionsData;
   };
+
+  modifyStrollersDataForAccordions(strollersIdsToCompare);
 
   return (
     <ComparisonContainer>
@@ -309,7 +354,7 @@ export const ComparisonTable: React.FC<Props> = ({
             </StyledTableFirstHeadCell>
             {strollersDataToShow.map((stroller) => {
               return (
-                <StyledTableCellContainer>
+                <StyledTableCellContainer key={stroller?.id}>
                   <StyledCardContent>
                     <StyledProductName>{`${stroller?.brand} ${stroller?.modelName}`}</StyledProductName>
                     <StyledProductDeleteIcon
@@ -331,7 +376,7 @@ export const ComparisonTable: React.FC<Props> = ({
         <Section sx={{ flexWrap: "nowrap" }}>
           {strollersDataToShow.map((stroller) => {
             return (
-              <ProductContainer>
+              <ProductContainer key={stroller?.id}>
                 <Product>
                   <ImageContainer>
                     <Figure>
@@ -358,8 +403,6 @@ export const ComparisonTable: React.FC<Props> = ({
           })}
         </Section>
       </SectionContainer>
-
-      {/* sx={{ marginTop: "20px" }} */}
 
       {/* {strollersDataToShow.length > 0 && <AccordionTable />} */}
     </ComparisonContainer>

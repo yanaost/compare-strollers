@@ -16,7 +16,7 @@ export const allStrollers: StrollersFeatures[] = [
                     {key: "unfoldedDimensions", title: "unfolded dimensions", value: "106 cm x 52 cm x 104 cm"},
                     {key: "foldedDimensions", title: "folded dimensions", value: "90 cm x 52 cm x 36 cm"},
                     {key: "chassisMaterial", title: "chassis material", value: "aluminum"},
-                    {key: "countryOfOrigin", title: "country of origin", value: "netherlands"}
+                    {key: "countryOfOrigin", title: "country of origin", value: "netherlands"} //return!!!
                 ],
             },
             {
@@ -210,7 +210,13 @@ export const allStrollers: StrollersFeatures[] = [
                     {key: "ventilationIntegratedIntoTheSeat", title: "Ventilation integrated into the seat", value: "No" },
                     {key: "secondSeatCanBeAttached", title: "Second seat can be attached (single-to-double convertibility)", value: "No" },
                 ]
-            }
+            },
+            { group : {key: "theCanopyHood", title: "The Canopy (Hood)"},
+            fields: [
+                {key: "seatUnitEquippedWithACanopyHood", title: "Seat unit equipped with a canopy/hood", value: "Yes"},
+                {key: "extendableCanopyHood", title: "Extendable canopy/hood", value: "Yes"}
+            ]
+        }
         ],
     },
 ];

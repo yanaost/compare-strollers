@@ -151,12 +151,7 @@ export const AccordionTable: React.FC<Props> = ({ strollersDataToShow }) => {
 
   return (
     <AccordionContainer>
-      <TableSectionContainer
-      // display="flex"
-      // justifyContent="space-between"
-      // height="60px"
-      // alignItems="center"
-      >
+      <TableSectionContainer>
         <SectionContainerShadow>
           <AccordionTitle>The Seat</AccordionTitle>
           <IconButton onClick={() => setIsOpen(!isOpen)}>
