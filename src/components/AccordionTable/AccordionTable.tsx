@@ -2,7 +2,7 @@ import { ExpandMore, ExpandLess } from "@mui/icons-material";
 import { Box, Collapse, IconButton } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useState } from "react";
-import { StrollersFeatures } from "../../types/StrollersFeatures";
+import { AccordionsData } from "../../types/AccordionData";
 
 const AccordionContainer = styled("div")(() => ({
   paddingTop: 20,
@@ -10,6 +10,9 @@ const AccordionContainer = styled("div")(() => ({
 
 const AccordionTitle = styled("h2")(() => ({
   fontSize: `calc(20px + 4*(100vw - 480px) / 760)`,
+  "&::first-letter": {
+    textTransform: "uppercase",
+  },
 }));
 
 const TableSectionContainer = styled(Box)(({ theme }) => ({
@@ -72,6 +75,9 @@ const StyledTableRowTitle = styled("h3")(({ theme }) => ({
   paddingLeft: 4,
   flexBasis: "100%",
   maxWidth: "100%",
+  "&::first-letter": {
+    textTransform: "uppercase",
+  },
 
   [theme.breakpoints.up("sm")]: {
     paddingRight: 8,
@@ -143,7 +149,7 @@ const StyledTableCellContainer = styled("div")(({ theme }) => ({
 }));
 
 type Props = {
-  strollersDataToShow: StrollersFeatures | undefined[];
+  strollersDataToShow: AccordionsData;
 };
 
 export const AccordionTable: React.FC<Props> = ({ strollersDataToShow }) => {
@@ -153,27 +159,28 @@ export const AccordionTable: React.FC<Props> = ({ strollersDataToShow }) => {
     <AccordionContainer>
       <TableSectionContainer>
         <SectionContainerShadow>
-          <AccordionTitle>The Seat</AccordionTitle>
+          <AccordionTitle>{strollersDataToShow.title}</AccordionTitle>
           <IconButton onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? <ExpandMore /> : <ExpandLess />}
           </IconButton>
         </SectionContainerShadow>
       </TableSectionContainer>
-      <Collapse>
-        {rows.map((row) => (
-          <StyledTableRow key={row.name}>
-            <TableSectionContainer>
-              <Section>
-                <StyledTableRowTitle>{row.name}</StyledTableRowTitle>
-                <StyledTableCellContainer>
-                  {row.calories}
-                </StyledTableCellContainer>
-                <StyledTableCellContainer>{row.fat}</StyledTableCellContainer>
-                <StyledTableCellContainer>{row.carbs}</StyledTableCellContainer>
-              </Section>
-            </TableSectionContainer>
-          </StyledTableRow>
-        ))}
+      <Collapse in={isOpen}>
+        {strollersDataToShow.rows &&
+          strollersDataToShow.rows.map((row) => (
+            <StyledTableRow key={row.key}>
+              <TableSectionContainer>
+                <Section>
+                  <StyledTableRowTitle>{row.title}</StyledTableRowTitle>
+                  {row.values.map((cell, index) => (
+                    <StyledTableCellContainer key={index}>
+                      {cell}
+                    </StyledTableCellContainer>
+                  ))}
+                </Section>
+              </TableSectionContainer>
+            </StyledTableRow>
+          ))}
       </Collapse>
     </AccordionContainer>
   );

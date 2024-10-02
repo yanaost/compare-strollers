@@ -3,6 +3,8 @@ import { styled } from "@mui/material/styles";
 
 import { DeleteOutline } from "@mui/icons-material";
 import { allStrollers } from "../../data/allStrollers";
+import { AccordionTable } from "../AccordionTable/AccordionTable";
+import { AccordionsData } from "../../types/AccordionData";
 // import { AccordionTable } from "../AccordionTable/AccordionTable";
 
 const StyledTableFirstHeadCell = styled(Box)(({ theme }) => ({
@@ -276,15 +278,6 @@ export const ComparisonTable: React.FC<Props> = ({
       allStrollers.find((stroller) => stroller.id === id)
     );
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    type AccordionDataRow = { title: string; key: string; values: any[] };
-
-    type AccordionsData = {
-      key: string;
-      title: string;
-      rows?: AccordionDataRow[];
-    };
-
     const accordionsData: AccordionsData[] = [];
     const accordionGroupKeys: string[] = [];
 
@@ -338,7 +331,9 @@ export const ComparisonTable: React.FC<Props> = ({
     return accordionsData;
   };
 
-  modifyStrollersDataForAccordions(strollersIdsToCompare);
+  const strollersDataToShowInAccordions = modifyStrollersDataForAccordions(
+    strollersIdsToCompare
+  );
 
   return (
     <ComparisonContainer>
@@ -404,7 +399,15 @@ export const ComparisonTable: React.FC<Props> = ({
         </Section>
       </SectionContainer>
 
-      {/* {strollersDataToShow.length > 0 && <AccordionTable />} */}
+      {strollersDataToShowInAccordions.length > 0 &&
+        strollersDataToShowInAccordions.map((accordionData) => {
+          return (
+            <AccordionTable
+              key={accordionData.key}
+              strollersDataToShow={accordionData}
+            />
+          );
+        })}
     </ComparisonContainer>
   );
 };

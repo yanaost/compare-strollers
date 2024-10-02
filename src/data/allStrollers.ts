@@ -15,8 +15,8 @@ export const allStrollers: StrollersFeatures[] = [
                     {key: "strollerWeight", title: "stroller weight", value: "7.9 kg"},
                     {key: "unfoldedDimensions", title: "unfolded dimensions", value: "106 cm x 52 cm x 104 cm"},
                     {key: "foldedDimensions", title: "folded dimensions", value: "90 cm x 52 cm x 36 cm"},
-                    {key: "chassisMaterial", title: "chassis material", value: "aluminum"},
-                    {key: "countryOfOrigin", title: "country of origin", value: "netherlands"} //return!!!
+                    {key: "chassisMaterial", title: "chassis material", value: "Aluminum"},
+                    {key: "countryOfOrigin", title: "country of origin", value: "Netherlands"}
                 ],
             },
             {
@@ -68,8 +68,8 @@ export const allStrollers: StrollersFeatures[] = [
                     {key: "strollerWeight", title: "stroller weight", value: "6.2 kg"},
                     {key: "unfoldedDimensions", title: "unfolded dimensions", value: "106 cm x 44 cm x 86 cm"},
                     {key: "foldedDimensions", title: "folded dimensions", value: "52 cm x 44 cm x 18 cm"},
-                    {key: "chassisMaterial", title: "chassis material", value: "aluminum"},
-                    {key: "countryOfOrigin", title: "country of origin", value: "france"}
+                    {key: "chassisMaterial", title: "chassis material", value: "Aluminum"},
+                    {key: "countryOfOrigin", title: "country of origin", value: "France"}
                 ],
             },
             {
@@ -121,8 +121,8 @@ export const allStrollers: StrollersFeatures[] = [
                     {key: "strollerWeight", title: "stroller weight", value: "6.4 kg"},
                     {key: "unfoldedDimensions", title: "unfolded dimensions", value: "105.5 cm x 45 cm x 83 cm"},
                     {key: "foldedDimensions", title: "folded dimensions", value: "53.5 cm x 45 cm x 21.5 cm"},
-                    {key: "chassisMaterial", title: "chassis material", value: "aluminum"},
-                    {key: "countryOfOrigin", title: "country of origin", value: "netherlands"}
+                    {key: "chassisMaterial", title: "chassis material", value: "Aluminum"},
+                    {key: "countryOfOrigin", title: "country of origin", value: "Netherlands"}
                 ],
             },
             {
@@ -174,8 +174,8 @@ export const allStrollers: StrollersFeatures[] = [
                     {key: "strollerWeight", title: "stroller weight", value: "11.5 kg"},
                     {key: "unfoldedDimensions", title: "unfolded dimensions", value: "106 cm x 53 cm x 85 cm"},
                     {key: "foldedDimensions", title: "folded dimensions", value: "66 cm x 53 cm x 34 cm"},
-                    {key: "chassisMaterial", title: "chassis material", value: "aluminum"},
-                    {key: "countryOfOrigin", title: "country of origin", value: "netherlands"}
+                    {key: "chassisMaterial", title: "chassis material", value: "Aluminum"},
+                    {key: "countryOfOrigin", title: "country of origin", value: "Netherlands"}
                 ],
             },
             {
