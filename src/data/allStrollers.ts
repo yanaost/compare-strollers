@@ -9,7 +9,7 @@ export const allStrollers: StrollersFeatures[] = [
         imagePath: "../../public/hubPlus.png",
         groups: [
             {   
-                group: {key: "basics", title: "the basics"},
+                group: {key: "basics", title: "basics"},
                 fields: [
                     {key: "type", title: "type", value: 'Pushchair (seat and chassis only), 2in1 stroller system, 3in1 stroller system'}, 
                     {key: "strollerWeight", title: "stroller weight", value: "7.9 kg"},
@@ -20,7 +20,7 @@ export const allStrollers: StrollersFeatures[] = [
                 ],
             },
             {
-                group: {key: "seatUnit", title: "the seat unit"},
+                group: {key: "seatUnit", title: "seat unit"},
                 fields: [
                     {key: "maximumWeightSapacitySeat ", title: "Maximum weight capacity - seat load", value: "22 kg" },
                     {key: "recommendedAgeRange", title: "Recommended age range (best to use with a child of)", value: "0-36 months" },
@@ -62,7 +62,7 @@ export const allStrollers: StrollersFeatures[] = [
         imagePath: "../../public/hubPlus.png",
         groups: [
             {   
-                group: {key: "basics", title: "the basics"},
+                group: {key: "basics", title: "basics"},
                 fields: [
                     {key: "type", title: "type", value: 'Pushchair (seat and chassis only)'}, 
                     {key: "strollerWeight", title: "stroller weight", value: "6.2 kg"},
@@ -73,7 +73,7 @@ export const allStrollers: StrollersFeatures[] = [
                 ],
             },
             {
-                group: {key: "seatUnit", title: "the seat unit"},
+                group: {key: "seatUnit", title: "seat unit"},
                 fields: [
                     {key: "maximumWeightSapacitySeat ", title: "Maximum weight capacity - seat load", value: "22 kg" },
                     {key: "recommendedAgeRange", title: "Recommended age range (best to use with a child of)", value: "0-36 months" },
@@ -115,7 +115,7 @@ export const allStrollers: StrollersFeatures[] = [
         imagePath: "../../public/hubPlus.png",
         groups: [
             {   
-                group: {key: "basics", title: "the basics"},
+                group: {key: "basics", title: "basics"},
                 fields: [
                     {key: "type", title: "type", value: 'Pushchair (seat and chassis only)'}, 
                     {key: "strollerWeight", title: "stroller weight", value: "6.4 kg"},
@@ -126,7 +126,7 @@ export const allStrollers: StrollersFeatures[] = [
                 ],
             },
             {
-                group: {key: "seatUnit", title: "the seat unit"},
+                group: {key: "seatUnit", title: "seat unit"},
                 fields: [
                     {key: "maximumWeightSapacitySeat ", title: "Maximum weight capacity - seat load", value: "22 kg" },
                     {key: "recommendedAgeRange", title: "Recommended age range (best to use with a child of)", value: "4-42 months" },
@@ -168,7 +168,7 @@ export const allStrollers: StrollersFeatures[] = [
         imagePath: "../../public/hubPlus.png",
         groups: [
             {   
-                group: {key: "basics", title: "the basics"},
+                group: {key: "basics", title: "basics"},
                 fields: [
                     {key: "type", title: "type", value: 'Pushchair (seat and chassis only), 2in1 stroller system, 3in1 stroller system'}, 
                     {key: "strollerWeight", title: "stroller weight", value: "11.5 kg"},
@@ -179,7 +179,7 @@ export const allStrollers: StrollersFeatures[] = [
                 ],
             },
             {
-                group: {key: "seatUnit", title: "the seat unit"},
+                group: {key: "seatUnit", title: "seat unit"},
                 fields: [
                     {key: "maximumWeightSapacitySeat ", title: "Maximum weight capacity - seat load", value: "20 kg" },
                     {key: "recommendedAgeRange", title: "Recommended age range (best to use with a child of)", value: "0-36 months" },
@@ -211,7 +211,7 @@ export const allStrollers: StrollersFeatures[] = [
                     {key: "secondSeatCanBeAttached", title: "Second seat can be attached (single-to-double convertibility)", value: "No" },
                 ]
             },
-            { group : {key: "theCanopyHood", title: "The Canopy (Hood)"},
+            { group : {key: "canopyHood", title: "Canopy (hood)"},
             fields: [
                 {key: "seatUnitEquippedWithACanopyHood", title: "Seat unit equipped with a canopy/hood", value: "Yes"},
                 {key: "extendableCanopyHood", title: "Extendable canopy/hood", value: "Yes"}

@@ -161,7 +161,11 @@ export const AccordionTable: React.FC<Props> = ({ strollersDataToShow }) => {
         <SectionContainerShadow>
           <AccordionTitle>{strollersDataToShow.title}</AccordionTitle>
           <IconButton onClick={() => setIsOpen(!isOpen)}>
-            {isOpen ? <ExpandMore /> : <ExpandLess />}
+            {isOpen ? (
+              <ExpandMore fontSize="large" />
+            ) : (
+              <ExpandLess fontSize="large" />
+            )}
           </IconButton>
         </SectionContainerShadow>
       </TableSectionContainer>

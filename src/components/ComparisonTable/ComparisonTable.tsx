@@ -5,7 +5,6 @@ import { DeleteOutline } from "@mui/icons-material";
 import { allStrollers } from "../../data/allStrollers";
 import { AccordionTable } from "../AccordionTable/AccordionTable";
 import { AccordionsData } from "../../types/AccordionData";
-// import { AccordionTable } from "../AccordionTable/AccordionTable";
 
 const StyledTableFirstHeadCell = styled(Box)(({ theme }) => ({
   display: "none",

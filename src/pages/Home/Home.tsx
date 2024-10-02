@@ -22,10 +22,10 @@ export const Home = () => {
 
   const deleteStrollerIdFromCompare = (strollerId: number) => {
     const copyStrollersIds = [...strollersIdsToCompare];
-    const indextoDelete = copyStrollersIds.indexOf(strollerId);
+    const indexToDelete = copyStrollersIds.indexOf(strollerId);
 
-    if (indextoDelete !== -1) {
-      copyStrollersIds.splice(indextoDelete);
+    if (indexToDelete !== -1) {
+      copyStrollersIds.splice(indexToDelete, 1);
     }
 
     setStrollersIdsToCompare(copyStrollersIds);
