@@ -123,13 +123,23 @@ export const AppBarSearch: React.FC<Props> = ({
               isOptionEqualToValue={(option, value) => option === value}
               getOptionLabel={(option) => `${option.brand} ${option.modelName}`}
               id="search-stroller"
-              onChange={(_, newValue) => {
+              onChange={(_, newValue, reason) => {
                 if (newValue !== null) {
                   handleAddStrollerIdToCompare(newValue.id);
+                  setInputValue(newValue.modelName);
+                }
+
+                if (reason === "selectOption") {
+                  setInputValue("");
                 }
               }}
+              key={null}
               inputValue={inputValue}
-              onInputChange={(_, newInputValue) => setInputValue(newInputValue)}
+              onInputChange={(_, newInputValue, reason) => {
+                if (reason === "input") {
+                  setInputValue(newInputValue);
+                }
+              }}
               options={allStrollers}
               renderInput={(params) => (
                 <StyledTextField
