@@ -221,7 +221,7 @@ const ProductContainer = styled("div")(({ theme }) => ({
 
 const ProductName = styled("div")(() => ({
   marginBottom: 16,
-  marginTop: 8,
+  marginTop: 16,
   fontSize: 18,
   lineHeight: 1.2,
   fontWeight: 700,
@@ -244,7 +244,7 @@ const ProductDescription = styled("div")(({ theme }) => ({
 const ProductDescriptionList = styled("ul")(() => ({
   margin: 0,
   padding: 0,
-  paddingBottom: 4,
+  paddingBottom: 24,
   borderBottom: "1px solid #e5e5e5",
 }));
 

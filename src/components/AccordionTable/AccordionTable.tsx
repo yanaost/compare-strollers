@@ -153,7 +153,7 @@ type Props = {
 };
 
 export const AccordionTable: React.FC<Props> = ({ strollersDataToShow }) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <AccordionContainer>

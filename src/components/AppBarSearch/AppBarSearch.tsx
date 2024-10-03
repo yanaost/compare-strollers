@@ -18,12 +18,15 @@ const Search = styled("div")(({ theme }) => ({
   "&:hover": {
     backgroundColor: theme.palette.common.white,
   },
-  marginRight: theme.spacing(5),
-  marginLeft: 0,
+  marginRight: theme.spacing(2),
   width: "100%",
+
   [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(2),
     width: "100%",
+    marginLeft: "16px",
+  },
+  [theme.breakpoints.up("md")]: {
+    flexBasis: "33%",
   },
 }));
 
@@ -66,6 +69,44 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
   },
 }));
 
+const StyledToolbar = styled(Toolbar)(({ theme }) => ({
+  height: 200,
+  marginTop: theme.spacing(2),
+  marginBottom: theme.spacing(2),
+  alignItems: "center",
+  md: "center",
+  maxWidth: `calc(1536px + 192px)`,
+
+  [theme.breakpoints.up("xs")]: {
+    paddingLeft: 16,
+    paddingRight: 16,
+    flexDirection: "column",
+  },
+  [theme.breakpoints.up("sm")]: {
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 32,
+    paddingBottom: 24,
+    gap: 5,
+    flexDirection: "column",
+  },
+  [theme.breakpoints.up("md")]: {
+    paddingLeft: 40,
+    paddingRight: 40,
+    justifyContent: "space-around",
+    gap: 40,
+    flexDirection: "row",
+  },
+  [theme.breakpoints.up("lg")]: {
+    paddingLeft: 40,
+    paddingRight: 40,
+  },
+  [theme.breakpoints.up("xl")]: {
+    paddingLeft: 96,
+    paddingRight: 96,
+  },
+}));
+
 type Props = {
   handleAddStrollerIdToCompare: (newStrollerId: number) => void;
 };
@@ -78,23 +119,16 @@ export const AppBarSearch: React.FC<Props> = ({
   return (
     <Box component="header">
       <AppBar position="static">
-        <Toolbar
-          sx={{
-            height: "200px",
-            paddingTop: "24px",
-            paddingBottom: "24px",
-            flexDirection: { xs: "column", sm: "column", md: "row" },
-            justifyContent: { md: "space-around" },
-          }}
-        >
+        <StyledToolbar sx={{}}>
           <Typography
             variant="h1"
             sx={{
-              marginLeft: (theme) => theme.spacing(2),
-              marginRight: (theme) => theme.spacing(5),
-              flexBasis: "0%",
+              fontSize: { md: "2rem", xl: "2.6rem" },
+              whiteSpace: "nowrap",
+
               float: { xs: "left", sm: "left" },
               width: { xs: "100%", sm: "left" },
+              flexBasis: { sm: "40%", md: "33%" },
             }}
           >
             Compare strollers
@@ -102,11 +136,15 @@ export const AppBarSearch: React.FC<Props> = ({
           <Typography
             variant="h2"
             sx={{
-              fontSize: { xs: "1rem", sm: "1.2rem" },
-              flexBasis: "40%",
+              fontSize: {
+                xs: "1rem",
+                sm: "1.2rem",
+                md: "1.2rem",
+                xl: "1.4rem",
+              },
+              flexBasis: { sm: "25%", md: "33%" },
               float: { xs: "left", sm: "left" },
               width: { xs: "100%" },
-              marginLeft: { sm: -2 },
             }}
           >
             Find the best stroller for you and your little explorer
@@ -154,7 +192,7 @@ export const AppBarSearch: React.FC<Props> = ({
               )}
             />
           </Search>
-        </Toolbar>
+        </StyledToolbar>
       </AppBar>
     </Box>
   );
