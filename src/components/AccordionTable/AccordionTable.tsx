@@ -19,10 +19,9 @@ const TableSectionContainer = styled(Box)(({ theme }) => ({
   paddingLeft: 16,
   paddingRight: 16,
   width: "100%",
-  maxWidth: `calc(1536px + 192px)`,
+  // maxWidth: `calc(1536px + 192px)`,
   display: "flex",
   justifyContent: "space-between",
-  height: "60px",
   alignItems: "center",
 
   [theme.breakpoints.up("xs")]: {
@@ -108,7 +107,22 @@ const Section = styled("section")(({ theme }) => ({
     width: `calc(100% + 16px)`,
     marginRight: -8,
     marginLeft: -8,
-    paddingTop: 24,
+  },
+  [theme.breakpoints.up("lg")]: {
+    width: `calc(100% + 16px)`,
+    flexWrap: "nowrap",
+  },
+}));
+
+const StyledTableCellsContainer = styled("div")(({ theme }) => ({
+  display: "flex",
+  flex: " 0 1 auto",
+
+  flexWrap: "nowrap",
+  width: `calc(100% + 8px)`,
+
+  [theme.breakpoints.up("lg")]: {
+    width: `calc(100% + 16px)`,
   },
 }));
 
@@ -132,8 +146,8 @@ const StyledTableCellContainer = styled("div")(({ theme }) => ({
     maxWidth: "50%",
   },
   [theme.breakpoints.up("md")]: {
-    paddingTop: "unset",
-    paddingBottom: "unset",
+    paddingTop: 32,
+    paddingBottom: 32,
     flexBasis: "33.33%",
     maxWidth: "33.33%",
   },
@@ -141,10 +155,22 @@ const StyledTableCellContainer = styled("div")(({ theme }) => ({
   [theme.breakpoints.up("lg")]: {
     paddingRight: 8,
     paddingLeft: 8,
+
     flexGrow: 0,
     flexShrink: 0,
-    flexBasis: "25%",
-    maxWidth: "25%",
+    flexBasis: "33%",
+    maxWidth: "33%",
+  },
+}));
+
+const StyledIconButton = styled(IconButton)(({ theme }) => ({
+  color: theme.palette.background.default,
+  backgroundColor: theme.palette.secondary.main,
+  transition: "all 100ms ease-in",
+  "&:hover": {
+    color: theme.palette.background.default,
+    backgroundColor: theme.palette.secondary.main,
+    transform: "scale(1.2)",
   },
 }));
 
@@ -160,13 +186,9 @@ export const AccordionTable: React.FC<Props> = ({ strollersDataToShow }) => {
       <TableSectionContainer>
         <SectionContainerShadow>
           <AccordionTitle>{strollersDataToShow.title}</AccordionTitle>
-          <IconButton onClick={() => setIsOpen(!isOpen)}>
-            {isOpen ? (
-              <ExpandMore fontSize="large" />
-            ) : (
-              <ExpandLess fontSize="large" />
-            )}
-          </IconButton>
+          <StyledIconButton onClick={() => setIsOpen(!isOpen)}>
+            {isOpen ? <ExpandMore /> : <ExpandLess />}
+          </StyledIconButton>
         </SectionContainerShadow>
       </TableSectionContainer>
       <Collapse in={isOpen}>
@@ -176,11 +198,13 @@ export const AccordionTable: React.FC<Props> = ({ strollersDataToShow }) => {
               <TableSectionContainer>
                 <Section>
                   <StyledTableRowTitle>{row.title}</StyledTableRowTitle>
-                  {row.values.map((cell, index) => (
-                    <StyledTableCellContainer key={index}>
-                      {cell}
-                    </StyledTableCellContainer>
-                  ))}
+                  <StyledTableCellsContainer>
+                    {row.values.map((cell, index) => (
+                      <StyledTableCellContainer key={index}>
+                        {cell}
+                      </StyledTableCellContainer>
+                    ))}
+                  </StyledTableCellsContainer>
                 </Section>
               </TableSectionContainer>
             </StyledTableRow>

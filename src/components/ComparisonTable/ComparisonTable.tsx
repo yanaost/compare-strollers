@@ -85,9 +85,16 @@ const StyledProductName = styled(Typography)(() => ({
   float: "left",
 }));
 
-const StyledProductDeleteIcon = styled(IconButton)(() => ({
+const StyledProductDeleteIcon = styled(IconButton)(({ theme }) => ({
   padding: 0,
   float: "right",
+
+  color: theme.palette.secondary.main,
+  transition: "all 100ms ease-in",
+  "&:hover": {
+    backgroundColor: theme.palette.background.default,
+    transform: "scale(1.1)",
+  },
 }));
 
 const ComparisonContainer = styled(Box)(() => ({}));
@@ -366,7 +373,7 @@ export const ComparisonTable: React.FC<Props> = ({
           </Section>
         </SectionContainer>
       </ComparisonStickyHeader>
-      <SectionContainer>
+      <SectionContainer sx={{ marginBottom: "32px" }}>
         <Section sx={{ flexWrap: "nowrap" }}>
           {strollersDataToShow.map((stroller) => {
             return (
