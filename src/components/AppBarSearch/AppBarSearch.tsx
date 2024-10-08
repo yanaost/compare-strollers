@@ -118,7 +118,7 @@ export const AppBarSearch: React.FC<Props> = ({
 
   return (
     <Box component="header">
-      <AppBar position="static">
+      <AppBar position="static" component="div">
         <StyledToolbar sx={{}}>
           <Typography
             variant="h1"

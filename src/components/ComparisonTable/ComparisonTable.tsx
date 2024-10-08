@@ -5,6 +5,7 @@ import { DeleteOutline } from "@mui/icons-material";
 import { allStrollers } from "../../data/allStrollers";
 import { AccordionTable } from "../AccordionTable/AccordionTable";
 import { AccordionsData } from "../../types/AccordionData";
+import { useEffect, useState } from "react";
 
 const StyledTableFirstHeadCell = styled(Box)(({ theme }) => ({
   display: "none",
@@ -97,11 +98,38 @@ const StyledProductDeleteIcon = styled(IconButton)(({ theme }) => ({
   },
 }));
 
-const ComparisonContainer = styled(Box)(() => ({}));
+const ComparisonContainer = styled("div", { label: "ComparisonContainer" })(
+  () => ({})
+);
 
-const ComparisonStickyHeader = styled(Box)(() => ({
-  position: "sticky",
+const ComparisonStickyHeader = styled(Box, { label: "ComparisonStickyHeader" })(
+  () => ({
+    position: "sticky",
+    paddingBottom: 24,
+    top: "0",
+    zIndex: 100,
+    width: "100%",
+    backgroundColor: "white",
+    boxShadow: "0 4px 12px 0 #b3b3b3",
+    animationName: "sticky-header-animation-removing-top",
+    animationDuration: "250ms",
+    animationFillMode: "forwards",
+  })
+);
+
+const ComparisonStickyHeaderWhenScrollContainer = styled("div", {
+  label: "ComparisonStickyHeaderWhenScrollContainer",
+})(() => ({
+  position: "absolute",
+  left: 0,
+  right: 0,
+}));
+
+const ComparisonStickyHeaderWhenScroll = styled("div", {
+  label: "ComparisonStickyHeaderWhenScroll",
+})(() => ({
   paddingBottom: 24,
+  position: "sticky",
   top: "0",
   zIndex: 100,
   width: "100%",
@@ -110,36 +138,39 @@ const ComparisonStickyHeader = styled(Box)(() => ({
   animationName: "sticky-header-animation-removing-top",
   animationDuration: "250ms",
   animationFillMode: "forwards",
+  transition: "opacity .2s ease, transform .2s ease",
 }));
 
-const SectionContainer = styled(Box)(({ theme }) => ({
-  paddingLeft: 16,
-  paddingRight: 16,
-  width: "100%",
-  maxWidth: `calc(1536px + 192px)`,
-  [theme.breakpoints.up("xs")]: {
+const SectionContainer = styled(Box, { label: "SectionContainer" })(
+  ({ theme }) => ({
     paddingLeft: 16,
     paddingRight: 16,
-  },
-  [theme.breakpoints.up("sm")]: {
-    paddingLeft: 16,
-    paddingRight: 16,
-  },
-  [theme.breakpoints.up("md")]: {
-    paddingLeft: 40,
-    paddingRight: 40,
-  },
-  [theme.breakpoints.up("lg")]: {
-    paddingLeft: 40,
-    paddingRight: 40,
-  },
-  [theme.breakpoints.up("xl")]: {
-    paddingLeft: 96,
-    paddingRight: 96,
-  },
-}));
+    width: "100%",
+    maxWidth: `calc(1536px + 192px)`,
+    [theme.breakpoints.up("xs")]: {
+      paddingLeft: 16,
+      paddingRight: 16,
+    },
+    [theme.breakpoints.up("sm")]: {
+      paddingLeft: 16,
+      paddingRight: 16,
+    },
+    [theme.breakpoints.up("md")]: {
+      paddingLeft: 40,
+      paddingRight: 40,
+    },
+    [theme.breakpoints.up("lg")]: {
+      paddingLeft: 40,
+      paddingRight: 40,
+    },
+    [theme.breakpoints.up("xl")]: {
+      paddingLeft: 96,
+      paddingRight: 96,
+    },
+  })
+);
 
-const Section = styled("section")(({ theme }) => ({
+const Section = styled("section", { label: "Section" })(({ theme }) => ({
   display: "flex",
   flex: " 0 1 auto",
   flexDirection: "row",
@@ -341,79 +372,133 @@ export const ComparisonTable: React.FC<Props> = ({
     strollersIdsToCompare
   );
 
+  const [isScrollEnabled, setIsScrollEnabled] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      setIsScrollEnabled(window.scrollY > 350);
+    });
+  }, []);
+
   return (
-    <ComparisonContainer>
-      <ComparisonStickyHeader>
-        <SectionContainer>
+    <>
+      <ComparisonStickyHeaderWhenScrollContainer
+        sx={{
+          top: isScrollEnabled ? -878 : 0,
+          bottom: isScrollEnabled ? 0 : "none",
+        }}
+      >
+        <ComparisonStickyHeaderWhenScroll
+          sx={{
+            opacity: isScrollEnabled ? 1 : 0,
+            transform: isScrollEnabled ? `translateY(0)` : `translateY(-300%)`,
+          }}
+        >
+          <SectionContainer>
+            <Section sx={{ flexWrap: "nowrap" }}>
+              <StyledTableFirstHeadCell>
+                <StyledTableFirstHeadCellTitleContainer>
+                  <Typography component="h2" sx={{ fontWeight: 500 }}>
+                    Strollers
+                  </Typography>
+                </StyledTableFirstHeadCellTitleContainer>
+              </StyledTableFirstHeadCell>
+              {strollersDataToShow.map((stroller) => {
+                return (
+                  <StyledTableCellContainer key={stroller?.id}>
+                    <StyledCardContent>
+                      <StyledProductName>{`${stroller?.brand} ${stroller?.modelName}`}</StyledProductName>
+                      <StyledProductDeleteIcon
+                        size="small"
+                        onClick={() =>
+                          handleDeleteStrollerIdFromCompare(stroller!.id)
+                        }
+                      >
+                        <DeleteOutline fontSize="small" />
+                      </StyledProductDeleteIcon>
+                    </StyledCardContent>
+                  </StyledTableCellContainer>
+                );
+              })}
+            </Section>
+          </SectionContainer>
+        </ComparisonStickyHeaderWhenScroll>
+      </ComparisonStickyHeaderWhenScrollContainer>
+
+      <ComparisonContainer>
+        <ComparisonStickyHeader>
+          <SectionContainer>
+            <Section sx={{ flexWrap: "nowrap" }}>
+              <StyledTableFirstHeadCell>
+                <StyledTableFirstHeadCellTitleContainer>
+                  <Typography component="h2" sx={{ fontWeight: 500 }}>
+                    Strollers
+                  </Typography>
+                </StyledTableFirstHeadCellTitleContainer>
+              </StyledTableFirstHeadCell>
+              {strollersDataToShow.map((stroller) => {
+                return (
+                  <StyledTableCellContainer key={stroller?.id}>
+                    <StyledCardContent>
+                      <StyledProductName>{`${stroller?.brand} ${stroller?.modelName}`}</StyledProductName>
+                      <StyledProductDeleteIcon
+                        size="small"
+                        onClick={() =>
+                          handleDeleteStrollerIdFromCompare(stroller!.id)
+                        }
+                      >
+                        <DeleteOutline fontSize="small" />
+                      </StyledProductDeleteIcon>
+                    </StyledCardContent>
+                  </StyledTableCellContainer>
+                );
+              })}
+            </Section>
+          </SectionContainer>
+        </ComparisonStickyHeader>
+
+        <SectionContainer sx={{ marginBottom: "32px" }}>
           <Section sx={{ flexWrap: "nowrap" }}>
-            <StyledTableFirstHeadCell>
-              <StyledTableFirstHeadCellTitleContainer>
-                <Typography component="h2" sx={{ fontWeight: 500 }}>
-                  Strollers
-                </Typography>
-              </StyledTableFirstHeadCellTitleContainer>
-            </StyledTableFirstHeadCell>
             {strollersDataToShow.map((stroller) => {
               return (
-                <StyledTableCellContainer key={stroller?.id}>
-                  <StyledCardContent>
-                    <StyledProductName>{`${stroller?.brand} ${stroller?.modelName}`}</StyledProductName>
-                    <StyledProductDeleteIcon
-                      size="small"
-                      onClick={() =>
-                        handleDeleteStrollerIdFromCompare(stroller!.id)
-                      }
-                    >
-                      <DeleteOutline fontSize="small" />
-                    </StyledProductDeleteIcon>
-                  </StyledCardContent>
-                </StyledTableCellContainer>
+                <ProductContainer key={stroller?.id}>
+                  <Product>
+                    <ImageContainer>
+                      <Figure>
+                        <Image
+                          alt={`${stroller?.brand} ${stroller?.modelName} stroller`}
+                          src={stroller?.imagePath}
+                        />
+                      </Figure>
+                    </ImageContainer>
+                    <ProductName>
+                      <ProductNameText>{stroller?.modelName}</ProductNameText>
+                    </ProductName>
+                    <ProductDescription>
+                      <ProductDescriptionList>
+                        <ProductDescriptionListItem>
+                          The most comfortable city pram with an innovative
+                          compact fold
+                        </ProductDescriptionListItem>
+                      </ProductDescriptionList>
+                    </ProductDescription>
+                  </Product>
+                </ProductContainer>
               );
             })}
           </Section>
         </SectionContainer>
-      </ComparisonStickyHeader>
-      <SectionContainer sx={{ marginBottom: "32px" }}>
-        <Section sx={{ flexWrap: "nowrap" }}>
-          {strollersDataToShow.map((stroller) => {
+
+        {strollersDataToShowInAccordions.length > 0 &&
+          strollersDataToShowInAccordions.map((accordionData) => {
             return (
-              <ProductContainer key={stroller?.id}>
-                <Product>
-                  <ImageContainer>
-                    <Figure>
-                      <Image
-                        alt={`${stroller?.brand} ${stroller?.modelName} stroller`}
-                        src={stroller?.imagePath}
-                      />
-                    </Figure>
-                  </ImageContainer>
-                  <ProductName>
-                    <ProductNameText>{stroller?.modelName}</ProductNameText>
-                  </ProductName>
-                  <ProductDescription>
-                    <ProductDescriptionList>
-                      <ProductDescriptionListItem>
-                        The most comfortable city pram with an innovative
-                        compact fold
-                      </ProductDescriptionListItem>
-                    </ProductDescriptionList>
-                  </ProductDescription>
-                </Product>
-              </ProductContainer>
+              <AccordionTable
+                key={accordionData.key}
+                strollersDataToShow={accordionData}
+              />
             );
           })}
-        </Section>
-      </SectionContainer>
-
-      {strollersDataToShowInAccordions.length > 0 &&
-        strollersDataToShowInAccordions.map((accordionData) => {
-          return (
-            <AccordionTable
-              key={accordionData.key}
-              strollersDataToShow={accordionData}
-            />
-          );
-        })}
-    </ComparisonContainer>
+      </ComparisonContainer>
+    </>
   );
 };

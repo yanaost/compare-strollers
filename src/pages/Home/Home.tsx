@@ -34,7 +34,7 @@ export const Home = () => {
   return (
     <>
       <AppBarSearch handleAddStrollerIdToCompare={addNewStrollerId} />
-      <Box component="main">
+      <Box component="main" sx={{ overflowX: "scroll" }}>
         {strollersIdsToCompare.length > 0 && (
           <ComparisonTable
             strollersIdsToCompare={strollersIdsToCompare}
