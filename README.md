@@ -1,50 +1,96 @@
-# React + TypeScript + Vite
+# Stroller Comparison Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, user-friendly web application for comparing different stroller models. Built with React, TypeScript, and Material-UI, this application helps parents make informed decisions when choosing a stroller by providing detailed feature comparisons.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🔍 **Smart Search**: Search strollers by model name, brand, or alternative names
+- 📊 **Detailed Comparison**: Compare multiple strollers side by side with organized feature groups
+- 🎨 **Modern UI**: Clean and intuitive interface built with Material-UI
+- 📱 **Responsive Design**: Works seamlessly on desktop and mobile devices
+- 🔄 **Real-time Updates**: Instant search results and comparison updates
 
-## Expanding the ESLint configuration
+## Feature Groups
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+The comparison is organized into logical groups:
 
-- Configure the top-level `parserOptions` property like this:
+- Basic Information
+- Dimensions & Weight
+- Seat Features
+- Safety & Comfort
+- Storage & Accessories
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v14 or higher)
+- npm or yarn
+- Backend server running on port 5001
+
+### Installation
+
+1. Clone the repository
+2. Navigate to the frontend directory:
+   ```bash
+   cd frontend
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+4. Start the development server:
+   ```bash
+   npm start
+   # or
+   yarn start
+   ```
+
+The application will be available at `http://localhost:3000`
+
+## Usage
+
+1. **Search for Strollers**
+
+   - Use the search bar to find strollers by name or brand
+   - Results appear in real-time as you type
+
+2. **Compare Strollers**
+   - Select strollers from the search results
+   - View detailed comparisons organized by feature groups
+   - Compare specifications side by side
+
+## Technical Stack
+
+- **Framework**: React with TypeScript
+- **UI Library**: Material-UI (MUI)
+- **State Management**: React Context API
+- **API Communication**: Axios
+- **Type Safety**: TypeScript interfaces for all data structures
+
+## Project Structure
+
+```
+frontend/
+├── src/
+│   ├── components/        # Reusable UI components
+│   ├── types/            # TypeScript type definitions
+│   ├── services/         # API service functions
+│   ├── context/          # React context providers
+│   └── utils/            # Utility functions
+├── public/               # Static assets
+└── package.json          # Project dependencies
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## API Integration
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+The frontend communicates with the backend API running on port 5001. Key endpoints include:
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+- `GET /api/strollers/search?query=...` - Search strollers
+- `GET /api/strollers/comparison-data?ids=...` - Get detailed comparison data
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
