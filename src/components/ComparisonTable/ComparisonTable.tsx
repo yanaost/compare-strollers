@@ -2,12 +2,14 @@ import { Box, IconButton, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 import { DeleteOutline } from "@mui/icons-material";
-import { allStrollers } from "../../data/allStrollers";
 import { AccordionTable } from "../AccordionTable/AccordionTable";
-import { AccordionsData } from "../../types/AccordionData";
 import { useEffect, useState } from "react";
+import { StrollersFeatures } from "../../types/StrollersFeatures";
+import { AccordionsData } from "../../types/AccordionData";
 
-const StyledTableFirstHeadCell = styled(Box)(({ theme }) => ({
+const StyledTableFirstHeadCell = styled(Box, {
+  label: "StyledTableFirstHeadCell",
+})(({ theme }) => ({
   display: "none",
   [theme.breakpoints.up("sm")]: {
     paddingRight: 8,
@@ -24,13 +26,17 @@ const StyledTableFirstHeadCell = styled(Box)(({ theme }) => ({
   },
 }));
 
-const StyledTableFirstHeadCellTitleContainer = styled(Box)(() => ({
+const StyledTableFirstHeadCellTitleContainer = styled(Box, {
+  label: "StyledTableFirstHeadCellTitleContainer",
+})(() => ({
   alignItems: "center",
   display: "flex",
   minHeight: 50,
 }));
 
-const StyledTableCellContainer = styled("div")(({ theme }) => ({
+const StyledTableCellContainer = styled("div", {
+  label: "StyledTableCellContainer",
+})(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   width: "100%",
@@ -66,7 +72,7 @@ const StyledTableCellContainer = styled("div")(({ theme }) => ({
   },
 }));
 
-const StyledCardContent = styled("div")(() => ({
+const StyledCardContent = styled("div", { label: "StyledCardContent" })(() => ({
   position: "relative",
   outline: "none",
   width: "100%",
@@ -81,12 +87,16 @@ const StyledCardContent = styled("div")(() => ({
   lineHeight: 1.35,
 }));
 
-const StyledProductName = styled(Typography)(() => ({
-  margin: 0,
-  float: "left",
-}));
+const StyledProductName = styled(Typography, { label: "StyledProductName" })(
+  () => ({
+    margin: 0,
+    float: "left",
+  })
+);
 
-const StyledProductDeleteIcon = styled(IconButton)(({ theme }) => ({
+const StyledProductDeleteIcon = styled(IconButton, {
+  label: "StyledProductDeleteIcon",
+})(({ theme }) => ({
   padding: 0,
   float: "right",
 
@@ -189,14 +199,16 @@ const Section = styled("section", { label: "Section" })(({ theme }) => ({
   },
 }));
 
-const ImageContainer = styled("div")(({ theme }) => ({
-  position: "relative",
-  [theme.breakpoints.up("md")]: {
-    marginBottom: 16,
-  },
-}));
+const ImageContainer = styled("div", { label: "ImageContainer" })(
+  ({ theme }) => ({
+    position: "relative",
+    [theme.breakpoints.up("md")]: {
+      marginBottom: 16,
+    },
+  })
+);
 
-const Image = styled("img")(() => ({
+const Image = styled("img", { label: "Image" })(() => ({
   borderImageOutset: 0,
   borderImageRepeat: "stretch",
   borderImageSlice: "100%",
@@ -208,7 +220,7 @@ const Image = styled("img")(() => ({
   backgroundSize: "contain",
 }));
 
-const Figure = styled("figure")(() => ({
+const Figure = styled("figure", { label: "Figure" })(() => ({
   backgroundSize: "contain",
   objectFit: "contain",
   width: "100%",
@@ -219,45 +231,49 @@ const Figure = styled("figure")(() => ({
   margin: 0,
 }));
 
-const Product = styled("div")(() => ({
+const Product = styled("div", { label: "Product" })(() => ({
   display: "flex",
   flexDirection: "column",
   width: "100%",
 }));
 
-const ProductContainer = styled("div")(({ theme }) => ({
-  flexGrow: 0,
-  flexShrink: 0,
-  paddingRight: 4,
-  paddingLeft: 4,
-  flexBasis: "50%",
-  maxWidth: "50%",
+const ProductContainer = styled("div", { label: "ProductContainer" })(
+  ({ theme }) => ({
+    flexGrow: 0,
+    flexShrink: 0,
+    paddingRight: 4,
+    paddingLeft: 4,
+    flexBasis: "50%",
+    maxWidth: "50%",
+    // width: 275,
 
-  [theme.breakpoints.up("sm")]: {
-    paddingRight: 8,
-    paddingLeft: 8,
-  },
-  [theme.breakpoints.up("md")]: {
-    paddingRight: 8,
-    paddingLeft: 8,
-    paddingTop: "unset",
-    paddingBottom: "unset",
-    flexBasis: "33.33%",
-    maxWidth: "33.33%",
-  },
-  [theme.breakpoints.up("lg")]: {
-    paddingTop: "unset",
-    paddingBottom: "unset",
-    paddingRight: 8,
-    paddingLeft: 8,
-    position: "relative",
-    right: "-25%",
-    flexBasis: "25%",
-    maxWidth: "25%",
-  },
-}));
+    [theme.breakpoints.up("sm")]: {
+      paddingRight: 8,
+      paddingLeft: 8,
+    },
+    [theme.breakpoints.up("md")]: {
+      paddingRight: 8,
+      paddingLeft: 8,
+      paddingTop: "unset",
+      paddingBottom: "unset",
+      flexBasis: "33.33%",
+      maxWidth: "33.33%",
+      // width: 275,
+    },
+    [theme.breakpoints.up("lg")]: {
+      paddingTop: "unset",
+      paddingBottom: "unset",
+      paddingRight: 8,
+      paddingLeft: 8,
+      position: "relative",
+      right: "-25%",
+      flexBasis: "25%",
+      maxWidth: "25%",
+    },
+  })
+);
 
-const ProductName = styled("div")(() => ({
+const ProductName = styled("div", { label: "ProductName" })(() => ({
   marginBottom: 16,
   marginTop: 16,
   fontSize: 18,
@@ -265,28 +281,34 @@ const ProductName = styled("div")(() => ({
   fontWeight: 700,
 }));
 
-const ProductNameText = styled("h3")(() => ({
+const ProductNameText = styled("h3", { label: "ProductNameText" })(() => ({
   margin: 0,
   fontSize: 18,
 }));
 
-const ProductDescription = styled("div")(({ theme }) => ({
-  height: 54,
-  paddingLeft: 24,
-  marginBottom: 16,
-  [theme.breakpoints.up("md")]: {
-    marginBottom: 24,
-  },
-}));
+const ProductDescription = styled("div", { label: "ProductDescription" })(
+  ({ theme }) => ({
+    height: 54,
+    paddingLeft: 24,
+    marginBottom: 16,
+    [theme.breakpoints.up("md")]: {
+      marginBottom: 24,
+    },
+  })
+);
 
-const ProductDescriptionList = styled("ul")(() => ({
+const ProductDescriptionList = styled("ul", {
+  label: "ProductDescriptionList",
+})(() => ({
   margin: 0,
   padding: 0,
   paddingBottom: 24,
   borderBottom: "1px solid #e5e5e5",
 }));
 
-const ProductDescriptionListItem = styled("li")(() => ({
+const ProductDescriptionListItem = styled("li", {
+  label: "ProductDescriptionListItem",
+})(() => ({
   margin: 0,
   padding: 0,
 }));
@@ -300,25 +322,41 @@ export const ComparisonTable: React.FC<Props> = ({
   strollersIdsToCompare,
   handleDeleteStrollerIdFromCompare,
 }) => {
-  const getStrollersDataToShow = (ids: number[]) => {
-    const dataToShow = ids.map((id) =>
-      allStrollers.find((stroller) => stroller.id === id)
-    );
+  const [strollerData, setStrollerData] = useState<StrollersFeatures[]>([]);
+  const [accordionData, setAccordionData] = useState<AccordionsData[]>([]);
 
-    return dataToShow;
+  const fetchStrollersData = async (selectedIds: number[]) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5001/api/strollers/comparison-data?ids=${selectedIds.join(
+          ","
+        )}`
+      );
+      const data: StrollersFeatures[] = await response.json();
+      // Update your state with the fetched data
+      setStrollerData(data);
+    } catch (error) {
+      console.error("Error fetching stroller data:", error);
+    }
   };
 
-  const strollersDataToShow = getStrollersDataToShow(strollersIdsToCompare);
+  // Call this function whenever selectedIds changes
+  useEffect(() => {
+    if (strollersIdsToCompare.length > 0) {
+      fetchStrollersData(strollersIdsToCompare);
+    }
+  }, [strollersIdsToCompare]);
 
   const modifyStrollersDataForAccordions = (ids: number[]) => {
     const filteredData = ids.map((id) =>
-      allStrollers.find((stroller) => stroller.id === id)
+      strollerData.find((stroller) => stroller.strollerId === id)
     );
 
     const accordionsData: AccordionsData[] = [];
     const accordionGroupKeys: string[] = [];
 
-    filteredData.forEach((stroller, index) => {
+    // check for empty array
+    strollerData.forEach((stroller, index) => {
       stroller!.groups.forEach((group) => {
         if (index === 0 || !accordionGroupKeys.includes(group.group.key)) {
           accordionsData.push(group.group);
@@ -368,9 +406,14 @@ export const ComparisonTable: React.FC<Props> = ({
     return accordionsData;
   };
 
-  const strollersDataToShowInAccordions = modifyStrollersDataForAccordions(
-    strollersIdsToCompare
-  );
+  useEffect(() => {
+    if (strollerData.length > 0) {
+      const accordionData = modifyStrollersDataForAccordions(
+        strollersIdsToCompare
+      );
+      setAccordionData(accordionData);
+    }
+  }, [strollerData]);
 
   const [isScrollEnabled, setIsScrollEnabled] = useState(false);
 
@@ -403,15 +446,17 @@ export const ComparisonTable: React.FC<Props> = ({
                   </Typography>
                 </StyledTableFirstHeadCellTitleContainer>
               </StyledTableFirstHeadCell>
-              {strollersDataToShow.map((stroller) => {
+              {strollerData.map((stroller) => {
                 return (
-                  <StyledTableCellContainer key={stroller?.id}>
+                  <StyledTableCellContainer key={stroller?.strollerId}>
                     <StyledCardContent>
                       <StyledProductName>{`${stroller?.brand} ${stroller?.modelName}`}</StyledProductName>
                       <StyledProductDeleteIcon
                         size="small"
                         onClick={() =>
-                          handleDeleteStrollerIdFromCompare(stroller!.id)
+                          handleDeleteStrollerIdFromCompare(
+                            stroller!.strollerId
+                          )
                         }
                       >
                         <DeleteOutline fontSize="small" />
@@ -436,15 +481,17 @@ export const ComparisonTable: React.FC<Props> = ({
                   </Typography>
                 </StyledTableFirstHeadCellTitleContainer>
               </StyledTableFirstHeadCell>
-              {strollersDataToShow.map((stroller) => {
+              {strollerData.map((stroller) => {
                 return (
-                  <StyledTableCellContainer key={stroller?.id}>
+                  <StyledTableCellContainer key={stroller?.strollerId}>
                     <StyledCardContent>
                       <StyledProductName>{`${stroller?.brand} ${stroller?.modelName}`}</StyledProductName>
                       <StyledProductDeleteIcon
                         size="small"
                         onClick={() =>
-                          handleDeleteStrollerIdFromCompare(stroller!.id)
+                          handleDeleteStrollerIdFromCompare(
+                            stroller!.strollerId
+                          )
                         }
                       >
                         <DeleteOutline fontSize="small" />
@@ -459,9 +506,9 @@ export const ComparisonTable: React.FC<Props> = ({
 
         <SectionContainer sx={{ marginBottom: "32px" }}>
           <Section sx={{ flexWrap: "nowrap" }}>
-            {strollersDataToShow.map((stroller) => {
+            {strollerData.map((stroller) => {
               return (
-                <ProductContainer key={stroller?.id}>
+                <ProductContainer key={stroller?.strollerId}>
                   <Product>
                     <ImageContainer>
                       <Figure>
@@ -489,8 +536,8 @@ export const ComparisonTable: React.FC<Props> = ({
           </Section>
         </SectionContainer>
 
-        {strollersDataToShowInAccordions.length > 0 &&
-          strollersDataToShowInAccordions.map((accordionData) => {
+        {accordionData.length > 0 &&
+          accordionData.map((accordionData) => {
             return (
               <AccordionTable
                 key={accordionData.key}

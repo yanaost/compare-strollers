@@ -1,5 +1,5 @@
 export type StrollersFeatures = {
-    id: number,
+    strollerId: number,
     modelName: string,
     alternativeModelNames?: string[]
     brand: string,
