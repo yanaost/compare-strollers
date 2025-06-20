@@ -12,11 +12,6 @@ dist
 dist-ssr
 *.local
 
-tsconfig.app.json
-tsconfig.json
-tsconfig.node.json
-vite.config.ts
-
 eslint.config.js
 
 # Editor directories and files
