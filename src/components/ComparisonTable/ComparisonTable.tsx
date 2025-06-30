@@ -99,7 +99,6 @@ const StyledProductDeleteIcon = styled(IconButton, {
 })(({ theme }) => ({
   padding: 0,
   float: "right",
-
   color: theme.palette.secondary.main,
   transition: "all 100ms ease-in",
   "&:hover": {
