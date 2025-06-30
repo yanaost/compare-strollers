@@ -114,12 +114,34 @@ const Section = styled("section")(({ theme }) => ({
   },
 }));
 
-const StyledTableCellsContainer = styled("div")(({ theme }) => ({
+const CollapseSection = styled("div", { label: "CollapseSection" })(
+  ({ theme }) => ({
+    [theme.breakpoints.up("sm")]: {
+      width: "150%",
+    },
+
+    [theme.breakpoints.up("md")]: {
+      width: "100%",
+    },
+  })
+);
+
+const StyledTableCellsContainer = styled("div", {
+  label: "StyledTableCellsContainer",
+})(({ theme }) => ({
   display: "flex",
   flex: " 0 1 auto",
 
   flexWrap: "nowrap",
   width: `calc(100% + 8px)`,
+
+  [theme.breakpoints.up("sm")]: {
+    width: `calc(66.6% + 8px)`,
+  },
+
+  [theme.breakpoints.up("md")]: {
+    width: `calc(100% + 8px)`,
+  },
 
   [theme.breakpoints.up("lg")]: {
     width: `calc(100% + 16px)`,
@@ -192,23 +214,25 @@ export const AccordionTable: React.FC<Props> = ({ strollersDataToShow }) => {
         </SectionContainerShadow>
       </TableSectionContainer>
       <Collapse in={isOpen}>
-        {strollersDataToShow.rows &&
-          strollersDataToShow.rows.map((row) => (
-            <StyledTableRow key={row.key}>
-              <TableSectionContainer>
-                <Section>
-                  <StyledTableRowTitle>{row.title}</StyledTableRowTitle>
-                  <StyledTableCellsContainer>
-                    {row.values.map((cell, index) => (
-                      <StyledTableCellContainer key={index}>
-                        {cell}
-                      </StyledTableCellContainer>
-                    ))}
-                  </StyledTableCellsContainer>
-                </Section>
-              </TableSectionContainer>
-            </StyledTableRow>
-          ))}
+        <CollapseSection>
+          {strollersDataToShow.rows &&
+            strollersDataToShow.rows.map((row) => (
+              <StyledTableRow key={row.key}>
+                <TableSectionContainer>
+                  <Section>
+                    <StyledTableRowTitle>{row.title}</StyledTableRowTitle>
+                    <StyledTableCellsContainer>
+                      {row.values.map((cell, index) => (
+                        <StyledTableCellContainer key={index}>
+                          {cell}
+                        </StyledTableCellContainer>
+                      ))}
+                    </StyledTableCellsContainer>
+                  </Section>
+                </TableSectionContainer>
+              </StyledTableRow>
+            ))}
+        </CollapseSection>
       </Collapse>
     </AccordionContainer>
   );

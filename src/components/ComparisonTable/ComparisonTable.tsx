@@ -3,7 +3,7 @@ import { styled } from "@mui/material/styles";
 
 import { DeleteOutline } from "@mui/icons-material";
 import { AccordionTable } from "../AccordionTable/AccordionTable";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { StrollersFeatures } from "../../types/StrollersFeatures";
 import { AccordionsData } from "../../types/AccordionData";
 
@@ -11,16 +11,16 @@ const StyledTableFirstHeadCell = styled(Box, {
   label: "StyledTableFirstHeadCell",
 })(({ theme }) => ({
   display: "none",
-  [theme.breakpoints.up("sm")]: {
-    paddingRight: 8,
-    paddingLeft: 8,
-  },
   flexGrow: 0,
   flexShrink: 0,
   paddingRight: 4,
   paddingLeft: 4,
   flexBasis: "25%",
   maxWidth: "25%",
+  [theme.breakpoints.up("sm")]: {
+    paddingRight: 8,
+    paddingLeft: 8,
+  },
   [theme.breakpoints.up("lg")]: {
     display: "block",
   },
@@ -112,34 +112,16 @@ const ComparisonContainer = styled("div", { label: "ComparisonContainer" })(
   () => ({})
 );
 
-const ComparisonStickyHeader = styled(Box, { label: "ComparisonStickyHeader" })(
-  () => ({
-    position: "sticky",
-    paddingBottom: 24,
-    top: "0",
-    zIndex: 100,
-    width: "100%",
-    backgroundColor: "white",
-    boxShadow: "0 4px 12px 0 #b3b3b3",
-    animationName: "sticky-header-animation-removing-top",
-    animationDuration: "250ms",
-    animationFillMode: "forwards",
-  })
-);
+type StickyHeaderProps = {
+  $numberOfStrollersToCompare: number;
+};
 
-const ComparisonStickyHeaderWhenScrollContainer = styled("div", {
-  label: "ComparisonStickyHeaderWhenScrollContainer",
-})(() => ({
-  position: "absolute",
-  left: 0,
-  right: 0,
-}));
-
-const ComparisonStickyHeaderWhenScroll = styled("div", {
-  label: "ComparisonStickyHeaderWhenScroll",
-})(() => ({
-  paddingBottom: 24,
+const ComparisonStickyHeader = styled(Box, {
+  label: "ComparisonStickyHeader",
+  shouldForwardProp: (prop) => prop !== "$numberOfStrollersToCompare",
+})<StickyHeaderProps>(({ theme, $numberOfStrollersToCompare }) => ({
   position: "sticky",
+  paddingBottom: 24,
   top: "0",
   zIndex: 100,
   width: "100%",
@@ -148,7 +130,12 @@ const ComparisonStickyHeaderWhenScroll = styled("div", {
   animationName: "sticky-header-animation-removing-top",
   animationDuration: "250ms",
   animationFillMode: "forwards",
-  transition: "opacity .2s ease, transform .2s ease",
+  [theme.breakpoints.up("sm")]: {
+    width: `max(100%,${$numberOfStrollersToCompare * 50}%)`,
+  },
+  [theme.breakpoints.up("md")]: {
+    width: "100%",
+  },
 }));
 
 const SectionContainer = styled(Box, { label: "SectionContainer" })(
@@ -180,14 +167,53 @@ const SectionContainer = styled(Box, { label: "SectionContainer" })(
   })
 );
 
+type SectionContainerHeaderProps = {
+  $numberOfStrollersToCompare: number;
+};
+
+const SectionContainerHeader = styled(Box, {
+  label: "SectionContainerHeader",
+  shouldForwardProp: (prop) => prop !== "$numberOfStrollersToCompare",
+})<SectionContainerHeaderProps>(({ theme, $numberOfStrollersToCompare }) => ({
+  paddingLeft: 16,
+  paddingRight: 16,
+  width: "100%",
+  maxWidth: `calc(1536px + 192px)`,
+  [theme.breakpoints.up("xs")]: {
+    paddingLeft: 16,
+    paddingRight: 16,
+  },
+  [theme.breakpoints.up("sm")]: {
+    paddingLeft: 16,
+    paddingRight: 16,
+    width: (100 / Math.max(100, $numberOfStrollersToCompare * 50)) * 100 + "%", //use props here
+  },
+  [theme.breakpoints.up("md")]: {
+    paddingLeft: 40,
+    paddingRight: 40,
+    width: "100%",
+  },
+  [theme.breakpoints.up("lg")]: {
+    paddingLeft: 40,
+    paddingRight: 40,
+  },
+  [theme.breakpoints.up("xl")]: {
+    paddingLeft: 96,
+    paddingRight: 96,
+  },
+}));
+
 const Section = styled("section", { label: "Section" })(({ theme }) => ({
   display: "flex",
   flex: " 0 1 auto",
   flexDirection: "row",
   flexWrap: "wrap",
   width: `calc(100% + 8px)`,
+  // minWidth: "maxContent",
   paddingTop: 16,
   [theme.breakpoints.up("sm")]: {
+    // width: "150%", ///??  when 3
+
     marginRight: -8,
     marginLeft: -8,
   },
@@ -245,8 +271,6 @@ const ProductContainer = styled("div", { label: "ProductContainer" })(
     paddingLeft: 4,
     flexBasis: "50%",
     maxWidth: "50%",
-    // width: 275,
-
     [theme.breakpoints.up("sm")]: {
       paddingRight: 8,
       paddingLeft: 8,
@@ -258,7 +282,6 @@ const ProductContainer = styled("div", { label: "ProductContainer" })(
       paddingBottom: "unset",
       flexBasis: "33.33%",
       maxWidth: "33.33%",
-      // width: 275,
     },
     [theme.breakpoints.up("lg")]: {
       paddingTop: "unset",
@@ -313,6 +336,11 @@ const ProductDescriptionListItem = styled("li", {
   padding: 0,
 }));
 
+const ScrollContainer = styled("div")(() => ({
+  height: "100vh", // or any specific height
+  overflow: "auto",
+}));
+
 type Props = {
   strollersIdsToCompare: number[];
   handleDeleteStrollerIdFromCompare: (strollerId: number) => void;
@@ -325,6 +353,9 @@ export const ComparisonTable: React.FC<Props> = ({
   const [strollerData, setStrollerData] = useState<StrollersFeatures[]>([]);
   const [accordionData, setAccordionData] = useState<AccordionsData[]>([]);
 
+  const numberOfStrollersToCompare = strollersIdsToCompare.length;
+  console.log("numbers of strollerrs", numberOfStrollersToCompare);
+
   const fetchStrollersData = async (selectedIds: number[]) => {
     try {
       const response = await fetch(
@@ -333,78 +364,75 @@ export const ComparisonTable: React.FC<Props> = ({
         )}`
       );
       const data: StrollersFeatures[] = await response.json();
-      // Update your state with the fetched data
       setStrollerData(data);
     } catch (error) {
       console.error("Error fetching stroller data:", error);
     }
   };
 
-  // Call this function whenever selectedIds changes
   useEffect(() => {
     if (strollersIdsToCompare.length > 0) {
       fetchStrollersData(strollersIdsToCompare);
     }
   }, [strollersIdsToCompare]);
 
-  const modifyStrollersDataForAccordions = (ids: number[]) => {
-    const filteredData = ids.map((id) =>
-      strollerData.find((stroller) => stroller.strollerId === id)
-    );
+  const modifyStrollersDataForAccordions = useCallback(
+    (ids: number[]) => {
+      const filteredData = ids.map((id) =>
+        strollerData.find((stroller) => stroller.strollerId === id)
+      );
 
-    const accordionsData: AccordionsData[] = [];
-    const accordionGroupKeys: string[] = [];
+      const accordionsData: AccordionsData[] = [];
+      const accordionGroupKeys: string[] = [];
 
-    // check for empty array
-    strollerData.forEach((stroller, index) => {
-      stroller!.groups.forEach((group) => {
-        if (index === 0 || !accordionGroupKeys.includes(group.group.key)) {
-          accordionsData.push(group.group);
-          accordionGroupKeys.push(group.group.key);
-        }
-      });
-    });
-
-    accordionsData.forEach((accordionGroup) => {
-      accordionGroup.rows = [];
-
-      filteredData.forEach((stroller, strollerIndex) => {
-        const currentStrollerGroup = stroller!.groups.find(
-          (strollerGroup) => strollerGroup.group.key === accordionGroup.key
-        );
-
-        currentStrollerGroup?.fields.forEach((field) => {
-          const existingRow = accordionGroup.rows!.find(
-            (row) => row.key === field.key
-          );
-
-          if (existingRow) {
-            if (existingRow.values.length < strollerIndex) {
-              const missingValuesArray = new Array(
-                strollerIndex - existingRow.values.length
-              ).fill("");
-              existingRow.values.push(...missingValuesArray);
-            }
-
-            existingRow.values.push(field.value);
-          } else {
-            const valuesArray = new Array(strollerIndex).fill("");
-            valuesArray.push(field.value);
-
-            accordionGroup.rows!.push({
-              title: field.title,
-              key: field.key,
-              values: valuesArray,
-            });
+      strollerData.forEach((stroller, index) => {
+        stroller!.groups.forEach((group) => {
+          if (index === 0 || !accordionGroupKeys.includes(group.group.key)) {
+            accordionsData.push(group.group);
+            accordionGroupKeys.push(group.group.key);
           }
         });
       });
-    });
 
-    console.log("accordionsData", accordionsData);
+      accordionsData.forEach((accordionGroup) => {
+        accordionGroup.rows = [];
 
-    return accordionsData;
-  };
+        filteredData.forEach((stroller, strollerIndex) => {
+          const currentStrollerGroup = stroller!.groups.find(
+            (strollerGroup) => strollerGroup.group.key === accordionGroup.key
+          );
+
+          currentStrollerGroup?.fields.forEach((field) => {
+            const existingRow = accordionGroup.rows!.find(
+              (row) => row.key === field.key
+            );
+
+            if (existingRow) {
+              if (existingRow.values.length < strollerIndex) {
+                const missingValuesArray = new Array(
+                  strollerIndex - existingRow.values.length
+                ).fill("");
+                existingRow.values.push(...missingValuesArray);
+              }
+
+              existingRow.values.push(field.value);
+            } else {
+              const valuesArray = new Array(strollerIndex).fill("");
+              valuesArray.push(field.value);
+
+              accordionGroup.rows!.push({
+                title: field.title,
+                key: field.key,
+                values: valuesArray,
+              });
+            }
+          });
+        });
+      });
+      return accordionsData;
+    },
+    [strollerData]
+  );
 
   useEffect(() => {
     if (strollerData.length > 0) {
@@ -413,8 +441,9 @@ export const ComparisonTable: React.FC<Props> = ({
       );
       setAccordionData(accordionData);
     }
-  }, [strollerData]);
+  }, [modifyStrollersDataForAccordions, strollerData, strollersIdsToCompare]);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isScrollEnabled, setIsScrollEnabled] = useState(false);
 
   useEffect(() => {
@@ -425,127 +454,88 @@ export const ComparisonTable: React.FC<Props> = ({
 
   return (
     <>
-      <ComparisonStickyHeaderWhenScrollContainer
-        sx={{
-          top: isScrollEnabled ? -878 : 0,
-          bottom: isScrollEnabled ? 0 : "none",
-        }}
-      >
-        <ComparisonStickyHeaderWhenScroll
-          sx={{
-            opacity: isScrollEnabled ? 1 : 0,
-            transform: isScrollEnabled ? `translateY(0)` : `translateY(-300%)`,
-          }}
-        >
-          <SectionContainer>
+      <ScrollContainer>
+        <ComparisonContainer>
+          <ComparisonStickyHeader
+            $numberOfStrollersToCompare={numberOfStrollersToCompare}
+          >
+            <SectionContainerHeader
+              $numberOfStrollersToCompare={numberOfStrollersToCompare}
+            >
+              <Section sx={{ flexWrap: "nowrap" }}>
+                <StyledTableFirstHeadCell>
+                  <StyledTableFirstHeadCellTitleContainer>
+                    <Typography component="h2" sx={{ fontWeight: 500 }}>
+                      Strollers
+                    </Typography>
+                  </StyledTableFirstHeadCellTitleContainer>
+                </StyledTableFirstHeadCell>
+                {strollerData.map((stroller) => {
+                  return (
+                    <StyledTableCellContainer key={stroller?.strollerId}>
+                      <StyledCardContent>
+                        <StyledProductName>{`${stroller?.brand} ${stroller?.modelName}`}</StyledProductName>
+                        <StyledProductDeleteIcon
+                          size="small"
+                          onClick={() =>
+                            handleDeleteStrollerIdFromCompare(
+                              stroller!.strollerId
+                            )
+                          }
+                        >
+                          <DeleteOutline fontSize="small" />
+                        </StyledProductDeleteIcon>
+                      </StyledCardContent>
+                    </StyledTableCellContainer>
+                  );
+                })}
+              </Section>
+            </SectionContainerHeader>
+          </ComparisonStickyHeader>
+
+          <SectionContainer sx={{ marginBottom: "32px" }}>
             <Section sx={{ flexWrap: "nowrap" }}>
-              <StyledTableFirstHeadCell>
-                <StyledTableFirstHeadCellTitleContainer>
-                  <Typography component="h2" sx={{ fontWeight: 500 }}>
-                    Strollers
-                  </Typography>
-                </StyledTableFirstHeadCellTitleContainer>
-              </StyledTableFirstHeadCell>
               {strollerData.map((stroller) => {
                 return (
-                  <StyledTableCellContainer key={stroller?.strollerId}>
-                    <StyledCardContent>
-                      <StyledProductName>{`${stroller?.brand} ${stroller?.modelName}`}</StyledProductName>
-                      <StyledProductDeleteIcon
-                        size="small"
-                        onClick={() =>
-                          handleDeleteStrollerIdFromCompare(
-                            stroller!.strollerId
-                          )
-                        }
-                      >
-                        <DeleteOutline fontSize="small" />
-                      </StyledProductDeleteIcon>
-                    </StyledCardContent>
-                  </StyledTableCellContainer>
+                  <ProductContainer key={stroller?.strollerId}>
+                    <Product>
+                      <ImageContainer>
+                        <Figure>
+                          <Image
+                            alt={`${stroller?.brand} ${stroller?.modelName} stroller`}
+                            src={stroller?.imagePath}
+                          />
+                        </Figure>
+                      </ImageContainer>
+                      <ProductName>
+                        <ProductNameText>{stroller?.modelName}</ProductNameText>
+                      </ProductName>
+                      <ProductDescription>
+                        <ProductDescriptionList>
+                          <ProductDescriptionListItem>
+                            The most comfortable city pram with an innovative
+                            compact fold
+                          </ProductDescriptionListItem>
+                        </ProductDescriptionList>
+                      </ProductDescription>
+                    </Product>
+                  </ProductContainer>
                 );
               })}
             </Section>
           </SectionContainer>
-        </ComparisonStickyHeaderWhenScroll>
-      </ComparisonStickyHeaderWhenScrollContainer>
 
-      <ComparisonContainer>
-        <ComparisonStickyHeader>
-          <SectionContainer>
-            <Section sx={{ flexWrap: "nowrap" }}>
-              <StyledTableFirstHeadCell>
-                <StyledTableFirstHeadCellTitleContainer>
-                  <Typography component="h2" sx={{ fontWeight: 500 }}>
-                    Strollers
-                  </Typography>
-                </StyledTableFirstHeadCellTitleContainer>
-              </StyledTableFirstHeadCell>
-              {strollerData.map((stroller) => {
-                return (
-                  <StyledTableCellContainer key={stroller?.strollerId}>
-                    <StyledCardContent>
-                      <StyledProductName>{`${stroller?.brand} ${stroller?.modelName}`}</StyledProductName>
-                      <StyledProductDeleteIcon
-                        size="small"
-                        onClick={() =>
-                          handleDeleteStrollerIdFromCompare(
-                            stroller!.strollerId
-                          )
-                        }
-                      >
-                        <DeleteOutline fontSize="small" />
-                      </StyledProductDeleteIcon>
-                    </StyledCardContent>
-                  </StyledTableCellContainer>
-                );
-              })}
-            </Section>
-          </SectionContainer>
-        </ComparisonStickyHeader>
-
-        <SectionContainer sx={{ marginBottom: "32px" }}>
-          <Section sx={{ flexWrap: "nowrap" }}>
-            {strollerData.map((stroller) => {
+          {accordionData.length > 0 &&
+            accordionData.map((accordionData) => {
               return (
-                <ProductContainer key={stroller?.strollerId}>
-                  <Product>
-                    <ImageContainer>
-                      <Figure>
-                        <Image
-                          alt={`${stroller?.brand} ${stroller?.modelName} stroller`}
-                          src={stroller?.imagePath}
-                        />
-                      </Figure>
-                    </ImageContainer>
-                    <ProductName>
-                      <ProductNameText>{stroller?.modelName}</ProductNameText>
-                    </ProductName>
-                    <ProductDescription>
-                      <ProductDescriptionList>
-                        <ProductDescriptionListItem>
-                          The most comfortable city pram with an innovative
-                          compact fold
-                        </ProductDescriptionListItem>
-                      </ProductDescriptionList>
-                    </ProductDescription>
-                  </Product>
-                </ProductContainer>
+                <AccordionTable
+                  key={accordionData.key}
+                  strollersDataToShow={accordionData}
+                />
               );
             })}
-          </Section>
-        </SectionContainer>
-
-        {accordionData.length > 0 &&
-          accordionData.map((accordionData) => {
-            return (
-              <AccordionTable
-                key={accordionData.key}
-                strollersDataToShow={accordionData}
-              />
-            );
-          })}
-      </ComparisonContainer>
+        </ComparisonContainer>
+      </ScrollContainer>
     </>
   );
 };
