@@ -85,6 +85,10 @@ const StyledCardContent = styled("div", { label: "StyledCardContent" })(() => ({
   border: "1px solid #e5e5e5",
   backgroundColor: "#fff",
   lineHeight: 1.35,
+
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
 }));
 
 const StyledProductName = styled(Typography, { label: "StyledProductName" })(
@@ -129,11 +133,20 @@ const ComparisonStickyHeader = styled(Box, {
   animationName: "sticky-header-animation-removing-top",
   animationDuration: "250ms",
   animationFillMode: "forwards",
+  [theme.breakpoints.down("xs")]: {
+    width: `max(100%,${$numberOfStrollersToCompare * 50}%)`,
+  },
+  [theme.breakpoints.up("xs")]: {
+    width: `max(100%,${$numberOfStrollersToCompare * 50}%)`,
+  },
   [theme.breakpoints.up("sm")]: {
     width: `max(100%,${$numberOfStrollersToCompare * 50}%)`,
   },
   [theme.breakpoints.up("md")]: {
-    width: "100%",
+    width: `max(100%,${$numberOfStrollersToCompare * 33.33}%)`,
+  },
+  [theme.breakpoints.up("lg")]: {
+    width: `max(100%,${($numberOfStrollersToCompare + 1) * 25}%)`,
   },
 }));
 
@@ -178,23 +191,32 @@ const SectionContainerHeader = styled(Box, {
   paddingRight: 16,
   width: "100%",
   maxWidth: `calc(1536px + 192px)`,
+  [theme.breakpoints.down("xs")]: {
+    paddingLeft: 16,
+    paddingRight: 16,
+    width: (100 / Math.max(100, $numberOfStrollersToCompare * 50)) * 100 + "%",
+  },
   [theme.breakpoints.up("xs")]: {
     paddingLeft: 16,
     paddingRight: 16,
+    width: (100 / Math.max(100, $numberOfStrollersToCompare * 50)) * 100 + "%",
   },
   [theme.breakpoints.up("sm")]: {
     paddingLeft: 16,
     paddingRight: 16,
-    width: (100 / Math.max(100, $numberOfStrollersToCompare * 50)) * 100 + "%", //use props here
+    width: (100 / Math.max(100, $numberOfStrollersToCompare * 50)) * 100 + "%",
   },
   [theme.breakpoints.up("md")]: {
     paddingLeft: 40,
     paddingRight: 40,
-    width: "100%",
+    width:
+      (100 / Math.max(100, $numberOfStrollersToCompare * 33.33)) * 100 + "%",
   },
   [theme.breakpoints.up("lg")]: {
     paddingLeft: 40,
     paddingRight: 40,
+    width:
+      (100 / Math.max(100, ($numberOfStrollersToCompare + 1) * 25)) * 100 + "%",
   },
   [theme.breakpoints.up("xl")]: {
     paddingLeft: 96,
@@ -353,7 +375,6 @@ export const ComparisonTable: React.FC<Props> = ({
   const [accordionData, setAccordionData] = useState<AccordionsData[]>([]);
 
   const numberOfStrollersToCompare = strollersIdsToCompare.length;
-  console.log("numbers of strollerrs", numberOfStrollersToCompare);
 
   const fetchStrollersData = async (selectedIds: number[]) => {
     try {
@@ -364,6 +385,7 @@ export const ComparisonTable: React.FC<Props> = ({
       );
       const data: StrollersFeatures[] = await response.json();
       setStrollerData(data);
+      console.log("strollersIdsToCompare--->>>", data);
     } catch (error) {
       console.error("Error fetching stroller data:", error);
     }
@@ -377,14 +399,19 @@ export const ComparisonTable: React.FC<Props> = ({
 
   const modifyStrollersDataForAccordions = useCallback(
     (ids: number[]) => {
-      const filteredData = ids.map((id) =>
-        strollerData.find((stroller) => stroller.strollerId === id)
-      );
+      const filteredData = ids
+        .map((id) =>
+          strollerData.find((stroller) => stroller.strollerId === id)
+        )
+        .filter((stroller) => stroller && stroller.groups);
+
+      console.log("filteredData", filteredData);
 
       const accordionsData: AccordionsData[] = [];
       const accordionGroupKeys: string[] = [];
 
       strollerData.forEach((stroller, index) => {
+        if (!stroller || !stroller.groups) return;
         stroller!.groups.forEach((group) => {
           if (index === 0 || !accordionGroupKeys.includes(group.group.key)) {
             accordionsData.push(group.group);
@@ -441,15 +468,6 @@ export const ComparisonTable: React.FC<Props> = ({
       setAccordionData(accordionData);
     }
   }, [modifyStrollersDataForAccordions, strollerData, strollersIdsToCompare]);
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [isScrollEnabled, setIsScrollEnabled] = useState(false);
-
-  useEffect(() => {
-    window.addEventListener("scroll", () => {
-      setIsScrollEnabled(window.scrollY > 350);
-    });
-  }, []);
 
   return (
     <>
@@ -530,6 +548,7 @@ export const ComparisonTable: React.FC<Props> = ({
                 <AccordionTable
                   key={accordionData.key}
                   strollersDataToShow={accordionData}
+                  numberOfStrollersToCompare={numberOfStrollersToCompare}
                 />
               );
             })}

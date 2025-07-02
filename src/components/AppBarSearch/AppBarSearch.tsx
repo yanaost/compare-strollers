@@ -7,9 +7,13 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   marginTop: theme.spacing(2),
   marginBottom: theme.spacing(2),
   alignItems: "center",
-  md: "center",
   maxWidth: `calc(1536px + 192px)`,
-
+  [theme.breakpoints.down("xs")]: {
+    paddingLeft: 16,
+    paddingRight: 16,
+    flexDirection: "column",
+    height: "auto",
+  },
   [theme.breakpoints.up("xs")]: {
     paddingLeft: 16,
     paddingRight: 16,

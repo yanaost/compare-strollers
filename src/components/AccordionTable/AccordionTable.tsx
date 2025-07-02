@@ -4,9 +4,11 @@ import { styled } from "@mui/material/styles";
 import { useState } from "react";
 import { AccordionsData } from "../../types/AccordionData";
 
-const AccordionContainer = styled("div")(() => ({
-  paddingTop: 20,
-}));
+const AccordionContainer = styled("div", { label: "AccordionContainer" })(
+  () => ({
+    paddingTop: 20,
+  })
+);
 
 const AccordionTitle = styled("h2")(() => ({
   fontSize: `calc(20px + 4*(100vw - 480px) / 760)`,
@@ -15,36 +17,38 @@ const AccordionTitle = styled("h2")(() => ({
   },
 }));
 
-const TableSectionContainer = styled(Box)(({ theme }) => ({
-  paddingLeft: 16,
-  paddingRight: 16,
-  width: "100%",
-  // maxWidth: `calc(1536px + 192px)`,
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
+const TableSectionContainer = styled(Box, { label: "TableSectionContainer" })(
+  ({ theme }) => ({
+    paddingLeft: 16,
+    paddingRight: 16,
+    width: "100%",
+    // maxWidth: `calc(1536px + 192px)`,
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
 
-  [theme.breakpoints.up("xs")]: {
-    paddingLeft: 16,
-    paddingRight: 16,
-  },
-  [theme.breakpoints.up("sm")]: {
-    paddingLeft: 16,
-    paddingRight: 16,
-  },
-  [theme.breakpoints.up("md")]: {
-    paddingLeft: 40,
-    paddingRight: 40,
-  },
-  [theme.breakpoints.up("lg")]: {
-    paddingLeft: 40,
-    paddingRight: 40,
-  },
-  [theme.breakpoints.up("xl")]: {
-    paddingLeft: 96,
-    paddingRight: 96,
-  },
-}));
+    [theme.breakpoints.up("xs")]: {
+      paddingLeft: 16,
+      paddingRight: 16,
+    },
+    [theme.breakpoints.up("sm")]: {
+      paddingLeft: 16,
+      paddingRight: 16,
+    },
+    [theme.breakpoints.up("md")]: {
+      paddingLeft: 40,
+      paddingRight: 40,
+    },
+    [theme.breakpoints.up("lg")]: {
+      paddingLeft: 40,
+      paddingRight: 40,
+    },
+    [theme.breakpoints.up("xl")]: {
+      paddingLeft: 96,
+      paddingRight: 96,
+    },
+  })
+);
 
 const SectionContainerShadow = styled("div")(() => ({
   display: "flex",
@@ -62,7 +66,14 @@ const StyledTableRow = styled("div")(({ theme }) => ({
   },
 }));
 
-const StyledTableRowTitle = styled("h3")(({ theme }) => ({
+type StyledTableRowTitleProps = {
+  $numberOfStrollersToCompare: number;
+};
+
+const StyledTableRowTitle = styled("h3", {
+  label: "StyledTableRowTitle",
+  shouldForwardProp: (prop) => prop !== "$numberOfStrollersToCompare",
+})<StyledTableRowTitleProps>(({ theme, $numberOfStrollersToCompare }) => ({
   marginBottom: 8,
   marginBlockStart: 0,
   fontSize: "1rem",
@@ -88,7 +99,7 @@ const StyledTableRowTitle = styled("h3")(({ theme }) => ({
     paddingRight: 8,
     paddingLeft: 8,
     flexBasis: "25%",
-    maxWidth: "25%",
+    maxWidth: 100 / ($numberOfStrollersToCompare + 1) + "%",
   },
 }));
 
@@ -114,41 +125,89 @@ const Section = styled("section")(({ theme }) => ({
   },
 }));
 
-const CollapseSection = styled("div", { label: "CollapseSection" })(
-  ({ theme }) => ({
-    [theme.breakpoints.up("sm")]: {
-      width: "150%",
-    },
+type CollapseSectionProps = {
+  $numberOfStrollersToCompare: number;
+};
 
-    [theme.breakpoints.up("md")]: {
-      width: "100%",
-    },
-  })
-);
-
-const StyledTableCellsContainer = styled("div", {
-  label: "StyledTableCellsContainer",
-})(({ theme }) => ({
-  display: "flex",
-  flex: " 0 1 auto",
-
-  flexWrap: "nowrap",
-  width: `calc(100% + 8px)`,
-
+const CollapseSection = styled("div", {
+  label: "CollapseSection",
+  shouldForwardProp: (prop) => prop !== "$numberOfStrollersToCompare",
+})<CollapseSectionProps>(({ theme, $numberOfStrollersToCompare }) => ({
+  [theme.breakpoints.down("xs")]: {
+    width: `max(100%,${$numberOfStrollersToCompare * 50}%)`,
+  },
+  [theme.breakpoints.up("xs")]: {
+    width: `max(100%,${$numberOfStrollersToCompare * 50}%)`,
+  },
   [theme.breakpoints.up("sm")]: {
-    width: `calc(66.6% + 8px)`,
+    width: `max(100%,${$numberOfStrollersToCompare * 50}%)`,
   },
-
   [theme.breakpoints.up("md")]: {
-    width: `calc(100% + 8px)`,
+    width: `max(100%,${$numberOfStrollersToCompare * 33.33}%)`,
   },
-
   [theme.breakpoints.up("lg")]: {
-    width: `calc(100% + 16px)`,
+    width: `max(100%,${$numberOfStrollersToCompare * 25 + 25}%)`,
   },
 }));
 
-const StyledTableCellContainer = styled("div")(({ theme }) => ({
+type StyledTableCellsContainerProps = {
+  $numberOfStrollersToCompare: number;
+};
+
+const StyledTableCellsContainer = styled("div", {
+  label: "StyledTableCellsContainer",
+  shouldForwardProp: (prop) => prop !== "$numberOfStrollersToCompare",
+})<StyledTableCellsContainerProps>(
+  ({ theme, $numberOfStrollersToCompare }) => ({
+    display: "flex",
+    flex: " 0 1 auto",
+
+    flexWrap: "nowrap",
+    width: `calc(100% + 8px)`,
+
+    // [theme.breakpoints.up("sm")]: {
+    //   width: `calc(66.6% + 8px)`, //8px???
+    // },
+
+    // [theme.breakpoints.up("md")]: {
+    //   width: `calc(100% + 8px)`,
+    // },
+
+    // [theme.breakpoints.up("lg")]: {
+    //   width: `calc(100% + 16px)`,
+    // },
+
+    [theme.breakpoints.down("xs")]: {
+      width:
+        (100 / Math.max(100, $numberOfStrollersToCompare * 50)) * 100 + "%",
+    },
+    [theme.breakpoints.up("xs")]: {
+      width:
+        (100 / Math.max(100, $numberOfStrollersToCompare * 50)) * 100 + "%",
+    },
+    [theme.breakpoints.up("sm")]: {
+      width:
+        (100 / Math.max(100, $numberOfStrollersToCompare * 50)) * 100 + "%",
+    },
+    [theme.breakpoints.up("md")]: {
+      width:
+        (100 / Math.max(100, $numberOfStrollersToCompare * 33.33)) * 100 + "%",
+    },
+    [theme.breakpoints.up("lg")]: {
+      width: 100 - 100 / ($numberOfStrollersToCompare + 1) + "%",
+    },
+    // [theme.breakpoints.up("xl")]: {},
+  })
+);
+
+type StyledTableCellContainerProps = {
+  $numberOfStrollersToCompare: number;
+};
+
+const StyledTableCellContainer = styled("div", {
+  label: "StyledTableCellContainer",
+  shouldForwardProp: (prop) => prop !== "$numberOfStrollersToCompare",
+})<StyledTableCellContainerProps>(({ theme, $numberOfStrollersToCompare }) => ({
   display: "flex",
   flexDirection: "column",
   width: "100%",
@@ -181,7 +240,7 @@ const StyledTableCellContainer = styled("div")(({ theme }) => ({
     flexGrow: 0,
     flexShrink: 0,
     flexBasis: "33%",
-    maxWidth: "33%",
+    maxWidth: 100 / $numberOfStrollersToCompare + "%",
   },
 }));
 
@@ -198,9 +257,13 @@ const StyledIconButton = styled(IconButton)(({ theme }) => ({
 
 type Props = {
   strollersDataToShow: AccordionsData;
+  numberOfStrollersToCompare: number;
 };
 
-export const AccordionTable: React.FC<Props> = ({ strollersDataToShow }) => {
+export const AccordionTable: React.FC<Props> = ({
+  strollersDataToShow,
+  numberOfStrollersToCompare,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -214,16 +277,29 @@ export const AccordionTable: React.FC<Props> = ({ strollersDataToShow }) => {
         </SectionContainerShadow>
       </TableSectionContainer>
       <Collapse in={isOpen}>
-        <CollapseSection>
+        <CollapseSection
+          $numberOfStrollersToCompare={numberOfStrollersToCompare}
+        >
           {strollersDataToShow.rows &&
             strollersDataToShow.rows.map((row) => (
               <StyledTableRow key={row.key}>
                 <TableSectionContainer>
                   <Section>
-                    <StyledTableRowTitle>{row.title}</StyledTableRowTitle>
-                    <StyledTableCellsContainer>
+                    <StyledTableRowTitle
+                      $numberOfStrollersToCompare={numberOfStrollersToCompare}
+                    >
+                      {row.title}
+                    </StyledTableRowTitle>
+                    <StyledTableCellsContainer
+                      $numberOfStrollersToCompare={numberOfStrollersToCompare}
+                    >
                       {row.values.map((cell, index) => (
-                        <StyledTableCellContainer key={index}>
+                        <StyledTableCellContainer
+                          key={index}
+                          $numberOfStrollersToCompare={
+                            numberOfStrollersToCompare
+                          }
+                        >
                           {cell}
                         </StyledTableCellContainer>
                       ))}
