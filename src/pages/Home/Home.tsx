@@ -15,7 +15,6 @@ export const Home = () => {
     ) {
       const copyStrollersIds = [...strollersIdsToCompare];
       copyStrollersIds.push(newStrollerId);
-      console.log("newStrollerId--->", newStrollerId);
 
       return setStrollersIdsToCompare(copyStrollersIds);
     }

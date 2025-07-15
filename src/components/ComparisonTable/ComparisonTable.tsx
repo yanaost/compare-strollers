@@ -63,7 +63,10 @@ export const ComparisonTable: React.FC<Props> = ({
               <Section sx={{ flexWrap: "nowrap" }}>
                 <StyledTableFirstHeadCell>
                   <StyledTableFirstHeadCellTitleContainer>
-                    <Typography component="h2" sx={{ fontWeight: 500 }}>
+                    <Typography
+                      component="h2"
+                      sx={{ fontWeight: 500, fontSize: "1.5rem" }}
+                    >
                       Strollers
                     </Typography>
                   </StyledTableFirstHeadCellTitleContainer>
@@ -110,8 +113,7 @@ export const ComparisonTable: React.FC<Props> = ({
                       <ProductDescription>
                         <ProductDescriptionList>
                           <ProductDescriptionListItem>
-                            !The most comfortable city pram with an innovative
-                            compact fold
+                            {stroller?.modelDescription}
                           </ProductDescriptionListItem>
                         </ProductDescriptionList>
                       </ProductDescription>

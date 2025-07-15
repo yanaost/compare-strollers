@@ -3,6 +3,7 @@ export type StrollersFeatures = {
     modelName: string,
     alternativeModelNames?: string[]
     brand: string,
+    modelDescription: string,
     imagePath: string,
     groups: {
         group: {key: string, title: string},

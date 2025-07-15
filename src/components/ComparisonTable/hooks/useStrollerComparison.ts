@@ -43,8 +43,6 @@ export const useStrollerComparison = (strollersIdsToCompare: number[]) => {
         )
         .filter((stroller) => stroller && stroller.groups);
 
-      console.log("filteredData", filteredData);
-
       const accordionsData: AccordionsData[] = [];
       const accordionGroupKeys: string[] = [];
 

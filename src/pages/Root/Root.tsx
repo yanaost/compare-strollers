@@ -29,7 +29,7 @@ const theme = createTheme({
 
 theme.typography.h1 = {
   fontSize: "2rem",
-  fontWeight: 300,
+  fontWeight: 400,
   [theme.breakpoints.up("xs")]: {
     fontSize: "2rem",
   },
@@ -46,7 +46,7 @@ theme.typography.h1 = {
 
 theme.typography.h2 = {
   fontSize: "1.2rem",
-  fontWeight: 300,
+  fontWeight: 400,
   [theme.breakpoints.up("xs")]: {
     fontSize: "1.2rem",
   },

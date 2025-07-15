@@ -94,7 +94,7 @@ export const StyledTableRowTitle = styled("h3", {
     marginTop: 32,
     paddingRight: 8,
     paddingLeft: 8,
-    flexBasis: "25%",
+    flexBasis: "26%",
     maxWidth: 100 / ($numberOfStrollersToCompare + 1) + "%",
   },
 }));
