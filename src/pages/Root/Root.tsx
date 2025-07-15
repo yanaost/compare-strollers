@@ -16,10 +16,6 @@ const theme = createTheme({
       default: "#FFFFFF",
     },
   },
-  typography: {
-    h1: { fontSize: "2.6rem" },
-    h2: { fontSize: "1.2rem" },
-  },
   breakpoints: {
     values: {
       xs: 390,
@@ -30,6 +26,40 @@ const theme = createTheme({
     },
   },
 });
+
+theme.typography.h1 = {
+  fontSize: "2rem",
+  fontWeight: 300,
+  [theme.breakpoints.up("xs")]: {
+    fontSize: "2rem",
+  },
+  [theme.breakpoints.up("sm")]: {
+    fontSize: "2rem",
+  },
+  [theme.breakpoints.up("md")]: {
+    fontSize: "2rem",
+  },
+  [theme.breakpoints.up("xl")]: {
+    fontSize: "2.6rem",
+  },
+};
+
+theme.typography.h2 = {
+  fontSize: "1.2rem",
+  fontWeight: 300,
+  [theme.breakpoints.up("xs")]: {
+    fontSize: "1.2rem",
+  },
+  [theme.breakpoints.up("sm")]: {
+    fontSize: "1.2rem",
+  },
+  [theme.breakpoints.up("md")]: {
+    fontSize: "1.2rem",
+  },
+  [theme.breakpoints.up("xl")]: {
+    fontSize: "1.4rem",
+  },
+};
 
 export const Root = () => {
   return (

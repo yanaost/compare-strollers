@@ -110,7 +110,7 @@ export const ComparisonTable: React.FC<Props> = ({
                       <ProductDescription>
                         <ProductDescriptionList>
                           <ProductDescriptionListItem>
-                            The most comfortable city pram with an innovative
+                            !The most comfortable city pram with an innovative
                             compact fold
                           </ProductDescriptionListItem>
                         </ProductDescriptionList>
