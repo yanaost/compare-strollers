@@ -16,7 +16,8 @@ export const StrollerSearch: React.FC = () => {
   const [options, setOptions] = useState<StrollersFeatures[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const { handleAddStrollerIdToCompare } = useContext(strollersContext);
+  const { strollersIdsToCompare, handleAddStrollerIdToCompare } =
+    useContext(strollersContext);
 
   const getStrollersFromServerByQuery = async (query: string) => {
     try {
@@ -63,7 +64,7 @@ export const StrollerSearch: React.FC = () => {
       </SearchIconWrapper>
       <Autocomplete
         open={inputValue.length > 0}
-        noOptionsText=""
+        noOptionsText="No result"
         isOptionEqualToValue={(option, value) => option === value}
         getOptionLabel={(option) => `${option.brand} ${option.modelName}`}
         id="search-stroller"
@@ -85,7 +86,9 @@ export const StrollerSearch: React.FC = () => {
             debouncedSearch(newInputValue);
           }
         }}
-        options={options}
+        options={options.filter(
+          (option) => !strollersIdsToCompare.includes(option.strollerId)
+        )}
         renderInput={(params) => (
           <StyledTextField
             variant="standard"
