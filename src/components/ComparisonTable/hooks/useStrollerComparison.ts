@@ -8,6 +8,8 @@ export const useStrollerComparison = (strollersIdsToCompare: number[]) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   const fetchStrollersData = useCallback(async (selectedIds: number[]) => {
     if (selectedIds.length === 0) return;
 
@@ -16,7 +18,7 @@ export const useStrollerComparison = (strollersIdsToCompare: number[]) => {
 
     try {
       const response = await fetch(
-        `http://localhost:5001/api/strollers/comparison-data?ids=${selectedIds.join(
+        `${apiUrl}/api/strollers/comparison-data?ids=${selectedIds.join(
           ","
         )}`
       );
