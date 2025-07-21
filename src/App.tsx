@@ -3,6 +3,7 @@ import { Home } from "./pages/Home";
 import { Root } from "./pages/Root";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { StrollersProvider } from "./context/StrollersProvider";
 
 const router = createBrowserRouter([
   {
@@ -20,10 +21,10 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <>
+    <StrollersProvider>
       <RouterProvider router={router} />
       <CssBaseline />
-    </>
+    </StrollersProvider>
   );
 }
 

@@ -2,13 +2,7 @@ import { AppBar, Box, Typography } from "@mui/material";
 import { StrollerSearch } from "./StrollerSearch/StrollerSearch";
 import { StyledH1, StyledH2, StyledToolbar } from "./AppBarSearch.styled";
 
-type Props = {
-  handleAddStrollerIdToCompare: (newStrollerId: number) => void;
-};
-
-export const AppBarSearch: React.FC<Props> = ({
-  handleAddStrollerIdToCompare,
-}) => {
+export const AppBarSearch: React.FC = () => {
   return (
     <Box component="header">
       <AppBar position="static" component="div">
@@ -21,9 +15,7 @@ export const AppBarSearch: React.FC<Props> = ({
               Find the best stroller for you and your little explorer
             </Typography>
           </StyledH2>
-          <StrollerSearch
-            handleAddStrollerIdToCompare={handleAddStrollerIdToCompare}
-          />
+          <StrollerSearch />
         </StyledToolbar>
       </AppBar>
     </Box>

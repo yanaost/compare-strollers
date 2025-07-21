@@ -1,7 +1,7 @@
 import { Autocomplete, debounce } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
-import { useCallback, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { StrollersFeatures } from "../../../types/StrollersFeatures";
 import {
   Search,
@@ -9,17 +9,14 @@ import {
   StyledTextField,
 } from "./StrollerSearch.styled";
 import { HourglassEmpty } from "@mui/icons-material";
+import { strollersContext } from "../../../context/context";
 
-type Props = {
-  handleAddStrollerIdToCompare: (newStrollerId: number) => void;
-};
-
-export const StrollerSearch: React.FC<Props> = ({
-  handleAddStrollerIdToCompare,
-}) => {
+export const StrollerSearch: React.FC = () => {
   const [inputValue, setInputValue] = useState("");
   const [options, setOptions] = useState<StrollersFeatures[]>([]);
   const [loading, setLoading] = useState(false);
+
+  const { handleAddStrollerIdToCompare } = useContext(strollersContext);
 
   const getStrollersFromServerByQuery = async (query: string) => {
     try {

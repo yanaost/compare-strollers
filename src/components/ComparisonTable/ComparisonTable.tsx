@@ -26,16 +26,13 @@ import {
   ProductDescriptionListItem,
 } from "./ComparisonTable.styled";
 import { useStrollerComparison } from "./hooks/useStrollerComparison";
+import { useContext } from "react";
+import { strollersContext } from "../../context/context";
 
-type Props = {
-  strollersIdsToCompare: number[];
-  handleDeleteStrollerIdFromCompare: (strollerId: number) => void;
-};
+export const ComparisonTable: React.FC = () => {
+  const { strollersIdsToCompare, handleDeleteStrollerIdFromCompare } =
+    useContext(strollersContext);
 
-export const ComparisonTable: React.FC<Props> = ({
-  strollersIdsToCompare,
-  handleDeleteStrollerIdFromCompare,
-}) => {
   const { strollerData, accordionData, loading, error } = useStrollerComparison(
     strollersIdsToCompare
   );
