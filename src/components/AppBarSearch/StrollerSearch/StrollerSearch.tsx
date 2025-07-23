@@ -19,13 +19,13 @@ export const StrollerSearch: React.FC = () => {
   const { strollersIdsToCompare, handleAddStrollerIdToCompare } =
     useContext(strollersContext);
 
+  const apiUrl = import.meta.env.VITE_BASE_URL;
+
   const getStrollersFromServerByQuery = async (query: string) => {
     try {
       setLoading(true);
       const response = await fetch(
-        `http://localhost:5001/api/strollers/search?query=${encodeURIComponent(
-          query
-        )}`,
+        `${apiUrl}/api/strollers/search?query=${encodeURIComponent(query)}`,
         {
           method: "GET",
           headers: {

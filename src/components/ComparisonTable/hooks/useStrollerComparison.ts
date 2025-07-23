@@ -8,7 +8,7 @@ export const useStrollerComparison = (strollersIdsToCompare: number[]) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const apiUrl = import.meta.env.VITE_API_URL;
+  const apiUrl = import.meta.env.VITE_BASE_URL;
 
   const fetchStrollersData = useCallback(async (selectedIds: number[]) => {
     if (selectedIds.length === 0) return;
@@ -35,7 +35,7 @@ export const useStrollerComparison = (strollersIdsToCompare: number[]) => {
     } finally {
       setLoading(false)
     }
-  }, []);
+  }, [apiUrl]);
 
   const modifyStrollersDataForAccordions = useCallback(
     (ids: number[]) => {
