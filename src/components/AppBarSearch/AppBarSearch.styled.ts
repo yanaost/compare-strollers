@@ -48,11 +48,12 @@ export const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 
 export const StyledH1 = styled("h1")(({ theme }) => ({
   fontFamily: '"Baloo 2", "Segoe UI", system-ui, -apple-system, sans-serif',
-  fontWeight: 400,
+  fontWeight: 600,
   fontStyle: "normal",
   fontOpticalSizing: "auto",
   fontSize: theme.typography.pxToRem(48),
   whiteSpace: "nowrap",
+  letterSpacing: "0.5px",
   margin: 0,
 
   [theme.breakpoints.up("xs")]: {
