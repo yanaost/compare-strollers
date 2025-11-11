@@ -323,7 +323,6 @@ export const ProductNameText = styled("h3", { label: "ProductNameText" })(() => 
 
 export const ProductDescription = styled("div", { label: "ProductDescription" })(
   ({ theme }) => ({
-    height: 54,
     paddingLeft: 24,
     marginBottom: 16,
     [theme.breakpoints.up("md")]: {
