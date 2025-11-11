@@ -46,18 +46,39 @@ export const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   },
 }));
 
-export const StyledH1 = styled("div", { label: "StyledH1" })(({theme}) => ({
-    whiteSpace: "nowrap",
-    float: "left",
-    width: "100%",
-    [theme.breakpoints.up("xs")]: {
-        flexBasis: "30%"
-    },
-    [theme.breakpoints.up("md")]: {
-        flexBasis: "33%"
-    },
-    [theme.breakpoints.up("xl")]: {
-    },
+export const StyledH1 = styled("h1")(({ theme }) => ({
+  fontFamily: '"Baloo 2", "Segoe UI", system-ui, -apple-system, sans-serif',
+  fontWeight: 400,
+  fontStyle: "normal",
+  fontOpticalSizing: "auto",
+  fontSize: theme.typography.pxToRem(48),
+  whiteSpace: "nowrap",
+  margin: 0,
+
+  [theme.breakpoints.up("xs")]: {
+    fontSize: theme.typography.pxToRem(48),
+    flexBasis: "30%"
+  },
+  [theme.breakpoints.up("md")]: {
+    fontSize: theme.typography.pxToRem(48),
+    flexBasis: "33%"
+  },
+  [theme.breakpoints.up("xl")]: {
+    fontSize: theme.typography.pxToRem(52),
+  },
+}));
+
+export const StyledHeading = styled("div", { label: "StyledH1" })(({theme}) => ({
+  float: "left",
+  width: "100%",
+  [theme.breakpoints.up("xs")]: {
+    flexBasis: "30%"
+  },
+  [theme.breakpoints.up("md")]: {
+    flexBasis: "33%"
+  },
+  [theme.breakpoints.up("xl")]: {
+  },
 }));
 
 export const StyledH2 = styled("div", { label: "StyledH2" })(({theme}) => ({

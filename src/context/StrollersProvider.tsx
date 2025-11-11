@@ -10,15 +10,13 @@ export const StrollersProvider: React.FC<{ children: React.ReactNode }> = ({
   );
 
   const handleAddStrollerIdToCompare = (newStrollerId: number) => {
-    if (
-      setStrollersIdsToCompare.length === 0 ||
-      !strollersIdsToCompare.includes(newStrollerId)
-    ) {
-      const copyStrollersIds = [...strollersIdsToCompare];
-      copyStrollersIds.push(newStrollerId);
+    setStrollersIdsToCompare((currentIds) => {
+      if (currentIds.length >= 3 || currentIds.includes(newStrollerId)) {
+        return currentIds;
+      }
 
-      return setStrollersIdsToCompare(copyStrollersIds);
-    }
+      return [...currentIds, newStrollerId];
+    });
   };
 
   const handleDeleteStrollerIdFromCompare = (strollerId: number) => {

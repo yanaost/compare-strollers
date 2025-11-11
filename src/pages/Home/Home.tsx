@@ -6,7 +6,6 @@ import { ComparisonTable } from "../../components/ComparisonTable";
 
 export const Home = () => {
   const { strollersIdsToCompare } = useContext(strollersContext);
-
   return (
     <>
       <AppBarSearch />

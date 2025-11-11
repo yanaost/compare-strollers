@@ -48,90 +48,88 @@ export const ComparisonTable: React.FC = () => {
   }
 
   return (
-    <>
-      <ScrollContainer>
-        <ComparisonContainer>
-          <ComparisonStickyHeader
+    <ScrollContainer>
+      <ComparisonContainer>
+        <ComparisonStickyHeader
+          $numberOfStrollersToCompare={numberOfStrollersToCompare}
+        >
+          <SectionContainerHeader
             $numberOfStrollersToCompare={numberOfStrollersToCompare}
           >
-            <SectionContainerHeader
-              $numberOfStrollersToCompare={numberOfStrollersToCompare}
-            >
-              <Section sx={{ flexWrap: "nowrap" }}>
-                <StyledTableFirstHeadCell>
-                  <StyledTableFirstHeadCellTitleContainer>
-                    <Typography
-                      component="h2"
-                      sx={{ fontWeight: 500, fontSize: "1.5rem" }}
-                    >
-                      Strollers
-                    </Typography>
-                  </StyledTableFirstHeadCellTitleContainer>
-                </StyledTableFirstHeadCell>
-                {strollerData.map((stroller) => {
-                  return (
-                    <StyledTableCellContainer key={stroller?.strollerId}>
-                      <StyledCardContent>
-                        <StyledProductName>{`${stroller?.brand} ${stroller?.modelName}`}</StyledProductName>
-                        <StyledProductDeleteIcon
-                          size="small"
-                          onClick={() =>
-                            handleDeleteStrollerIdFromCompare(
-                              stroller!.strollerId
-                            )
-                          }
-                        >
-                          <DeleteOutline fontSize="small" />
-                        </StyledProductDeleteIcon>
-                      </StyledCardContent>
-                    </StyledTableCellContainer>
-                  );
-                })}
-              </Section>
-            </SectionContainerHeader>
-          </ComparisonStickyHeader>
-          <SectionContainer sx={{ marginBottom: "32px" }}>
             <Section sx={{ flexWrap: "nowrap" }}>
+              <StyledTableFirstHeadCell>
+                <StyledTableFirstHeadCellTitleContainer>
+                  <Typography
+                    component="h2"
+                    sx={{ fontWeight: 500, fontSize: "1.5rem" }}
+                  >
+                    Strollers
+                  </Typography>
+                </StyledTableFirstHeadCellTitleContainer>
+              </StyledTableFirstHeadCell>
               {strollerData.map((stroller) => {
                 return (
-                  <ProductContainer key={stroller?.strollerId}>
-                    <Product>
-                      <ImageContainer>
-                        <Figure>
-                          <Image
-                            alt={`${stroller?.brand} ${stroller?.modelName} stroller`}
-                            src={stroller?.imagePath}
-                          />
-                        </Figure>
-                      </ImageContainer>
-                      <ProductName>
-                        <ProductNameText>{stroller?.modelName}</ProductNameText>
-                      </ProductName>
-                      <ProductDescription>
-                        <ProductDescriptionList>
-                          <ProductDescriptionListItem>
-                            {stroller?.modelDescription}
-                          </ProductDescriptionListItem>
-                        </ProductDescriptionList>
-                      </ProductDescription>
-                    </Product>
-                  </ProductContainer>
+                  <StyledTableCellContainer key={stroller?.strollerId}>
+                    <StyledCardContent>
+                      <StyledProductName>{`${stroller?.brand} ${stroller?.modelName}`}</StyledProductName>
+                      <StyledProductDeleteIcon
+                        size="small"
+                        onClick={() =>
+                          handleDeleteStrollerIdFromCompare(
+                            stroller!.strollerId
+                          )
+                        }
+                      >
+                        <DeleteOutline fontSize="small" />
+                      </StyledProductDeleteIcon>
+                    </StyledCardContent>
+                  </StyledTableCellContainer>
                 );
               })}
             </Section>
-          </SectionContainer>
-          {accordionData.length > 0 &&
-            accordionData.map((accordionData) => {
+          </SectionContainerHeader>
+        </ComparisonStickyHeader>
+        <SectionContainer sx={{ marginBottom: "32px" }}>
+          <Section sx={{ flexWrap: "nowrap" }}>
+            {strollerData.map((stroller) => {
               return (
-                <AccordionTable
-                  key={accordionData.key}
-                  strollersDataToShow={accordionData}
-                  numberOfStrollersToCompare={numberOfStrollersToCompare}
-                />
+                <ProductContainer key={stroller?.strollerId}>
+                  <Product>
+                    <ImageContainer>
+                      <Figure>
+                        <Image
+                          alt={`${stroller?.brand} ${stroller?.modelName} stroller`}
+                          src={stroller?.imagePath}
+                        />
+                      </Figure>
+                    </ImageContainer>
+                    <ProductName>
+                      <ProductNameText>{stroller?.modelName}</ProductNameText>
+                    </ProductName>
+                    <ProductDescription>
+                      <ProductDescriptionList>
+                        <ProductDescriptionListItem>
+                          {stroller?.modelDescription}
+                        </ProductDescriptionListItem>
+                      </ProductDescriptionList>
+                    </ProductDescription>
+                  </Product>
+                </ProductContainer>
               );
             })}
-        </ComparisonContainer>
-      </ScrollContainer>
-    </>
+          </Section>
+        </SectionContainer>
+        {accordionData.length > 0 &&
+          accordionData.map((accordionData) => {
+            return (
+              <AccordionTable
+                key={accordionData.key}
+                strollersDataToShow={accordionData}
+                numberOfStrollersToCompare={numberOfStrollersToCompare}
+              />
+            );
+          })}
+      </ComparisonContainer>
+    </ScrollContainer>
   );
 };
