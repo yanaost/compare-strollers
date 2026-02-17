@@ -32,7 +32,7 @@ export const Comparison = () => {
 
   const parsedIds = useMemo(() => {
     const ids = parseComparisonIds(slug);
-    return ids.length >= 2 ? ids.slice(-2) : ids;
+    return ids.length >= 2 ? ids.slice(0, 3) : ids;
   }, [slug]);
 
   useEffect(() => {

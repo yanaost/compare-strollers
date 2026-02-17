@@ -65,8 +65,11 @@ export const StrollerSearch: React.FC = () => {
       <Autocomplete
         open={inputValue.length > 0}
         noOptionsText="No result"
-        isOptionEqualToValue={(option, value) => option === value}
-        getOptionLabel={(option) => `${option.brand} ${option.modelName}`}
+        filterOptions={(x) => x}
+        isOptionEqualToValue={(option, value) =>
+          option.strollerId === value.strollerId
+        }
+        getOptionLabel={(option) => option.modelName}
         id="search-stroller"
         onChange={(_, newValue, reason) => {
           if (newValue !== null) {

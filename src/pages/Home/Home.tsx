@@ -11,7 +11,8 @@ export const Home = () => {
 
   useEffect(() => {
     setStrollersIdsToCompare([]);
-  }, [setStrollersIdsToCompare]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <>
       <AppBarSearch />
