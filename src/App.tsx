@@ -1,6 +1,8 @@
 import { CssBaseline } from "@mui/material";
 import { Home } from "./pages/Home";
 import { Comparison } from "./pages/Comparison";
+import { About } from "./pages/About";
+import { Contact } from "./pages/Contact";
 import { Root } from "./pages/Root";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -10,7 +12,6 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
-    // errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
@@ -19,6 +20,14 @@ const router = createBrowserRouter([
       {
         path: "/compare/:slug",
         element: <Comparison />,
+      },
+      {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
       },
     ],
   },

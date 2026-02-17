@@ -1,50 +1,15 @@
 import { Box, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const currentYear = new Date().getFullYear();
 
-const FooterA = () => (
-  <Box
-    component="footer"
-    sx={{
-      borderTop: "1px solid",
-      borderColor: "divider",
-      py: 3,
-      mt: 6,
-      textAlign: "center",
-    }}
-  >
-    <Typography variant="body2" sx={{ color: "text.secondary" }}>
-      Compare Strollers &copy; {currentYear}
-    </Typography>
-  </Box>
-);
+const footerLinkSx = {
+  color: "rgba(255,255,255,0.75)",
+  textDecoration: "none",
+  "&:hover": { color: "white" },
+};
 
-const FooterB = () => (
-  <Box
-    component="footer"
-    sx={{
-      borderTop: "1px solid",
-      borderColor: "divider",
-      py: 3,
-      px: 4,
-      mt: 6,
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      flexWrap: "wrap",
-      gap: 1,
-    }}
-  >
-    <Typography variant="body2" sx={{ fontWeight: 500, color: "text.primary" }}>
-      Compare Strollers
-    </Typography>
-    <Typography variant="body2" sx={{ color: "text.secondary" }}>
-      Made for parents who research everything
-    </Typography>
-  </Box>
-);
-
-const FooterC = () => (
+export const Footer = () => (
   <Box
     component="footer"
     sx={{
@@ -55,44 +20,37 @@ const FooterC = () => (
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      gap: 1,
+      gap: 2,
+      flexWrap: "wrap",
     }}
   >
     <Typography variant="body2" sx={{ color: "white", fontWeight: 500 }}>
       Compare Strollers
     </Typography>
+    <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.4)" }}>
+      &middot;
+    </Typography>
+    <Typography
+      component={Link}
+      to="/about"
+      variant="body2"
+      sx={footerLinkSx}
+    >
+      About
+    </Typography>
+    <Typography
+      component={Link}
+      to="/contact"
+      variant="body2"
+      sx={footerLinkSx}
+    >
+      Contact
+    </Typography>
+    <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.4)" }}>
+      &middot;
+    </Typography>
     <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.6)" }}>
-      &middot; &copy; {currentYear}
+      &copy; {currentYear}
     </Typography>
   </Box>
 );
-
-export const FooterPreview = () => (
-  <Box sx={{ mt: 8 }}>
-    <Typography
-      variant="caption"
-      sx={{ display: "block", textAlign: "center", mb: 1, color: "text.secondary" }}
-    >
-      Option A — Simple centered
-    </Typography>
-    <FooterA />
-
-    <Typography
-      variant="caption"
-      sx={{ display: "block", textAlign: "center", mt: 4, mb: 1, color: "text.secondary" }}
-    >
-      Option B — Two-column subtle
-    </Typography>
-    <FooterB />
-
-    <Typography
-      variant="caption"
-      sx={{ display: "block", textAlign: "center", mt: 4, mb: 1, color: "text.secondary" }}
-    >
-      Option C — Green bar
-    </Typography>
-    <FooterC />
-  </Box>
-);
-
-export { FooterA, FooterB, FooterC };

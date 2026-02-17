@@ -6,7 +6,7 @@ import { ComparisonTable } from "../../components/ComparisonTable";
 import { PopularSearchCards } from "../../components/PopularSearchesCards";
 import { COMPARISONS } from "../../config/comparisons";
 import { strollersContext } from "../../context/context";
-import { FooterPreview } from "../../components/Footer";
+import { Footer } from "../../components/Footer";
 
 const comparisonsBySlug = new Map(
   COMPARISONS.map((c) => [c.slug, c.ids])
@@ -55,7 +55,7 @@ export const Comparison = () => {
           </Box>
         )}
         <PopularSearchCards />
-        <FooterPreview />
+        <Footer />
       </Box>
     </>
   );
