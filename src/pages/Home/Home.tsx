@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { strollersContext } from "../../context/context";
 import { AppBarSearch } from "../../components/AppBarSearch";
 import { Box } from "@mui/material";
@@ -6,7 +6,12 @@ import { ComparisonTable } from "../../components/ComparisonTable";
 import { PopularSearchCards } from "../../components/PopularSearchesCards";
 
 export const Home = () => {
-  const { strollersIdsToCompare } = useContext(strollersContext);
+  const { strollersIdsToCompare, setStrollersIdsToCompare } =
+    useContext(strollersContext);
+
+  useEffect(() => {
+    setStrollersIdsToCompare([]);
+  }, [setStrollersIdsToCompare]);
   return (
     <>
       <AppBarSearch />
