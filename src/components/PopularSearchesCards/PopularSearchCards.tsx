@@ -1,5 +1,7 @@
 import { Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
+import { COMPARISONS } from "../../config/comparisons";
 import {
   Section,
   SectionContent,
@@ -13,7 +15,7 @@ import {
 export type PopularSearchCard = {
   id: string;
   title: string;
-  query: string;
+  slug: string;
 };
 
 type Props = {
@@ -21,38 +23,11 @@ type Props = {
   onSelectSearch?: (query: string) => void;
 };
 
-const POPULAR_SEARCHES: PopularSearchCard[] = [
-  {
-    id: "yoyo2-aer",
-    title: "Yoyo2 vs Aer Plus",
-    query: "babyzen yoyo2 vs joovy aer plus",
-  },
-  {
-    id: "vista-fox",
-    title: "Vista V2 vs Fox 5",
-    query: "uppababy vista v2 vs bugaboo fox 5",
-  },
-  {
-    id: "cruz-pipa",
-    title: "Cruz V2 vs Nuna Mixx",
-    query: "uppababy cruz v2 vs nuna mixx",
-  },
-  {
-    id: "double-mini",
-    title: "Donkey 5 vs Vista Twin",
-    query: "bugaboo donkey 5 vs uppababy vista twin",
-  },
-  {
-    id: "joggers",
-    title: "Urban Glide vs Alterrain",
-    query: "thule urban glide vs bob alterrain",
-  },
-  {
-    id: "budget",
-    title: "Mockingbird vs Pivot Xpand",
-    query: "mockingbird vs evenflo pivot xpand",
-  },
-];
+const POPULAR_SEARCHES: PopularSearchCard[] = COMPARISONS.map((c) => ({
+  id: c.slug,
+  title: c.title,
+  slug: c.slug,
+}));
 
 export const PopularSearchCards: React.FC<Props> = ({
   items = POPULAR_SEARCHES,
@@ -87,8 +62,9 @@ export const PopularSearchCards: React.FC<Props> = ({
           {items.map((card) => (
             <CardButton
               key={card.id}
-              onClick={() => onSelectSearch?.(card.query)}
-              disabled={!onSelectSearch}
+              component={Link}
+              to={`/compare/${card.slug}`}
+              onClick={() => onSelectSearch?.(card.title)}
               focusRipple
             >
               <CardBody>

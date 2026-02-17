@@ -9,13 +9,13 @@ export const StrollersProvider: React.FC<{ children: React.ReactNode }> = ({
     []
   );
 
+  const normalizeIds = (ids: number[]) => {
+    return Array.from(new Set(ids)).filter((id) => id > 0).slice(0, 2);
+  };
+
   const handleAddStrollerIdToCompare = (newStrollerId: number) => {
     setStrollersIdsToCompare((currentIds) => {
-      if (currentIds.length >= 3 || currentIds.includes(newStrollerId)) {
-        return currentIds;
-      }
-
-      return [...currentIds, newStrollerId];
+      return normalizeIds([...currentIds, newStrollerId]);
     });
   };
 
@@ -30,10 +30,15 @@ export const StrollersProvider: React.FC<{ children: React.ReactNode }> = ({
     setStrollersIdsToCompare(copyStrollersIds);
   };
 
+  const handleSetStrollersIdsToCompare = (ids: number[]) => {
+    setStrollersIdsToCompare(normalizeIds(ids));
+  };
+
   const value: StrollersContextType = {
     strollersIdsToCompare,
     handleAddStrollerIdToCompare,
     handleDeleteStrollerIdFromCompare,
+    setStrollersIdsToCompare: handleSetStrollersIdsToCompare,
   };
 
   return (

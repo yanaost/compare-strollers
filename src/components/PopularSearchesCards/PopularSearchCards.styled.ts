@@ -35,6 +35,8 @@ export const CardButton = styled(ButtonBase)(({ theme }) => ({
   flexDirection: "column",
   justifyContent: "space-between",
   textAlign: "left",
+  textDecoration: "none",
+  color: "inherit",
   padding: theme.spacing(3.25, 3.5),
   borderRadius: 20,
   backgroundColor: theme.palette.background.default,

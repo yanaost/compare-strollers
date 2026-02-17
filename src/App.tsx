@@ -1,5 +1,6 @@
 import { CssBaseline } from "@mui/material";
 import { Home } from "./pages/Home";
+import { Comparison } from "./pages/Comparison";
 import { Root } from "./pages/Root";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/compare/:slug",
+        element: <Comparison />,
       },
     ],
   },

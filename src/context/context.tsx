@@ -3,6 +3,7 @@ import { StrollersContextType } from "../types/StrollersContextType";
 
 export const strollersContext = createContext<StrollersContextType>({
   strollersIdsToCompare: [],
-  handleAddStrollerIdToCompare: () => "",
-  handleDeleteStrollerIdFromCompare: () => "",
+  handleAddStrollerIdToCompare: () => {},
+  handleDeleteStrollerIdFromCompare: () => {},
+  setStrollersIdsToCompare: () => {},
 });
