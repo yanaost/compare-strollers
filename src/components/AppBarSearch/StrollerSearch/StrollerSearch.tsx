@@ -24,6 +24,7 @@ export const StrollerSearch: React.FC = () => {
   const getStrollersFromServerByQuery = async (query: string) => {
     try {
       setLoading(true);
+      setOptions([]);
       const response = await fetch(
         `${apiUrl}/api/strollers/search?query=${encodeURIComponent(query)}`,
         {
@@ -64,7 +65,7 @@ export const StrollerSearch: React.FC = () => {
       </SearchIconWrapper>
       <Autocomplete
         open={inputValue.length > 0}
-        noOptionsText="No result"
+        noOptionsText={loading ? "Loading..." : "No result"}
         filterOptions={(x) => x}
         isOptionEqualToValue={(option, value) =>
           option.strollerId === value.strollerId
