@@ -16,8 +16,8 @@ export const Contact = () => (
         </Typography>
         <Typography variant="body1" sx={{ color: "text.secondary" }}>
           Email us at{" "}
-          <MuiLink href="mailto:hello@comparestrollers.com">
-            hello@comparestrollers.com
+          <MuiLink href="mailto:hello@strollercompare.com">
+            hello@strollercompare.com
           </MuiLink>
         </Typography>
         <Typography variant="body1" sx={{ color: "text.secondary" }}>
