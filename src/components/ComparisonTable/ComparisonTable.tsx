@@ -71,7 +71,7 @@ export const ComparisonTable: React.FC = () => {
                 return (
                   <StyledTableCellContainer key={stroller?.strollerId}>
                     <StyledCardContent>
-                      <StyledProductName>{`${stroller?.brand} ${stroller?.modelName}`}</StyledProductName>
+                      <StyledProductName>{stroller?.modelName}</StyledProductName>
                       <StyledProductDeleteIcon
                         size="small"
                         onClick={() =>
@@ -98,7 +98,7 @@ export const ComparisonTable: React.FC = () => {
                     <ImageContainer>
                       <Figure>
                         <Image
-                          alt={`${stroller?.brand} ${stroller?.modelName} stroller`}
+                          alt={`${stroller?.modelName} stroller`}
                           src={stroller?.imagePath}
                         />
                       </Figure>
