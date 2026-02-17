@@ -10,7 +10,7 @@ export const StrollersProvider: React.FC<{ children: React.ReactNode }> = ({
   );
 
   const normalizeIds = (ids: number[]) => {
-    return Array.from(new Set(ids)).filter((id) => id > 0).slice(0, 2);
+    return Array.from(new Set(ids)).filter((id) => id > 0).slice(0, 3);
   };
 
   const handleAddStrollerIdToCompare = (newStrollerId: number) => {
