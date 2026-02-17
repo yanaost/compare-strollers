@@ -1,7 +1,6 @@
 import { ThemeProvider } from "@emotion/react";
 import { createTheme } from "@mui/material";
 import { Outlet } from "react-router-dom";
-import { CodexAgent } from "../../components/CodexAgent";
 
 const theme = createTheme({
   palette: {
@@ -66,7 +65,6 @@ export const Root = () => {
   return (
     <ThemeProvider theme={theme}>
       <Outlet />
-      <CodexAgent />
     </ThemeProvider>
   );
 };
