@@ -4,6 +4,7 @@ import { AppBarSearch } from "../../components/AppBarSearch";
 import { Box } from "@mui/material";
 import { ComparisonTable } from "../../components/ComparisonTable";
 import { PopularSearchCards } from "../../components/PopularSearchesCards";
+import { FooterPreview } from "../../components/Footer";
 
 export const Home = () => {
   const { strollersIdsToCompare, setStrollersIdsToCompare } =
@@ -23,6 +24,7 @@ export const Home = () => {
           </Box>
         )}
         <PopularSearchCards />
+        <FooterPreview />
       </Box>
     </>
   );
