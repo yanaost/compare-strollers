@@ -1,4 +1,5 @@
 import { AppBar, Box, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 import { StrollerSearch } from "./StrollerSearch/StrollerSearch";
 import {
   StyledH1,
@@ -13,12 +14,14 @@ export const AppBarSearch: React.FC = () => {
       <AppBar position="static" component="div">
         <StyledToolbar>
           <StyledHeading>
-            <StyledH1>
-              Compare{" "}
-              <Box component="span" sx={{ color: "#EFCDBB" }}>
-                Strollers
-              </Box>
-            </StyledH1>
+            <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+              <StyledH1>
+                Compare{" "}
+                <Box component="span" sx={{ color: "#EFCDBB" }}>
+                  Strollers
+                </Box>
+              </StyledH1>
+            </Link>
           </StyledHeading>
           <StyledH2>
             <Typography
