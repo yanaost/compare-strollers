@@ -1,4 +1,4 @@
-import { ButtonBase, Typography, TypographyProps } from "@mui/material";
+import { ButtonBase, ButtonBaseProps, Typography, TypographyProps } from "@mui/material";
 import { styled, alpha } from "@mui/material/styles";
 
 export const Section = styled("section")(({ theme }) => ({
@@ -28,7 +28,7 @@ export const CardsGrid = styled("div")(({ theme }) => ({
   gap: theme.spacing(3),
 }));
 
-export const CardButton = styled(ButtonBase)(({ theme }) => ({
+export const CardButton = styled(ButtonBase)<ButtonBaseProps & { component?: React.ElementType; to?: string }>(({ theme }) => ({
   position: "relative",
   overflow: "hidden",
   display: "flex",
