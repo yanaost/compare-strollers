@@ -20,11 +20,6 @@ const parseComparisonIds = (raw: string | undefined): number[] => {
   return matches.map(Number).filter((id) => Number.isFinite(id) && id > 0);
 };
 
-const areSameIds = (left: number[], right: number[]) => {
-  if (left.length !== right.length) return false;
-  return left.every((id, index) => id === right[index]);
-};
-
 export const Comparison = () => {
   const { slug } = useParams();
   const { strollersIdsToCompare, setStrollersIdsToCompare } =
@@ -36,10 +31,9 @@ export const Comparison = () => {
   }, [slug]);
 
   useEffect(() => {
-    if (!areSameIds(parsedIds, strollersIdsToCompare)) {
-      setStrollersIdsToCompare(parsedIds);
-    }
-  }, [parsedIds, setStrollersIdsToCompare, strollersIdsToCompare]);
+    setStrollersIdsToCompare(parsedIds);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [parsedIds]);
 
   return (
     <>
