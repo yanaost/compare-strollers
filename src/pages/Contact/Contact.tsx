@@ -1,30 +1,32 @@
-import { Box, Container, Link as MuiLink, Typography } from "@mui/material";
-import { AppBarSearch } from "../../components/AppBarSearch";
-import { Footer } from "../../components/Footer";
+import {
+  SectionHeading,
+  TextPage,
+  TextSection,
+} from "../../components/TextPage";
+
+const SECTIONS: readonly TextSection[] = [
+  { id: "email", label: "Email us" },
+  { id: "response", label: "Response times" },
+];
 
 export const Contact = () => (
-  <>
-    <AppBarSearch />
-    <Container maxWidth="md" sx={{ py: 6 }}>
-      <Typography variant="h4" sx={{ fontWeight: 600, mb: 3 }}>
-        Contact
-      </Typography>
-      <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-        <Typography variant="body1" sx={{ color: "text.secondary" }}>
-          Have a question, suggestion, or found incorrect data? We'd love to
-          hear from you.
-        </Typography>
-        <Typography variant="body1" sx={{ color: "text.secondary" }}>
-          Email us at{" "}
-          <MuiLink href="mailto:hello@strollercompare.com">
-            hello@strollercompare.com
-          </MuiLink>
-        </Typography>
-        <Typography variant="body1" sx={{ color: "text.secondary" }}>
-          We aim to respond within 48 hours.
-        </Typography>
-      </Box>
-    </Container>
-    <Footer />
-  </>
+  <TextPage
+    eyebrow="Contact"
+    title={
+      <>
+        We'd love to hear <em>from you.</em>
+      </>
+    }
+    lede="Have a question, suggestion, or found incorrect data?"
+    sections={SECTIONS}
+  >
+    <SectionHeading id="email">Email us</SectionHeading>
+    <p>
+      Email us at{" "}
+      <a href="mailto:hello@strollercompare.com">hello@strollercompare.com</a>.
+    </p>
+
+    <SectionHeading id="response">Response times</SectionHeading>
+    <p>We aim to respond within 48 hours.</p>
+  </TextPage>
 );
