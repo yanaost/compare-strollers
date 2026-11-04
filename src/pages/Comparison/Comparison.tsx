@@ -8,7 +8,13 @@ import { SpecGroups } from "../../components/SpecGroups";
 import { useStrollerComparison } from "../../components/ComparisonTable/hooks/useStrollerComparison";
 import { COMPARISONS } from "../../config/comparisons";
 import { compare, toSpecs } from "../../features/compare/specs";
-import { comparePath, useStrollers } from "../../features/strollers/useStrollers";
+import {
+  StrollerSummary,
+  VS,
+  comparePath,
+  strollerSlug,
+  useStrollers,
+} from "../../features/strollers/useStrollers";
 import { strollersContext } from "../../context/context";
 import {
   BarFill,
@@ -51,41 +57,92 @@ const comparisonsBySlug = new Map(COMPARISONS.map((c) => [c.slug, c.ids]));
 const POSITION = ["First", "Second", "Third"];
 
 // Swapping one column's stroller keeps the others where they are.
-const replaceAt = (ids: number[], index: number, id: number) =>
-  comparePath(...ids.map((current, i) => (i === index ? id : current)));
+const replaceAt = (
+  strollers: StrollerSummary[],
+  ids: number[],
+  index: number,
+  id: number
+) =>
+  comparePath(strollers, ...ids.map((current, i) => (i === index ? id : current)));
 
 // Dropping the last column leaves nothing to compare, so it falls back to the
 // home page and its search.
-const removeAt = (ids: number[], index: number) => {
+const removeAt = (
+  strollers: StrollerSummary[],
+  ids: number[],
+  index: number
+) => {
   const next = ids.filter((_, i) => i !== index);
-  return next.length === 0 ? "/" : comparePath(...next);
+  return next.length === 0 ? "/" : comparePath(strollers, ...next);
 };
 
-const parseComparisonIds = (raw: string | undefined): number[] => {
+const isId = (part: string) => /^\d+$/.test(part);
+
+/**
+ * Resolves a /compare/ path to stroller ids, newest spelling first:
+ *
+ *   1. a curated slug from the config, which survives a model being renamed;
+ *   2. model-name slugs, resolved one part at a time;
+ *   3. bare ids, for links made before names were used.
+ *
+ * Resolving part by part is what makes 2 and 3 safe together: a part is an id
+ * only when it is nothing but digits, so "cybex-libelle-2" is read as a name
+ * rather than scraped for the 2 it ends with.
+ */
+const parseComparisonIds = (
+  raw: string | undefined,
+  strollers: StrollerSummary[]
+): number[] => {
   if (!raw) return [];
-  const knownIds = comparisonsBySlug.get(raw);
-  if (knownIds) return knownIds;
-  const matches = raw.match(/\d+/g);
-  if (!matches) return [];
-  return matches.map(Number).filter((id) => Number.isFinite(id) && id > 0);
+
+  const curated = comparisonsBySlug.get(raw);
+  if (curated) return [...curated];
+
+  const idBySlug = new Map(
+    strollers.map((s) => [strollerSlug(s.modelName), s.strollerId])
+  );
+
+  const ids = raw
+    .split(VS)
+    .map((part) => idBySlug.get(part) ?? (isId(part) ? Number(part) : undefined))
+    .filter((id): id is number => id !== undefined && id > 0);
+
+  if (ids.length > 0) return ids;
+
+  // A link from before the separator settled — digits and dashes, nothing else.
+  // Names always carry letters, so this cannot swallow one.
+  if (/^[\d-]+$/.test(raw)) {
+    return (raw.match(/\d+/g) ?? []).map(Number).filter((id) => id > 0);
+  }
+
+  return [];
 };
 
 export const Comparison = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
   const { setStrollersIdsToCompare } = useContext(strollersContext);
-  const { strollers } = useStrollers();
+  const { strollers, loading: strollersLoading } = useStrollers();
   const [differencesOnly, setDifferencesOnly] = useState(false);
 
   const ids = useMemo(
-    () => parseComparisonIds(slug).slice(0, MAX_STROLLERS),
-    [slug]
+    () => parseComparisonIds(slug, strollers).slice(0, MAX_STROLLERS),
+    [slug, strollers]
   );
 
   useEffect(() => {
     setStrollersIdsToCompare(ids);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ids]);
+
+  // One page, one address: an id path quietly becomes the name path once the
+  // names are known. Replaces rather than pushes, so Back still leaves.
+  const canonical = comparePath(strollers, ...ids);
+
+  useEffect(() => {
+    if (strollersLoading || ids.length === 0) return;
+    if (canonical !== `/compare/${slug}`) navigate(canonical, { replace: true });
+  }, [canonical, slug, ids.length, strollersLoading, navigate]);
 
   const { strollerData, accordionData, loading, error } =
     useStrollerComparison(ids);
@@ -143,8 +200,11 @@ export const Comparison = () => {
       <>
         {header}
         <StatusBlock>
-          No strollers selected yet. Search above, or pick a popular comparison
-          from the home page.
+          {/* A name path cannot be resolved until the names arrive, so a shared
+              link must not accuse the visitor of picking nothing meanwhile. */}
+          {strollersLoading
+            ? "Loading comparison…"
+            : "No strollers selected yet. Search above, or pick a popular comparison from the home page."}
         </StatusBlock>
         <SiteFooter ctaLabel="Popular comparisons →" ctaTo="/#popular" />
       </>
@@ -208,7 +268,7 @@ export const Comparison = () => {
                 Differences only
               </DiffButton>
               <SwapButton
-                onClick={() => navigate(comparePath(...[...ids].reverse()))}
+                onClick={() => navigate(comparePath(strollers, ...[...ids].reverse()))}
               >
                 {ids.length > 2 ? "Reverse ⇄" : "Swap ⇄"}
               </SwapButton>
@@ -228,7 +288,7 @@ export const Comparison = () => {
                   $count={selected.length}
                   value={stroller.strollerId}
                   aria-label={`${POSITION[index]} stroller`}
-                  onChange={(e) => navigate(replaceAt(ids, index, Number(e.target.value)))}
+                  onChange={(e) => navigate(replaceAt(strollers, ids, index, Number(e.target.value)))}
                 >
                   {strollers.map((option) => (
                     <option key={option.strollerId} value={option.strollerId}>
@@ -237,7 +297,7 @@ export const Comparison = () => {
                   ))}
                 </StrollerSelect>
                 <RemoveButton
-                  onClick={() => navigate(removeAt(ids, index))}
+                  onClick={() => navigate(removeAt(strollers, ids, index))}
                   aria-label={`Remove ${stroller.modelName} from the comparison`}
                 >
                   <X size={18} strokeWidth={2.5} aria-hidden />
