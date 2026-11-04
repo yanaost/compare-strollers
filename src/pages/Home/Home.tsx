@@ -5,10 +5,6 @@ import { SiteHeader } from "../../components/SiteHeader";
 import { COMPARISONS } from "../../config/comparisons";
 import { useStrollers } from "../../features/strollers/useStrollers";
 import {
-  AllComparisons,
-  AllGrid,
-  AllLabel,
-  AllLink,
   Card,
   CardGrid,
   CardNote,
@@ -24,6 +20,12 @@ import {
   HeroTitle,
   HowHeading,
   HowSection,
+  MoreArrow,
+  MoreCard,
+  MoreComparisons,
+  MoreGrid,
+  MoreLabel,
+  MoreTitle,
   PopularHeader,
   PopularHeading,
   PopularNote,
@@ -76,11 +78,21 @@ const FEATURED = [
   },
 ];
 
+const splitTitle = (title: string) => {
+  const [aName, bName] = title.split(" vs ");
+  return { aName, bName };
+};
+
 const featuredCards = FEATURED.map((featured) => {
   const comparison = COMPARISONS.find((c) => c.slug === featured.slug)!;
-  const [aName, bName] = comparison.title.split(" vs ");
-  return { ...featured, aName, bName };
+  return { ...featured, ...splitTitle(comparison.title) };
 });
+
+// Whatever the four above did not cover. Derived from the config rather than
+// listed by hand, so a comparison added to it always reaches the home page.
+const moreCards = COMPARISONS.filter(
+  (comparison) => !FEATURED.some((f) => f.slug === comparison.slug)
+).map((comparison) => ({ ...comparison, ...splitTitle(comparison.title) }));
 
 export const Home = () => {
   const { strollers } = useStrollers();
@@ -153,19 +165,21 @@ export const Home = () => {
           ))}
         </CardGrid>
 
-        <AllComparisons>
-          <AllLabel>All comparisons</AllLabel>
-          <AllGrid>
-            {COMPARISONS.map((comparison) => (
-              <AllLink
-                key={comparison.slug}
-                to={`/compare/${comparison.slug}`}
-              >
-                {comparison.title}
-              </AllLink>
+        <MoreComparisons>
+          <MoreLabel>More comparisons</MoreLabel>
+          <MoreGrid>
+            {moreCards.map((card) => (
+              <MoreCard key={card.slug} to={`/compare/${card.slug}`}>
+                <MoreTitle>
+                  {card.aName} <em>vs</em> {card.bName}
+                </MoreTitle>
+                <MoreArrow data-arrow aria-hidden>
+                  →
+                </MoreArrow>
+              </MoreCard>
             ))}
-          </AllGrid>
-        </AllComparisons>
+          </MoreGrid>
+        </MoreComparisons>
       </PopularSection>
 
       <SiteFooter ctaLabel="Start comparing →" ctaTo="/compare/babyzen-yoyo-2-vs-bugaboo-butterfly" />
