@@ -1,4 +1,3 @@
-import { CssBaseline } from "@mui/material";
 import { Home } from "./pages/Home";
 import { Comparison } from "./pages/Comparison";
 import { About } from "./pages/About";
@@ -37,7 +36,6 @@ function App() {
   return (
     <StrollersProvider>
       <RouterProvider router={router} />
-      <CssBaseline />
     </StrollersProvider>
   );
 }
