@@ -116,7 +116,7 @@ export const HeroSearch: React.FC<Props> = ({ strollers }) => {
   // The first pick hands straight off to the comparison page, which carries
   // its own search for adding the second and third.
   const pick = (stroller: StrollerSummary) =>
-    navigate(comparePath(stroller.strollerId));
+    navigate(comparePath(strollers, stroller.strollerId));
 
   // Enter and the arrow both take the top result, so neither ever feels dead.
   const submit = () => {

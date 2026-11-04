@@ -41,7 +41,7 @@ export const CompareSearch: React.FC<Props> = ({ ids, strollers }) => {
   const add = (stroller: StrollerSummary) => {
     if (full) return;
     setQuery("");
-    navigate(comparePath(...ids, stroller.strollerId));
+    navigate(comparePath(strollers, ...ids, stroller.strollerId));
     inputRef.current?.focus();
   };
 
