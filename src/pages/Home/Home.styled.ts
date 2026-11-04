@@ -243,3 +243,43 @@ export const CardNote = styled.span`
   color: ${color.secondary};
   line-height: 1.45;
 `;
+
+/* The four cards above are a selection; this is the index. Every comparison the
+   site has appears here, so none of them is reachable by URL alone. */
+export const AllComparisons = styled.div`
+  margin-top: 48px;
+  padding-top: 28px;
+  border-top: 1px solid ${color.divider};
+`;
+
+export const AllLabel = styled.h3`
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: ${color.tertiary};
+  margin: 0 0 18px;
+`;
+
+export const AllGrid = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+`;
+
+export const AllLink = styled(Link)`
+  font-size: 14px;
+  font-weight: 500;
+  color: ${color.secondary};
+  background: ${color.surface};
+  border: 1px solid ${color.divider};
+  border-radius: ${radius.pill};
+  padding: 9px 16px;
+  text-decoration: none;
+  transition: color 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    color: ${color.accent};
+    border-color: ${color.accent};
+  }
+`;

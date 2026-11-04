@@ -5,6 +5,10 @@ import { SiteHeader } from "../../components/SiteHeader";
 import { COMPARISONS } from "../../config/comparisons";
 import { useStrollers } from "../../features/strollers/useStrollers";
 import {
+  AllComparisons,
+  AllGrid,
+  AllLabel,
+  AllLink,
   Card,
   CardGrid,
   CardNote,
@@ -148,6 +152,20 @@ export const Home = () => {
             </Card>
           ))}
         </CardGrid>
+
+        <AllComparisons>
+          <AllLabel>All comparisons</AllLabel>
+          <AllGrid>
+            {COMPARISONS.map((comparison) => (
+              <AllLink
+                key={comparison.slug}
+                to={`/compare/${comparison.slug}`}
+              >
+                {comparison.title}
+              </AllLink>
+            ))}
+          </AllGrid>
+        </AllComparisons>
       </PopularSection>
 
       <SiteFooter ctaLabel="Start comparing →" ctaTo="/compare/babyzen-yoyo-2-vs-bugaboo-butterfly" />
