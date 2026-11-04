@@ -1,20 +1,24 @@
-import { ThemeProvider } from "@emotion/react";
-import { createTheme } from "@mui/material";
+import { Global, ThemeProvider, css } from "@emotion/react";
+import { CssBaseline, createTheme } from "@mui/material";
 import { Outlet } from "react-router-dom";
+import { color, font } from "../../styles/tokens";
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#388E3C",
-      light: "#757575",
+      main: color.accent,
+      light: color.accentOnDark,
     },
     secondary: {
-      main: "#CDDC39",
-      light: "#C8E6C9",
+      main: color.ink,
+      light: color.band,
     },
     background: {
-      default: "#FFFFFF",
+      default: color.bg,
     },
+  },
+  typography: {
+    fontFamily: font.family,
   },
   breakpoints: {
     values: {
@@ -27,44 +31,45 @@ const theme = createTheme({
   },
 });
 
-theme.typography.h1 = {
-  fontSize: "2rem",
-  fontWeight: 400,
-  [theme.breakpoints.up("xs")]: {
-    fontSize: "2rem",
-  },
-  [theme.breakpoints.up("sm")]: {
-    fontSize: "2rem",
-  },
-  [theme.breakpoints.up("md")]: {
-    fontSize: "2rem",
-  },
-  [theme.breakpoints.up("xl")]: {
-    fontSize: "2.6rem",
-  },
-};
+const globalStyles = css`
+  /* In-page anchors (the About contents rail) glide rather than jump. */
+  html {
+    scroll-behavior: smooth;
+  }
 
-theme.typography.h2 = {
-  fontSize: "1.2rem",
-  fontWeight: 400,
-  [theme.breakpoints.up("xs")]: {
-    fontSize: "1.2rem",
-  },
-  [theme.breakpoints.up("sm")]: {
-    fontSize: "1.2rem",
-  },
-  [theme.breakpoints.up("md")]: {
-    fontSize: "1.2rem",
-  },
-  [theme.breakpoints.up("xl")]: {
-    fontSize: "1.4rem",
-  },
-};
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
 
-export const Root = () => {
-  return (
-    <ThemeProvider theme={theme}>
-      <Outlet />
-    </ThemeProvider>
-  );
-};
+  body {
+    margin: 0;
+    background: ${color.bg};
+    color: ${color.ink};
+    font-family: ${font.family};
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: ${color.accent};
+  }
+
+  ::selection {
+    background: ${color.accent};
+    color: #fff;
+  }
+`;
+
+export const Root = () => (
+  <ThemeProvider theme={theme}>
+    <CssBaseline />
+    <Global styles={globalStyles} />
+    <Outlet />
+  </ThemeProvider>
+);
