@@ -243,3 +243,76 @@ export const CardNote = styled.span`
   color: ${color.secondary};
   line-height: 1.45;
 `;
+
+/* The cards above are the editorial selection; these are the rest. Every
+   comparison in the config reaches the home page one way or the other, so none
+   of them is reachable by URL alone. */
+export const MoreComparisons = styled.div`
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid ${color.divider};
+`;
+
+export const MoreLabel = styled.h3`
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: ${color.tertiary};
+  margin: 0 0 20px;
+`;
+
+export const MoreGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: 16px;
+`;
+
+/* Same card, quieter: no tag or note, and short enough that a row of them reads
+   as secondary to the four above rather than competing with them. */
+export const MoreCard = styled(Link)`
+  color: ${color.ink};
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 128px;
+  background: ${color.surface};
+  border-radius: ${radius.card};
+  padding: 22px;
+  text-decoration: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+  &:hover {
+    color: ${color.ink};
+    transform: translateY(-4px);
+    box-shadow: ${shadow.cardHover};
+  }
+
+  /* An attribute rather than a component selector — referencing MoreArrow here
+     would need @emotion/babel-plugin, which this build does not run. */
+  &:hover [data-arrow] {
+    color: ${color.accent};
+  }
+`;
+
+export const MoreTitle = styled.span`
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+
+  em {
+    font-style: italic;
+    font-weight: 600;
+    color: ${color.tertiaryLight};
+  }
+`;
+
+export const MoreArrow = styled.span`
+  align-self: flex-end;
+  font-size: 18px;
+  line-height: 1;
+  color: ${color.tertiaryLight};
+  transition: color 0.2s ease;
+`;
