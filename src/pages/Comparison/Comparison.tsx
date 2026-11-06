@@ -50,6 +50,8 @@ import {
   Value,
   ValueLine,
   Verdict,
+  NameBlock,
+  Tagline,
 } from "./Comparison.styled";
 
 const comparisonsBySlug = new Map(COMPARISONS.map((c) => [c.slug, c.ids]));
@@ -284,6 +286,7 @@ export const Comparison = () => {
                 <img src={stroller.imagePath} alt={`${stroller.modelName} stroller`} />
               </ImageSlot>
               <NameRow>
+                <NameBlock>
                 <StrollerSelect
                   $count={selected.length}
                   value={stroller.strollerId}
@@ -296,6 +299,8 @@ export const Comparison = () => {
                     </option>
                   ))}
                 </StrollerSelect>
+                {stroller.tagline && <Tagline>{stroller.tagline}</Tagline>}
+                </NameBlock>
                 <RemoveButton
                   onClick={() => navigate(removeAt(strollers, ids, index))}
                   aria-label={`Remove ${stroller.modelName} from the comparison`}
