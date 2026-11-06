@@ -160,6 +160,23 @@ export const NameRow = styled.div`
   }
 `;
 
+export const NameBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  background: ${color.bg};
+  border-radius: ${radius.select};
+`;
+
+export const Tagline = styled.p`
+  margin: 0;
+  padding: 0 18px 14px;
+  font-size: 13.5px;
+  line-height: 1.35;
+  color: ${color.tertiary};
+`;
+
 export const RemoveButton = styled.button`
   display: flex;
   align-items: center;
@@ -188,7 +205,7 @@ export const RemoveButton = styled.button`
 export const StrollerSelect = styled.select<Columns>`
   appearance: none;
   -webkit-appearance: none;
-  background: ${color.bg};
+  background: transparent;
   border: 0;
   border-radius: ${radius.select};
   padding: 16px 18px;
