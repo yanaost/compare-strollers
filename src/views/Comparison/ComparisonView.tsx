@@ -77,23 +77,45 @@ export const ComparisonView = ({ ids, strollers, data }: ComparisonViewProps) =>
   const { setStrollersIdsToCompare } = useContext(strollersContext);
   const [differencesOnly, setDifferencesOnly] = useState(false);
 
-  useEffect(() => {
-    setStrollersIdsToCompare(ids);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ids]);
+  // Column order is local state, not part of the URL. A published comparison
+  // has one canonical path and links.ts keys it on a *sorted* id list, so a
+  // reversed selection resolves to the same slug — pushing it would navigate
+  // nowhere. The button only ever reverses, so a flag is the whole state and
+  // the order itself stays derived from the ids prop.
+  const [reversed, setReversed] = useState(false);
 
-  const accordionData = useAccordionGroups(ids, data);
+  // Moving to a different selection drops the reversal rather than carrying it
+  // over. Adjusted during render, so the stale order is never painted.
+  const idsKey = ids.join(",");
+  const [selectionKey, setSelectionKey] = useState(idsKey);
+  if (selectionKey !== idsKey) {
+    setSelectionKey(idsKey);
+    setReversed(false);
+  }
 
-  // The URL order is the column order, so index by id rather than position.
-  const selected = useMemo(
-    () =>
-      ids
-        .map((id) => data.find((s) => s.strollerId === id))
-        .filter((s): s is NonNullable<typeof s> => Boolean(s)),
-    [ids, data]
+  const order = useMemo(
+    () => (reversed ? [...ids].reverse() : ids),
+    [ids, reversed]
   );
 
-  const complete = selected.length === ids.length;
+  useEffect(() => {
+    setStrollersIdsToCompare(order);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [order]);
+
+  const accordionData = useAccordionGroups(order, data);
+
+  // Column order is independent of the dataset's order, so index by id rather
+  // than by position.
+  const selected = useMemo(
+    () =>
+      order
+        .map((id) => data.find((s) => s.strollerId === id))
+        .filter((s): s is NonNullable<typeof s> => Boolean(s)),
+    [order, data]
+  );
+
+  const complete = selected.length === order.length;
 
   const comparison = useMemo(
     () => (complete ? compare(selected.map(toSpecs)) : null),
@@ -121,7 +143,7 @@ export const ComparisonView = ({ ids, strollers, data }: ComparisonViewProps) =>
     return () => observer.disconnect();
   }, [ready]);
 
-  const search = <CompareSearch ids={ids} strollers={strollers} />;
+  const search = <CompareSearch ids={order} strollers={strollers} />;
 
   // One stroller has nothing to rank against, so the ranking controls would
   // only ever hide every row.
@@ -193,9 +215,7 @@ export const ComparisonView = ({ ids, strollers, data }: ComparisonViewProps) =>
                 <DiffDot $on={differencesOnly} />
                 Differences only
               </DiffButton>
-              <SwapButton
-                onClick={() => router.push(comparePath(strollers, ...[...ids].reverse()))}
-              >
+              <SwapButton onClick={() => setReversed((on) => !on)}>
                 {ids.length > 2 ? "Reverse ⇄" : "Swap ⇄"}
               </SwapButton>
             </Controls>
@@ -217,7 +237,7 @@ export const ComparisonView = ({ ids, strollers, data }: ComparisonViewProps) =>
                   {stroller.tagline && <Tagline>{stroller.tagline}</Tagline>}
                 </NameBlock>
                 <RemoveButton
-                  onClick={() => router.push(removeAt(strollers, ids, index))}
+                  onClick={() => router.push(removeAt(strollers, order, index))}
                   aria-label={`Remove ${stroller.modelName} from the comparison`}
                 >
                   <X size={18} strokeWidth={2.5} aria-hidden />
