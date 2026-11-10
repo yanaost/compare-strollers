@@ -17,6 +17,8 @@ export type ComparisonPage = {
   slug: string;
   title: string;
   strollerIds: number[];
+  /** Listed under "New comparisons" on the home page rather than "More". */
+  isNew: boolean;
 };
 
 const data = index as {
