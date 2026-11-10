@@ -1,0 +1,27 @@
+# Render Blueprint for the frontend.
+#
+# The frontend was a Render Static Site serving the Vite `dist/`. The Next build
+# needs a Node runtime: the compare route redirects id paths to name paths
+# server-side, serves uncurated slugs that no build step can enumerate, and
+# leaves the door open to ISR. A Static Site can do none of the three.
+#
+# This file is inert until a Blueprint is pointed at the repo — an existing
+# dashboard-managed service keeps its own settings. Either way these are the
+# values that service needs.
+services:
+  - type: web
+    name: compare-strollers
+    runtime: node
+    plan: starter # free spins down after ~15min idle; a ~50s cold start is not
+                  # acceptable on pages whose whole purpose is being crawled
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      # Backend origin. Read as VITE_BASE_URL for continuity with the Vite
+      # build; next.config.ts bridges it to NEXT_PUBLIC_API_BASE_URL. The build
+      # also calls it directly via scripts/fetch-seo-data.mjs (read-only GETs).
+      - key: VITE_BASE_URL
+        value: https://compare-strollers-backend.onrender.com
