@@ -44,7 +44,7 @@ import {
   StickyName,
   StickyNames,
   StickyStroller,
-  StrollerSelect,
+  StrollerName,
   SwapButton,
   TopGrid,
   Value,
@@ -55,17 +55,6 @@ import {
 } from "./Comparison.styled";
 
 const comparisonsBySlug = new Map(COMPARISONS.map((c) => [c.slug, c.ids]));
-
-const POSITION = ["First", "Second", "Third"];
-
-// Swapping one column's stroller keeps the others where they are.
-const replaceAt = (
-  strollers: StrollerSummary[],
-  ids: number[],
-  index: number,
-  id: number
-) =>
-  comparePath(strollers, ...ids.map((current, i) => (i === index ? id : current)));
 
 // Dropping the last column leaves nothing to compare, so it falls back to the
 // home page and its search.
@@ -287,19 +276,10 @@ export const Comparison = () => {
               </ImageSlot>
               <NameRow>
                 <NameBlock>
-                <StrollerSelect
-                  $count={selected.length}
-                  value={stroller.strollerId}
-                  aria-label={`${POSITION[index]} stroller`}
-                  onChange={(e) => navigate(replaceAt(strollers, ids, index, Number(e.target.value)))}
-                >
-                  {strollers.map((option) => (
-                    <option key={option.strollerId} value={option.strollerId}>
-                      {option.modelName}
-                    </option>
-                  ))}
-                </StrollerSelect>
-                {stroller.tagline && <Tagline>{stroller.tagline}</Tagline>}
+                  <StrollerName $count={selected.length}>
+                    {stroller.modelName}
+                  </StrollerName>
+                  {stroller.tagline && <Tagline>{stroller.tagline}</Tagline>}
                 </NameBlock>
                 <RemoveButton
                   onClick={() => navigate(removeAt(strollers, ids, index))}

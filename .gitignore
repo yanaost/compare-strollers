@@ -26,3 +26,5 @@ eslint.config.js
 *.sw?
 
 .env
+
+CLAUDE.md

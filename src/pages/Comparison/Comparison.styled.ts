@@ -45,7 +45,7 @@ export const Eyebrow = styled.span`
   color: ${color.accent};
 `;
 
-export const Verdict = styled.h2`
+export const Verdict = styled.h1`
   font-weight: 800;
   font-size: clamp(36px, 4.4vw, 68px);
   line-height: 1;
@@ -202,25 +202,18 @@ export const RemoveButton = styled.button`
   }
 `;
 
-export const StrollerSelect = styled.select<Columns>`
-  appearance: none;
-  -webkit-appearance: none;
-  background: transparent;
-  border: 0;
-  border-radius: ${radius.select};
+export const StrollerName = styled.h2<Columns>`
+  margin: 0;
   padding: 16px 18px;
-  font: inherit;
   font-size: clamp(16px, 1.6vw, 22px);
   font-weight: 700;
   letter-spacing: -0.02em;
   color: ${color.ink};
-  cursor: pointer;
   flex: 1;
   min-width: 0;
-  outline: none;
 
-  /* A select can't wrap, so a third column on a phone has to buy legibility
-     with type size — otherwise two Bugaboos both read as "Bugab". */
+  /* Three columns on a phone buy legibility with type size — otherwise two
+     Bugaboos both read as "Bugab". */
   @media (max-width: 767px) {
     padding: ${({ $count }) => ($count > 2 ? "12px 10px" : "16px 18px")};
     font-size: ${({ $count }) => ($count > 2 ? "12px" : "16px")};
