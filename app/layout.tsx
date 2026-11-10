@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
+import { SITE } from "../src/config/site";
 import { Providers } from "./providers";
 
 export const metadata: Metadata = {
   // Resolves every relative `alternates.canonical` and any future absolute-URL
   // tag against the live origin. Without it Next emits canonicals verbatim,
   // i.e. relative — legal, but the one tag least worth leaving ambiguous.
-  metadataBase: new URL("https://comparestrollers.com"),
+  metadataBase: new URL(SITE),
   title: "Compare strollers side by side",
   icons: { icon: "/favicon.ico" },
 };
