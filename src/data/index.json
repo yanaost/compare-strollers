@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-10T05:17:38.012Z",
+  "generatedAt": "2026-11-10T09:19:34.879Z",
   "comparisons": [
     {
       "slug": "babyzen-yoyo-2-vs-bugaboo-butterfly",
@@ -7,7 +7,8 @@
       "strollerIds": [
         1,
         2
-      ]
+      ],
+      "isNew": false
     },
     {
       "slug": "bugaboo-dragonfly-vs-bugaboo-fox-5",
@@ -15,7 +16,8 @@
       "strollerIds": [
         4,
         3
-      ]
+      ],
+      "isNew": false
     },
     {
       "slug": "bugaboo-butterfly-vs-cybex-libelle-2",
@@ -23,7 +25,8 @@
       "strollerIds": [
         2,
         7
-      ]
+      ],
+      "isNew": false
     },
     {
       "slug": "bugaboo-fox-5-vs-cybex-e-priam-2022",
@@ -31,7 +34,8 @@
       "strollerIds": [
         3,
         12
-      ]
+      ],
+      "isNew": false
     },
     {
       "slug": "bugaboo-butterfly-vs-bugaboo-dragonfly",
@@ -39,7 +43,8 @@
       "strollerIds": [
         2,
         4
-      ]
+      ],
+      "isNew": false
     },
     {
       "slug": "babyzen-yoyo-2-vs-joolz-aer",
@@ -47,7 +52,8 @@
       "strollerIds": [
         1,
         9
-      ]
+      ],
+      "isNew": false
     },
     {
       "slug": "bugaboo-butterfly-vs-joolz-aer-plus",
@@ -55,7 +61,8 @@
       "strollerIds": [
         2,
         10
-      ]
+      ],
+      "isNew": false
     },
     {
       "slug": "bugaboo-butterfly-vs-joolz-aer",
@@ -63,7 +70,8 @@
       "strollerIds": [
         2,
         9
-      ]
+      ],
+      "isNew": false
     },
     {
       "slug": "bugaboo-dragonfly-vs-joolz-hub-plus",
@@ -71,7 +79,8 @@
       "strollerIds": [
         4,
         11
-      ]
+      ],
+      "isNew": false
     },
     {
       "slug": "bugaboo-dragonfly-vs-joolz-aer",
@@ -79,7 +88,8 @@
       "strollerIds": [
         4,
         9
-      ]
+      ],
+      "isNew": false
     },
     {
       "slug": "cybex-gazelle-s-vs-cybex-e-priam-2022",
@@ -87,7 +97,125 @@
       "strollerIds": [
         5,
         12
-      ]
+      ],
+      "isNew": false
+    },
+    {
+      "slug": "bugaboo-fox-5-vs-bugaboo-donkey-6",
+      "title": "Bugaboo Fox 5 vs Bugaboo Donkey 6",
+      "strollerIds": [
+        3,
+        18
+      ],
+      "isNew": true
+    },
+    {
+      "slug": "bugaboo-butterfly-vs-bugaboo-butterfly-2-plus",
+      "title": "Bugaboo Butterfly vs Bugaboo Butterfly 2 Plus",
+      "strollerIds": [
+        2,
+        16
+      ],
+      "isNew": true
+    },
+    {
+      "slug": "joolz-aer-vs-joolz-aer-2",
+      "title": "Joolz Aer vs Joolz Aer 2",
+      "strollerIds": [
+        9,
+        21
+      ],
+      "isNew": true
+    },
+    {
+      "slug": "bugaboo-butterfly-2-plus-vs-joolz-aer-2",
+      "title": "Bugaboo Butterfly 2 Plus vs Joolz Aer 2",
+      "strollerIds": [
+        16,
+        21
+      ],
+      "isNew": true
+    },
+    {
+      "slug": "cybex-orfeo-vs-joolz-aer",
+      "title": "Cybex Orfeo vs Joolz Aer",
+      "strollerIds": [
+        8,
+        9
+      ],
+      "isNew": true
+    },
+    {
+      "slug": "bugaboo-dragonfly-vs-silver-cross-breez",
+      "title": "Bugaboo Dragonfly vs Silver Cross Breez",
+      "strollerIds": [
+        4,
+        24
+      ],
+      "isNew": true
+    },
+    {
+      "slug": "joolz-aer-vs-joolz-aer-plus",
+      "title": "Joolz Aer vs Joolz Aer+",
+      "strollerIds": [
+        9,
+        10
+      ],
+      "isNew": true
+    },
+    {
+      "slug": "bugaboo-dragonfly-vs-nuna-triv-lx",
+      "title": "Bugaboo Dragonfly vs Nuna Triv LX",
+      "strollerIds": [
+        4,
+        20
+      ],
+      "isNew": true
+    },
+    {
+      "slug": "bugaboo-butterfly-vs-uppababy-minu-duo",
+      "title": "Bugaboo Butterfly vs UPPAbaby Minu Duo",
+      "strollerIds": [
+        2,
+        15
+      ],
+      "isNew": true
+    },
+    {
+      "slug": "bugaboo-dragonfly-vs-joolz-hub-2",
+      "title": "Bugaboo Dragonfly vs Joolz Hub 2",
+      "strollerIds": [
+        4,
+        22
+      ],
+      "isNew": true
+    },
+    {
+      "slug": "silver-cross-breez-vs-silver-cross-nia",
+      "title": "Silver Cross Breez vs Silver Cross Nia",
+      "strollerIds": [
+        24,
+        26
+      ],
+      "isNew": true
+    },
+    {
+      "slug": "joolz-aer-2-vs-silver-cross-nia",
+      "title": "Joolz Aer 2 vs Silver Cross Nia",
+      "strollerIds": [
+        21,
+        26
+      ],
+      "isNew": true
+    },
+    {
+      "slug": "nuna-triv-lx-vs-silver-cross-breez",
+      "title": "Nuna Triv LX vs Silver Cross Breez",
+      "strollerIds": [
+        20,
+        24
+      ],
+      "isNew": true
     }
   ],
   "strollers": [

@@ -9,8 +9,11 @@
  */
 import { COMPARISON_PAGES } from "../data/dataset";
 
-export const COMPARISONS = COMPARISON_PAGES.map(({ slug, title, strollerIds }) => ({
-  slug,
-  title,
-  ids: strollerIds,
-}));
+export const COMPARISONS = COMPARISON_PAGES.map(
+  ({ slug, title, strollerIds, isNew }) => ({
+    slug,
+    title,
+    ids: strollerIds,
+    isNew,
+  })
+);

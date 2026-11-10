@@ -95,9 +95,15 @@ const featuredCards = FEATURED.flatMap((featured) => {
 
 // Whatever the cards above did not cover, so a comparison added to the database
 // always reaches the home page even with no copy written for it.
-const moreCards = COMPARISONS.filter(
+const restCards = COMPARISONS.filter(
   (comparison) => !featuredCards.some((f) => f.slug === comparison.slug)
 ).map((comparison) => ({ ...comparison, ...splitTitle(comparison.title) }));
+
+// Which block a card lands in is the row's own `isNew`, set in the seeder, so
+// publishing a comparison and placing it on the page are one edit rather than
+// a database row plus a slug list here.
+const moreCards = restCards.filter((card) => !card.isNew);
+const newCards = restCards.filter((card) => card.isNew);
 
 export const Home = () => {
   const { strollers } = useStrollers();
@@ -185,6 +191,24 @@ export const Home = () => {
             ))}
           </MoreGrid>
         </MoreComparisons>
+
+        {newCards.length > 0 && (
+          <MoreComparisons>
+            <MoreLabel>New comparisons</MoreLabel>
+            <MoreGrid>
+              {newCards.map((card) => (
+                <MoreCard key={card.slug} href={`/compare/${card.slug}`}>
+                  <MoreTitle>
+                    {card.aName} <em>vs</em> {card.bName}
+                  </MoreTitle>
+                  <MoreArrow data-arrow aria-hidden>
+                    →
+                  </MoreArrow>
+                </MoreCard>
+              ))}
+            </MoreGrid>
+          </MoreComparisons>
+        )}
       </PopularSection>
 
       <SiteFooter ctaLabel="Start comparing →" ctaTo="/compare/babyzen-yoyo-2-vs-bugaboo-butterfly" />

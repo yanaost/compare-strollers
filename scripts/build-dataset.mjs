@@ -48,7 +48,7 @@ const STROLLERS = `
 // them — the same order the Express endpoint happened to return, so the grouping
 // and row order on the page do not shift.
 const COMPARISONS = `
-  SELECT slug, title, "strollerIds"
+  SELECT slug, title, "strollerIds", "isNew"
   FROM comparison
   ORDER BY position, "comparisonId"
 `;
