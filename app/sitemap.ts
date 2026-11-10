@@ -16,7 +16,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
   return [
-    { url: `${SITE}/`, lastModified: now, priority: 1 },
+    // No trailing slash, to match the canonical the home page emits —
+    // metadataBase resolves "/" to the bare origin.
+    { url: SITE, lastModified: now, priority: 1 },
     { url: `${SITE}/about`, lastModified: now, priority: 0.5 },
     { url: `${SITE}/contact`, lastModified: now, priority: 0.5 },
     ...COMPARISONS.map(({ slug }) => ({

@@ -5,6 +5,10 @@ import { COMPARISON_PAGES, STROLLER_SUMMARIES } from "../../../src/data/dataset"
 // Server component, so this never reaches the browser — the two or three
 // strollers this page needs go down as props instead.
 import { strollersByIds } from "../../../src/data/specs";
+import {
+  comparisonDescription,
+  comparisonTitle,
+} from "../../../src/features/compare/metadata";
 
 /**
  * One page per row in the `comparison` table, and nothing else.
@@ -32,13 +36,13 @@ export const generateMetadata = async ({
   const page = pageFor(slug);
   if (!page) return {};
 
-  const names = strollersByIds(page.strollerIds)
-    .map((s) => s.modelName)
-    .join(" vs ");
+  // Same records the page body renders, so the verdict in the description is
+  // the verdict on the page rather than a second opinion.
+  const strollers = strollersByIds(page.strollerIds);
 
   return {
-    title: `${names} — compared side by side`,
-    description: `${names}: weight, folded size, max child weight, recline and fold compared row by row on manufacturer-listed specs.`,
+    title: comparisonTitle(strollers.map((s) => s.modelName)),
+    description: comparisonDescription(strollers),
     alternates: { canonical: `/compare/${slug}` },
   };
 };
