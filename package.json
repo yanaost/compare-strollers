@@ -8,11 +8,10 @@
   },
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node scripts/fetch-seo-data.mjs",
     "build": "next build",
-    "start": "next start",
+    "start": "npx serve out",
     "lint": "next lint",
-    "fetch-seo-data": "node scripts/fetch-seo-data.mjs"
+    "build-dataset": "node scripts/build-dataset.mjs"
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
@@ -34,6 +33,7 @@
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.9",
     "globals": "^15.9.0",
+    "pg": "^8.23.1",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1"
   }

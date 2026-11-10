@@ -1,49 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { API_BASE_URL } from "../../config/api";
-import type { StrollerSummary } from "./paths";
+import { STROLLER_SUMMARIES } from "../../data/dataset";
 
-// The path helpers moved to ./paths so server components can use them. Kept
-// re-exported here so existing call sites import from one place as before.
-export { VS, comparePath, searchStrollers, strollerSlug } from "./paths";
+// The path helpers moved to ./paths so server components can use them, and
+// comparePath to ../compare/links because it needs the published page list.
+// Both stay re-exported here so existing call sites import from one place.
+export { VS, searchStrollers, strollerSlug, namedComparePath } from "./paths";
+export { comparePath } from "../compare/links";
 export type { StrollerSummary } from "./paths";
 
-const apiUrl = API_BASE_URL;
-
 /**
- * The stroller list, fetched in the browser.
+ * The stroller list.
  *
- * Prerendered routes pass the list down from the server instead — see
- * `initial`, which makes this a no-op rather than a second request.
+ * Used to be a fetch, and took the prerendered list as a seed. The list is now
+ * baked into the bundle, so there is nothing to wait for and nothing to pass
+ * in — this is a constant wearing a hook's clothes, kept so the search
+ * components do not all have to change.
  */
-export const useStrollers = (initial?: StrollerSummary[]) => {
-  const [strollers, setStrollers] = useState<StrollerSummary[]>(initial ?? []);
-  const [loading, setLoading] = useState(!initial);
-
-  useEffect(() => {
-    if (initial) return;
-
-    let active = true;
-
-    const load = async () => {
-      try {
-        const response = await fetch(`${apiUrl}/api/strollers/test-all`);
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const data: StrollerSummary[] = await response.json();
-        if (active) setStrollers(data);
-      } catch (error) {
-        console.error("Failed to load strollers:", error);
-      } finally {
-        if (active) setLoading(false);
-      }
-    };
-
-    load();
-    return () => {
-      active = false;
-    };
-  }, [initial]);
-
-  return { strollers, loading };
-};
+export const useStrollers = () => ({ strollers: STROLLER_SUMMARIES });

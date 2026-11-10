@@ -3,9 +3,14 @@ import { COMPARISONS } from "../src/config/comparisons";
 
 const SITE = "https://comparestrollers.com";
 
+// Static export writes this to a file at build time rather than serving it
+// from a route handler; Next wants that said out loud.
+export const dynamic = "force-static";
+
 /**
- * Only the prerendered pages. Uncurated comparisons are noindex, so listing
- * them here would ask for crawl budget the site then declines to spend.
+ * The published pages, which under static export is every page that exists as
+ * a file. Ad-hoc selections live at /compare?ids=… and are noindex, so listing
+ * them would ask for crawl budget the site then declines to spend.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();

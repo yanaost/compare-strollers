@@ -46,13 +46,8 @@ export const strollerSlug = (modelName: string) =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
 
-/**
- * Two strollers or three, as names: /compare/babyzen-yoyo-2-vs-joolz-aer.
- *
- * Falls back to the id for a stroller the list does not know about, which the
- * route resolves part by part — so a half-known path still works.
- */
-export const comparePath = (
+/** /compare/babyzen-yoyo-2-vs-joolz-aer — the spelling a page is published at. */
+export const namedComparePath = (
   strollers: StrollerSummary[],
   ...ids: number[]
 ) => {
@@ -63,3 +58,28 @@ export const comparePath = (
   });
   return `/compare/${parts.join(VS)}`;
 };
+
+/**
+ * Where a link to a selection should point.
+ *
+ * A selection matching a published page gets that page's own URL. Anything else
+ * gets /compare?ids=… — one page serving every ad-hoc combination, since a
+ * query string needs no file of its own. That is what lets the whole site be
+ * static: only published pages exist as paths, and nothing else 404s.
+ *
+ * `publishedSlugs` maps a sorted id list to its slug. Order-insensitive on
+ * purpose, so picking the same two strollers the other way round lands on the
+ * published page rather than a second URL showing the same thing.
+ */
+export const comparePathIn = (
+  publishedSlugs: Map<string, string>,
+  ...ids: number[]
+) => {
+  const published = publishedSlugs.get(idKey(ids));
+  if (published) return `/compare/${published}`;
+  if (ids.length === 0) return "/";
+  return `/compare?ids=${ids.join(",")}`;
+};
+
+/** Order-insensitive key for a set of ids. */
+export const idKey = (ids: number[]) => [...ids].sort((a, b) => a - b).join(",");

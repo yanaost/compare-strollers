@@ -4,17 +4,15 @@ import { X } from "lucide-react";
 import type { StrollersFeatures } from "../../types/StrollersFeatures";
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { CompareSearch, MAX_STROLLERS } from "../../components/CompareSearch";
+import { CompareSearch } from "../../components/CompareSearch";
 import { SiteFooter } from "../../components/SiteFooter";
 import { SiteHeader } from "../../components/SiteHeader";
 import { SpecGroups } from "../../components/SpecGroups";
-import { useStrollerComparison } from "../../components/ComparisonTable/hooks/useStrollerComparison";
-import { parseComparisonIds } from "../../features/compare/resolveSlug";
+import { useAccordionGroups } from "../../features/compare/useAccordionGroups";
 import { compare, toSpecs } from "../../features/compare/specs";
 import {
   StrollerSummary,
   comparePath,
-  useStrollers,
 } from "../../features/strollers/useStrollers";
 import { strollersContext } from "../../context/context";
 import {
@@ -67,52 +65,32 @@ const removeAt = (
 };
 
 type ComparisonViewProps = {
-  slug: string;
-  /** Prerendered routes pass these down; uncurated slugs fetch client-side. */
-  initialStrollers?: StrollerSummary[];
-  initialData?: StrollersFeatures[];
+  /** Column order, left to right. */
+  ids: number[];
+  strollers: StrollerSummary[];
+  /** Full records for `ids`. Resolved by the caller — nothing is fetched. */
+  data: StrollersFeatures[];
 };
 
-export const ComparisonView = ({
-  slug,
-  initialStrollers,
-  initialData,
-}: ComparisonViewProps) => {
+export const ComparisonView = ({ ids, strollers, data }: ComparisonViewProps) => {
   const router = useRouter();
   const { setStrollersIdsToCompare } = useContext(strollersContext);
-  const { strollers, loading: strollersLoading } = useStrollers(initialStrollers);
   const [differencesOnly, setDifferencesOnly] = useState(false);
-
-  const ids = useMemo(
-    () => parseComparisonIds(slug, strollers).slice(0, MAX_STROLLERS),
-    [slug, strollers]
-  );
 
   useEffect(() => {
     setStrollersIdsToCompare(ids);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ids]);
 
-  // One page, one address: an id path quietly becomes the name path once the
-  // names are known. Replaces rather than pushes, so Back still leaves.
-  const canonical = comparePath(strollers, ...ids);
+  const accordionData = useAccordionGroups(ids, data);
 
-  useEffect(() => {
-    if (strollersLoading || ids.length === 0) return;
-    if (canonical !== `/compare/${slug}`) router.replace(canonical);
-  }, [canonical, slug, ids.length, strollersLoading, router]);
-
-  const { strollerData, accordionData, loading, error } =
-    useStrollerComparison(ids, initialData);
-
-  // strollerData comes back in database order, so index by id rather than
-  // position — the URL order is the column order.
+  // The URL order is the column order, so index by id rather than position.
   const selected = useMemo(
     () =>
       ids
-        .map((id) => strollerData.find((s) => s.strollerId === id))
+        .map((id) => data.find((s) => s.strollerId === id))
         .filter((s): s is NonNullable<typeof s> => Boolean(s)),
-    [ids, strollerData]
+    [ids, data]
   );
 
   const complete = selected.length === ids.length;
@@ -126,7 +104,7 @@ export const ComparisonView = ({
   // the viewport the floating bar takes over.
   const sentinelRef = useRef<HTMLDivElement | null>(null);
   const [namesStuck, setNamesStuck] = useState(false);
-  const ready = !loading && !!comparison;
+  const ready = !!comparison;
 
   useEffect(() => {
     const node = sentinelRef.current;
@@ -158,32 +136,22 @@ export const ComparisonView = ({
       <>
         {header}
         <StatusBlock>
-          {/* A name path cannot be resolved until the names arrive, so a shared
-              link must not accuse the visitor of picking nothing meanwhile. */}
-          {strollersLoading
-            ? "Loading comparison…"
-            : "No strollers selected yet. Search above, or pick a popular comparison from the home page."}
+          No strollers selected yet. Search above, or pick a popular comparison
+          from the home page.
         </StatusBlock>
         <SiteFooter ctaLabel="Popular comparisons →" ctaTo="/#popular" />
       </>
     );
   }
 
-  if (error) {
+  // Reachable from /compare?ids=… with an id that no longer exists.
+  if (!comparison) {
     return (
       <>
         {header}
-        <StatusBlock>Could not load this comparison. {error}</StatusBlock>
-        <SiteFooter ctaLabel="Popular comparisons →" ctaTo="/#popular" />
-      </>
-    );
-  }
-
-  if (loading || !comparison) {
-    return (
-      <>
-        {header}
-        <StatusBlock>Loading comparison…</StatusBlock>
+        <StatusBlock>
+          That comparison is not available. Search above to pick strollers.
+        </StatusBlock>
         <SiteFooter ctaLabel="Popular comparisons →" ctaTo="/#popular" />
       </>
     );

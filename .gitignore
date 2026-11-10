@@ -34,7 +34,7 @@ CLAUDE.md
 next-env.d.ts
 out
 
-# Build-time SEO payload cache
-.cache
+# Baked dataset: committed on purpose, so a build needs no database.
+# src/data/*.json
 
 *.tsbuildinfo

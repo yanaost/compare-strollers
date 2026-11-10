@@ -1,18 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Every page is a file. There is no server: the dataset is baked into the
+  // bundle at build time by scripts/build-dataset.mjs, so nothing needs to run
+  // to answer a request, and the site goes back to being a Render Static Site.
+  output: "export",
+
   // Replaces @emotion/babel-plugin, which this project never ran under Vite.
   // Server-rendered Emotion needs stable class names, and this also makes
   // component selectors safe — see the Emotion note in CLAUDE.md.
   compiler: { emotion: true },
-
-  env: {
-    // Production sets VITE_BASE_URL on the deploy host and the old Vite build
-    // baked it in. Next only inlines NEXT_PUBLIC_* into client code, so bridge
-    // the old name here rather than requiring a host-side rename at cutover.
-    NEXT_PUBLIC_API_BASE_URL:
-      process.env.NEXT_PUBLIC_API_BASE_URL ?? process.env.VITE_BASE_URL ?? "",
-  },
 };
 
 export default nextConfig;

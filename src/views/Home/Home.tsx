@@ -85,15 +85,18 @@ const splitTitle = (title: string) => {
   return { aName, bName };
 };
 
-const featuredCards = FEATURED.map((featured) => {
-  const comparison = COMPARISONS.find((c) => c.slug === featured.slug)!;
-  return { ...featured, ...splitTitle(comparison.title) };
+// The slugs come from the database; the card copy above does not. A featured
+// slug that is no longer a published page drops out rather than throwing at
+// module scope, and falls through to the grid below if it comes back.
+const featuredCards = FEATURED.flatMap((featured) => {
+  const comparison = COMPARISONS.find((c) => c.slug === featured.slug);
+  return comparison ? [{ ...featured, ...splitTitle(comparison.title) }] : [];
 });
 
-// Whatever the four above did not cover. Derived from the config rather than
-// listed by hand, so a comparison added to it always reaches the home page.
+// Whatever the cards above did not cover, so a comparison added to the database
+// always reaches the home page even with no copy written for it.
 const moreCards = COMPARISONS.filter(
-  (comparison) => !FEATURED.some((f) => f.slug === comparison.slug)
+  (comparison) => !featuredCards.some((f) => f.slug === comparison.slug)
 ).map((comparison) => ({ ...comparison, ...splitTitle(comparison.title) }));
 
 export const Home = () => {
