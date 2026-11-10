@@ -12,8 +12,9 @@ services:
   - type: web
     name: compare-strollers
     runtime: node
-    plan: starter # free spins down after ~15min idle; a ~50s cold start is not
-                  # acceptable on pages whose whole purpose is being crawled
+    # Match this to whatever the existing service already runs on — omitting
+    # `plan` does not inherit it, Render defaults to starter.
+    plan: starter
     buildCommand: npm ci && npm run build
     startCommand: npm start
     healthCheckPath: /

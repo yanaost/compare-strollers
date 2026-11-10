@@ -12,9 +12,8 @@
  * instance cannot make the build emit blank pages. With no cache at all it
  * exits 1 rather than letting that happen silently — which is the case on
  * Render, since .cache is gitignored and every build starts from a clean
- * checkout. That is why the retries below exist: the API is a free-tier Render
- * instance that spins down after idling, and the first request has to both wake
- * it and wait out a cold boot.
+ * checkout. That is why the retries below exist: with no last-good copy, a
+ * deploy, a restart or a transient 5xx on the API would fail the build.
  */
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
@@ -27,7 +26,7 @@ const BASE =
 const OUT_DIR = ".cache";
 const OUT = `${OUT_DIR}/seo-data.json`;
 const TIMEOUT_MS = 60_000;
-/** Backoff between attempts. A spun-down Render instance takes ~50s to wake. */
+/** Backoff between attempts — long enough to ride out a backend redeploy. */
 const RETRY_DELAYS_MS = [5_000, 15_000, 30_000, 30_000];
 
 /** Reads slug → ids straight out of the config module, which is TS. */
