@@ -1,6 +1,5 @@
 import type { MetadataRoute } from "next";
-
-const SITE = "https://comparestrollers.com";
+import { SITE } from "../src/config/site";
 
 // Static export writes this to a file at build time rather than serving it
 // from a route handler; Next wants that said out loud.

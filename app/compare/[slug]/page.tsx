@@ -5,6 +5,10 @@ import { COMPARISON_PAGES, STROLLER_SUMMARIES } from "../../../src/data/dataset"
 // Server component, so this never reaches the browser — the two or three
 // strollers this page needs go down as props instead.
 import { strollersByIds } from "../../../src/data/specs";
+import {
+  comparisonJsonLd,
+  jsonLdScript,
+} from "../../../src/features/compare/jsonLd";
 
 /**
  * One page per row in the `comparison` table, and nothing else.
@@ -52,11 +56,24 @@ export default async function ComparisonPage({
   const page = pageFor(slug);
   if (!page) notFound();
 
+  const data = strollersByIds(page.strollerIds);
+
   return (
-    <ComparisonView
-      ids={page.strollerIds}
-      strollers={STROLLER_SUMMARIES}
-      data={strollersByIds(page.strollerIds)}
-    />
+    <>
+      {/* Built here rather than in generateMetadata: Next's metadata API has
+          no slot for JSON-LD, and this is a server component, so the script is
+          in the static HTML either way. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLdScript(comparisonJsonLd(slug, page.title, data)),
+        }}
+      />
+      <ComparisonView
+        ids={page.strollerIds}
+        strollers={STROLLER_SUMMARIES}
+        data={data}
+      />
+    </>
   );
 }
