@@ -1,5 +1,7 @@
+"use client";
+
 import styled from "@emotion/styled";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { color, layout, radius } from "../../styles/tokens";
 
 const Footer = styled.footer`
@@ -84,13 +86,13 @@ export const SiteFooter: React.FC<Props> = ({ ctaLabel, ctaTo }) => (
       <Headline>
         Better strolls <em>start here.</em>
       </Headline>
-      <Cta to={ctaTo}>{ctaLabel}</Cta>
+      <Cta href={ctaTo}>{ctaLabel}</Cta>
     </Top>
     <Bottom>
       <span>© {new Date().getFullYear()} CompareStrollers. No sponsored rankings.</span>
       <BottomLinks>
-        <Link to="/about">About</Link>
-        <Link to="/contact">Contact</Link>
+        <Link href="/about">About</Link>
+        <Link href="/contact">Contact</Link>
       </BottomLinks>
     </Bottom>
   </Footer>

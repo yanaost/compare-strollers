@@ -1,0 +1,411 @@
+{
+  "generatedAt": "2026-11-10T05:17:38.012Z",
+  "comparisons": [
+    {
+      "slug": "babyzen-yoyo-2-vs-bugaboo-butterfly",
+      "title": "Babyzen Yoyo 2 vs Bugaboo Butterfly",
+      "strollerIds": [
+        1,
+        2
+      ]
+    },
+    {
+      "slug": "bugaboo-dragonfly-vs-bugaboo-fox-5",
+      "title": "Bugaboo Dragonfly vs Bugaboo Fox 5",
+      "strollerIds": [
+        4,
+        3
+      ]
+    },
+    {
+      "slug": "bugaboo-butterfly-vs-cybex-libelle-2",
+      "title": "Bugaboo Butterfly vs Cybex Libelle 2",
+      "strollerIds": [
+        2,
+        7
+      ]
+    },
+    {
+      "slug": "bugaboo-fox-5-vs-cybex-e-priam-2022",
+      "title": "Bugaboo Fox 5 vs Cybex e-Priam 2022",
+      "strollerIds": [
+        3,
+        12
+      ]
+    },
+    {
+      "slug": "bugaboo-butterfly-vs-bugaboo-dragonfly",
+      "title": "Bugaboo Butterfly vs Bugaboo Dragonfly",
+      "strollerIds": [
+        2,
+        4
+      ]
+    },
+    {
+      "slug": "babyzen-yoyo-2-vs-joolz-aer",
+      "title": "Babyzen Yoyo 2 vs Joolz Aer",
+      "strollerIds": [
+        1,
+        9
+      ]
+    },
+    {
+      "slug": "bugaboo-butterfly-vs-joolz-aer-plus",
+      "title": "Bugaboo Butterfly vs Joolz Aer+",
+      "strollerIds": [
+        2,
+        10
+      ]
+    },
+    {
+      "slug": "bugaboo-butterfly-vs-joolz-aer",
+      "title": "Bugaboo Butterfly vs Joolz Aer",
+      "strollerIds": [
+        2,
+        9
+      ]
+    },
+    {
+      "slug": "bugaboo-dragonfly-vs-joolz-hub-plus",
+      "title": "Bugaboo Dragonfly vs Joolz Hub+",
+      "strollerIds": [
+        4,
+        11
+      ]
+    },
+    {
+      "slug": "bugaboo-dragonfly-vs-joolz-aer",
+      "title": "Bugaboo Dragonfly vs Joolz Aer",
+      "strollerIds": [
+        4,
+        9
+      ]
+    },
+    {
+      "slug": "cybex-gazelle-s-vs-cybex-e-priam-2022",
+      "title": "Cybex Gazelle S vs Cybex e-Priam 2022",
+      "strollerIds": [
+        5,
+        12
+      ]
+    }
+  ],
+  "strollers": [
+    {
+      "strollerId": 1,
+      "modelName": "Babyzen Yoyo 2",
+      "brand": "Babyzen",
+      "imagePath": "/images/babyzen-yoyo2.jpg",
+      "tagline": "Ultra-compact travel stroller for city life",
+      "alternativeModelNames": [
+        "Yoyo2",
+        "Yoyo"
+      ]
+    },
+    {
+      "strollerId": 2,
+      "modelName": "Bugaboo Butterfly",
+      "brand": "Bugaboo",
+      "imagePath": "/images/bugaboo-butterfly.jpg",
+      "tagline": "Quick-fold elegance for everyday travel",
+      "alternativeModelNames": []
+    },
+    {
+      "strollerId": 3,
+      "modelName": "Bugaboo Fox 5",
+      "brand": "Bugaboo",
+      "imagePath": "/images/bugaboo-fox5.jpg",
+      "tagline": "All-terrain luxury with one-hand ease",
+      "alternativeModelNames": [
+        "Fox5"
+      ]
+    },
+    {
+      "strollerId": 4,
+      "modelName": "Bugaboo Dragonfly",
+      "brand": "Bugaboo",
+      "imagePath": "/images/bugaboo-dragonfly.jpg",
+      "tagline": "Compact urban design with modern flair",
+      "alternativeModelNames": [
+        "Dragonfly 2.0"
+      ]
+    },
+    {
+      "strollerId": 5,
+      "modelName": "Cybex Gazelle S",
+      "brand": "Cybex",
+      "imagePath": "/images/cybex-gazelle-s.jpg",
+      "tagline": "Convertible stroller for growing families",
+      "alternativeModelNames": [
+        "Gazelle S 2.0"
+      ]
+    },
+    {
+      "strollerId": 6,
+      "modelName": "Cybex Coya",
+      "brand": "Cybex",
+      "imagePath": "/images/cybex-coya.jpg",
+      "tagline": "Luxury meets portability for modern travel",
+      "alternativeModelNames": []
+    },
+    {
+      "strollerId": 7,
+      "modelName": "Cybex Libelle 2",
+      "brand": "Cybex",
+      "imagePath": "/images/cybex-libelle2.jpg",
+      "tagline": "Featherlight fold for easy adventures",
+      "alternativeModelNames": [
+        "Libelle2"
+      ]
+    },
+    {
+      "strollerId": 8,
+      "modelName": "Cybex Orfeo",
+      "brand": "Cybex",
+      "imagePath": "/images/cybex-orfeo.jpg",
+      "tagline": "Portable comfort with effortless folding",
+      "alternativeModelNames": []
+    },
+    {
+      "strollerId": 9,
+      "modelName": "Joolz Aer",
+      "brand": "Joolz",
+      "imagePath": "/images/joolz-aer.jpg",
+      "tagline": "Lightweight comfort for stylish travel",
+      "alternativeModelNames": []
+    },
+    {
+      "strollerId": 10,
+      "modelName": "Joolz Aer+",
+      "brand": "Joolz",
+      "imagePath": "/images/joolz-aer-plus.jpg",
+      "tagline": "Upgraded design for next-level travel ease",
+      "alternativeModelNames": [
+        "Aer Plus",
+        "Aer Plus+"
+      ]
+    },
+    {
+      "strollerId": 11,
+      "modelName": "Joolz Hub+",
+      "brand": "Joolz",
+      "imagePath": "/images/joolz-hub-plus.jpg",
+      "tagline": "Compact city stroller with luxury touches",
+      "alternativeModelNames": [
+        "Hub Plus"
+      ]
+    },
+    {
+      "strollerId": 12,
+      "modelName": "Cybex e-Priam 2022",
+      "brand": "Cybex",
+      "imagePath": "/images/cybex-e-priam-2022.jpg",
+      "tagline": "Smart electric power for effortless strolling",
+      "alternativeModelNames": [
+        "ePriam 2022",
+        "e-Priam"
+      ]
+    },
+    {
+      "strollerId": 13,
+      "modelName": "Stokke Yoyo 5",
+      "brand": "Stokke",
+      "imagePath": "/images/stokke-yoyo5.jpg",
+      "tagline": "Ultra-compact carry-on stroller from 6 months",
+      "alternativeModelNames": [
+        "YOYO 5",
+        "YOYO5",
+        "Yoyo5",
+        "YOYO\u2075"
+      ]
+    },
+    {
+      "strollerId": 14,
+      "modelName": "UPPAbaby Kona",
+      "brand": "UPPAbaby",
+      "imagePath": "/images/uppababy-kona.jpg",
+      "tagline": "Full-size features in a lighter mid-size frame",
+      "alternativeModelNames": [
+        "Kona"
+      ]
+    },
+    {
+      "strollerId": 15,
+      "modelName": "UPPAbaby Minu Duo",
+      "brand": "UPPAbaby",
+      "imagePath": "/images/uppababy-minu-duo.jpg",
+      "tagline": "Compact side-by-side double for two children",
+      "alternativeModelNames": [
+        "Minu Duo",
+        "MINU Duo"
+      ]
+    },
+    {
+      "strollerId": 16,
+      "modelName": "Bugaboo Butterfly 2 Plus",
+      "brand": "Bugaboo",
+      "imagePath": "/images/bugaboo-butterfly2-plus.jpg",
+      "tagline": "Carry-on travel stroller with a lie-flat seat",
+      "alternativeModelNames": [
+        "Butterfly 2 Plus",
+        "Butterfly 2+",
+        "Butterfly2 Plus"
+      ]
+    },
+    {
+      "strollerId": 17,
+      "modelName": "Bugaboo Dragonfly Plus",
+      "brand": "Bugaboo",
+      "imagePath": "/images/bugaboo-dragonfly-plus.jpg",
+      "tagline": "Compact city stroller with a one-hand stand-up fold",
+      "alternativeModelNames": [
+        "Dragonfly Plus",
+        "Dragonfly+"
+      ]
+    },
+    {
+      "strollerId": 18,
+      "modelName": "Bugaboo Donkey 6",
+      "brand": "Bugaboo",
+      "imagePath": "/images/bugaboo-donkey6.jpg",
+      "tagline": "Single-to-double side-by-side convertible stroller",
+      "alternativeModelNames": [
+        "Donkey 6",
+        "Donkey6"
+      ]
+    },
+    {
+      "strollerId": 19,
+      "modelName": "Nuna Demi Icon",
+      "brand": "Nuna",
+      "imagePath": "/images/nuna-demi-icon.jpg",
+      "tagline": "Full-size stroller with an elevated seat and large basket",
+      "alternativeModelNames": [
+        "DEMI icon",
+        "Demi Icon"
+      ]
+    },
+    {
+      "strollerId": 20,
+      "modelName": "Nuna Triv LX",
+      "brand": "Nuna",
+      "imagePath": "/images/nuna-triv-lx.jpg",
+      "tagline": "Everyday stroller with a reversible lie-flat seat",
+      "alternativeModelNames": [
+        "TRIV lx",
+        "TRIV LX",
+        "Triv LX"
+      ]
+    },
+    {
+      "strollerId": 21,
+      "modelName": "Joolz Aer 2",
+      "brand": "Joolz",
+      "imagePath": "/images/joolz-aer2.jpg",
+      "tagline": "Lightweight carry-on stroller with a lie-flat seat",
+      "alternativeModelNames": [
+        "Aer2",
+        "Aer\u00b2",
+        "Aer 2"
+      ]
+    },
+    {
+      "strollerId": 22,
+      "modelName": "Joolz Hub 2",
+      "brand": "Joolz",
+      "imagePath": "/images/joolz-hub2.jpg",
+      "tagline": "Compact city stroller with a reversible seat",
+      "alternativeModelNames": [
+        "Hub2",
+        "Hub\u00b2",
+        "Hub 2"
+      ]
+    },
+    {
+      "strollerId": 23,
+      "modelName": "Joolz Geo 3",
+      "brand": "Joolz",
+      "imagePath": "/images/joolz-geo3.jpg",
+      "tagline": "2-in-1 stroller that grows into a tandem double",
+      "alternativeModelNames": [
+        "Geo3",
+        "Geo\u00b3",
+        "Geo 3"
+      ]
+    },
+    {
+      "strollerId": 24,
+      "modelName": "Silver Cross Breez",
+      "brand": "Silver Cross",
+      "imagePath": "/images/silver-cross-breez.jpg",
+      "tagline": "Mid-size stroller with a folding carrycot",
+      "alternativeModelNames": [
+        "Breez"
+      ]
+    },
+    {
+      "strollerId": 25,
+      "modelName": "Silver Cross Cove 2",
+      "brand": "Silver Cross",
+      "imagePath": "/images/silver-cross-cove2.jpg",
+      "tagline": "Full-size stroller with a folding carrycot",
+      "alternativeModelNames": [
+        "Cove 2",
+        "Cove2"
+      ]
+    },
+    {
+      "strollerId": 26,
+      "modelName": "Silver Cross Nia",
+      "brand": "Silver Cross",
+      "imagePath": "/images/silver-cross-nia.jpg",
+      "tagline": "Compact carry-on stroller with a folding carrycot",
+      "alternativeModelNames": [
+        "Nia"
+      ]
+    },
+    {
+      "strollerId": 27,
+      "modelName": "Thule Charm",
+      "brand": "Thule",
+      "imagePath": "/images/thule-charm.jpg",
+      "tagline": "Full-size stroller with an elevated reversible seat",
+      "alternativeModelNames": [
+        "Charm"
+      ]
+    },
+    {
+      "strollerId": 28,
+      "modelName": "Maxi-Cosi Oxford Modular",
+      "brand": "Maxi-Cosi",
+      "imagePath": "/images/maxi-cosi-oxford-modular.jpg",
+      "tagline": "Modular stroller with a built-in baby carriage",
+      "alternativeModelNames": [
+        "Oxford Modular",
+        "Maxi Cosi Oxford Modular"
+      ]
+    },
+    {
+      "strollerId": 29,
+      "modelName": "Baby Jogger City Mini GT3",
+      "brand": "Baby Jogger",
+      "imagePath": "/images/baby-jogger-city-mini-gt3.jpg",
+      "tagline": "Three-wheel stroller with a 29.5 kg seat capacity",
+      "alternativeModelNames": [
+        "City Mini GT3",
+        "City Mini GT 3"
+      ]
+    },
+    {
+      "strollerId": 30,
+      "modelName": "Britax Juniper+",
+      "brand": "Britax",
+      "imagePath": "/images/britax-juniper-plus.jpg",
+      "tagline": "Lightweight compact stroller with all-wheel suspension",
+      "alternativeModelNames": [
+        "Juniper+",
+        "Juniper Plus"
+      ]
+    }
+  ]
+}

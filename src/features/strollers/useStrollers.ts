@@ -1,90 +1,20 @@
-import { useEffect, useState } from "react";
+"use client";
 
-export type StrollerSummary = {
-  strollerId: number;
-  modelName: string;
-  brand: string;
-  imagePath: string;
-  alternativeModelNames?: string[];
-};
+import { STROLLER_SUMMARIES } from "../../data/dataset";
 
-const apiUrl = import.meta.env.VITE_BASE_URL;
-
-export const useStrollers = () => {
-  const [strollers, setStrollers] = useState<StrollerSummary[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    let active = true;
-
-    const load = async () => {
-      try {
-        const response = await fetch(`${apiUrl}/api/strollers/test-all`);
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const data: StrollerSummary[] = await response.json();
-        if (active) setStrollers(data);
-      } catch (error) {
-        console.error("Failed to load strollers:", error);
-      } finally {
-        if (active) setLoading(false);
-      }
-    };
-
-    load();
-    return () => {
-      active = false;
-    };
-  }, []);
-
-  return { strollers, loading };
-};
-
-export const searchStrollers = (
-  strollers: StrollerSummary[],
-  query: string
-): StrollerSummary[] => {
-  const trimmed = query.trim().toLowerCase();
-  if (!trimmed) return strollers.slice(0, 5);
-
-  return strollers.filter((s) =>
-    [s.modelName, s.brand, ...(s.alternativeModelNames ?? [])]
-      .join(" ")
-      .toLowerCase()
-      .includes(trimmed)
-  );
-};
-
-/** Separates one stroller from the next in a /compare/ path. */
-export const VS = "-vs-";
+// The path helpers moved to ./paths so server components can use them, and
+// comparePath to ../compare/links because it needs the published page list.
+// Both stay re-exported here so existing call sites import from one place.
+export { VS, searchStrollers, strollerSlug, namedComparePath } from "./paths";
+export { comparePath } from "../compare/links";
+export type { StrollerSummary } from "./paths";
 
 /**
- * "Joolz Aer+" → "joolz-aer-plus".
+ * The stroller list.
  *
- * Deliberately produces the same spelling as the hand-written slugs in
- * src/config/comparisons.ts, so a curated link and a generated one are the same
- * URL rather than two URLs serving one page.
+ * Used to be a fetch, and took the prerendered list as a seed. The list is now
+ * baked into the bundle, so there is nothing to wait for and nothing to pass
+ * in — this is a constant wearing a hook's clothes, kept so the search
+ * components do not all have to change.
  */
-export const strollerSlug = (modelName: string) =>
-  modelName
-    .toLowerCase()
-    .replace(/\+/g, "-plus")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-
-/**
- * Two strollers or three, as names: /compare/babyzen-yoyo-2-vs-joolz-aer.
- *
- * Falls back to the id for a stroller the list does not know about, which the
- * route resolves part by part — so a half-known path still works.
- */
-export const comparePath = (
-  strollers: StrollerSummary[],
-  ...ids: number[]
-) => {
-  const byId = new Map(strollers.map((s) => [s.strollerId, s.modelName]));
-  const parts = ids.map((id) => {
-    const modelName = byId.get(id);
-    return modelName ? strollerSlug(modelName) : String(id);
-  });
-  return `/compare/${parts.join(VS)}`;
-};
+export const useStrollers = () => ({ strollers: STROLLER_SUMMARIES });

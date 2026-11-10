@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { SiteFooter } from "../SiteFooter";
 import { SiteHeader } from "../SiteHeader";

@@ -28,3 +28,13 @@ eslint.config.js
 .env
 
 CLAUDE.md
+
+# Next
+.next
+next-env.d.ts
+out
+
+# Baked dataset: committed on purpose, so a build needs no database.
+# src/data/*.json
+
+*.tsbuildinfo

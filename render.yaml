@@ -1,0 +1,24 @@
+# Render Blueprint for the frontend.
+#
+# A Static Site, as it was before the Next migration: `output: 'export'` writes
+# plain files to `out/`, so there is no Node runtime to pay for and nothing to
+# spin down. Every page exists as a file, including one per row in the
+# backend's `comparison` table — publishing a comparison is a row plus a
+# rebuild, not a redirect rule.
+#
+# The stroller data is committed as `src/data/*.json`, so the build needs no
+# database and no API. `npm run build-dataset` regenerates it locally against
+# DATABASE_URL; Render never runs it.
+#
+# This file is inert until a Blueprint is pointed at the repo — an existing
+# dashboard-managed service keeps its own settings. Either way these are the
+# values that service needs.
+services:
+  - type: web
+    name: compare-strollers
+    runtime: static
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./out
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
