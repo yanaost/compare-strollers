@@ -1,6 +1,8 @@
+"use client";
+
 import { Search } from "lucide-react";
 import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import {
   StrollerSummary,
   comparePath,
@@ -28,7 +30,7 @@ type Props = {
 export const CompareSearch: React.FC<Props> = ({ ids, strollers }) => {
   const [query, setQuery] = useState("");
   const [focused, setFocused] = useState(false);
-  const navigate = useNavigate();
+  const router = useRouter();
   const blurTimer = useRef<number>();
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -41,7 +43,7 @@ export const CompareSearch: React.FC<Props> = ({ ids, strollers }) => {
   const add = (stroller: StrollerSummary) => {
     if (full) return;
     setQuery("");
-    navigate(comparePath(strollers, ...ids, stroller.strollerId));
+    router.push(comparePath(strollers, ...ids, stroller.strollerId));
     inputRef.current?.focus();
   };
 

@@ -1,3 +1,5 @@
+"use client";
+
 import { Heart, Scale, Shield, Star } from "lucide-react";
 import { HeroSearch } from "../../components/HeroSearch";
 import { SiteFooter } from "../../components/SiteFooter";
@@ -153,7 +155,7 @@ export const Home = () => {
         </PopularHeader>
         <CardGrid>
           {featuredCards.map((card) => (
-            <Card key={card.slug} to={`/compare/${card.slug}`}>
+            <Card key={card.slug} href={`/compare/${card.slug}`}>
               <CardTag>{card.tag}</CardTag>
               <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                 <CardTitle>
@@ -169,7 +171,7 @@ export const Home = () => {
           <MoreLabel>More comparisons</MoreLabel>
           <MoreGrid>
             {moreCards.map((card) => (
-              <MoreCard key={card.slug} to={`/compare/${card.slug}`}>
+              <MoreCard key={card.slug} href={`/compare/${card.slug}`}>
                 <MoreTitle>
                   {card.aName} <em>vs</em> {card.bName}
                 </MoreTitle>

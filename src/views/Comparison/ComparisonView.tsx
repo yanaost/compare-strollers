@@ -1,18 +1,19 @@
+"use client";
+
 import { X } from "lucide-react";
+import type { StrollersFeatures } from "../../types/StrollersFeatures";
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import { CompareSearch, MAX_STROLLERS } from "../../components/CompareSearch";
 import { SiteFooter } from "../../components/SiteFooter";
 import { SiteHeader } from "../../components/SiteHeader";
 import { SpecGroups } from "../../components/SpecGroups";
 import { useStrollerComparison } from "../../components/ComparisonTable/hooks/useStrollerComparison";
-import { COMPARISONS } from "../../config/comparisons";
+import { parseComparisonIds } from "../../features/compare/resolveSlug";
 import { compare, toSpecs } from "../../features/compare/specs";
 import {
   StrollerSummary,
-  VS,
   comparePath,
-  strollerSlug,
   useStrollers,
 } from "../../features/strollers/useStrollers";
 import { strollersContext } from "../../context/context";
@@ -54,8 +55,6 @@ import {
   Tagline,
 } from "./Comparison.styled";
 
-const comparisonsBySlug = new Map(COMPARISONS.map((c) => [c.slug, c.ids]));
-
 // Dropping the last column leaves nothing to compare, so it falls back to the
 // home page and its search.
 const removeAt = (
@@ -67,53 +66,21 @@ const removeAt = (
   return next.length === 0 ? "/" : comparePath(strollers, ...next);
 };
 
-const isId = (part: string) => /^\d+$/.test(part);
-
-/**
- * Resolves a /compare/ path to stroller ids, newest spelling first:
- *
- *   1. a curated slug from the config, which survives a model being renamed;
- *   2. model-name slugs, resolved one part at a time;
- *   3. bare ids, for links made before names were used.
- *
- * Resolving part by part is what makes 2 and 3 safe together: a part is an id
- * only when it is nothing but digits, so "cybex-libelle-2" is read as a name
- * rather than scraped for the 2 it ends with.
- */
-const parseComparisonIds = (
-  raw: string | undefined,
-  strollers: StrollerSummary[]
-): number[] => {
-  if (!raw) return [];
-
-  const curated = comparisonsBySlug.get(raw);
-  if (curated) return [...curated];
-
-  const idBySlug = new Map(
-    strollers.map((s) => [strollerSlug(s.modelName), s.strollerId])
-  );
-
-  const ids = raw
-    .split(VS)
-    .map((part) => idBySlug.get(part) ?? (isId(part) ? Number(part) : undefined))
-    .filter((id): id is number => id !== undefined && id > 0);
-
-  if (ids.length > 0) return ids;
-
-  // A link from before the separator settled — digits and dashes, nothing else.
-  // Names always carry letters, so this cannot swallow one.
-  if (/^[\d-]+$/.test(raw)) {
-    return (raw.match(/\d+/g) ?? []).map(Number).filter((id) => id > 0);
-  }
-
-  return [];
+type ComparisonViewProps = {
+  slug: string;
+  /** Prerendered routes pass these down; uncurated slugs fetch client-side. */
+  initialStrollers?: StrollerSummary[];
+  initialData?: StrollersFeatures[];
 };
 
-export const Comparison = () => {
-  const { slug } = useParams();
-  const navigate = useNavigate();
+export const ComparisonView = ({
+  slug,
+  initialStrollers,
+  initialData,
+}: ComparisonViewProps) => {
+  const router = useRouter();
   const { setStrollersIdsToCompare } = useContext(strollersContext);
-  const { strollers, loading: strollersLoading } = useStrollers();
+  const { strollers, loading: strollersLoading } = useStrollers(initialStrollers);
   const [differencesOnly, setDifferencesOnly] = useState(false);
 
   const ids = useMemo(
@@ -132,11 +99,11 @@ export const Comparison = () => {
 
   useEffect(() => {
     if (strollersLoading || ids.length === 0) return;
-    if (canonical !== `/compare/${slug}`) navigate(canonical, { replace: true });
-  }, [canonical, slug, ids.length, strollersLoading, navigate]);
+    if (canonical !== `/compare/${slug}`) router.replace(canonical);
+  }, [canonical, slug, ids.length, strollersLoading, router]);
 
   const { strollerData, accordionData, loading, error } =
-    useStrollerComparison(ids);
+    useStrollerComparison(ids, initialData);
 
   // strollerData comes back in database order, so index by id rather than
   // position — the URL order is the column order.
@@ -259,7 +226,7 @@ export const Comparison = () => {
                 Differences only
               </DiffButton>
               <SwapButton
-                onClick={() => navigate(comparePath(strollers, ...[...ids].reverse()))}
+                onClick={() => router.push(comparePath(strollers, ...[...ids].reverse()))}
               >
                 {ids.length > 2 ? "Reverse ⇄" : "Swap ⇄"}
               </SwapButton>
@@ -282,7 +249,7 @@ export const Comparison = () => {
                   {stroller.tagline && <Tagline>{stroller.tagline}</Tagline>}
                 </NameBlock>
                 <RemoveButton
-                  onClick={() => navigate(removeAt(strollers, ids, index))}
+                  onClick={() => router.push(removeAt(strollers, ids, index))}
                   aria-label={`Remove ${stroller.modelName} from the comparison`}
                 >
                   <X size={18} strokeWidth={2.5} aria-hidden />

@@ -1,5 +1,7 @@
+"use client";
+
 import styled from "@emotion/styled";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { color, layout, radius, shadow } from "../../styles/tokens";
 
 export const Hero = styled.section`

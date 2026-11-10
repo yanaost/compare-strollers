@@ -1,14 +1,29 @@
+"use client";
+
 import { useCallback, useEffect, useState } from "react";
 import { AccordionsData } from "../../../types/AccordionData";
 import { StrollersFeatures } from "../../../types/StrollersFeatures";
+import { API_BASE_URL } from "../../../config/api";
 
-export const useStrollerComparison = (strollersIdsToCompare: number[]) => {
-  const [strollerData, setStrollerData] = useState<StrollersFeatures[]>([]);
+/**
+ * Comparison payload for the selected ids.
+ *
+ * `initialData` is the prerendered route's build-time payload. When it already
+ * covers the requested ids the fetch below never runs, so a curated comparison
+ * costs no request at all; uncurated slugs fall through and fetch as before.
+ */
+export const useStrollerComparison = (
+  strollersIdsToCompare: number[],
+  initialData?: StrollersFeatures[]
+) => {
+  const [strollerData, setStrollerData] = useState<StrollersFeatures[]>(
+    initialData ?? []
+  );
   const [accordionData, setAccordionData] = useState<AccordionsData[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const apiUrl = import.meta.env.VITE_BASE_URL;
+  const apiUrl = API_BASE_URL;
 
   const fetchStrollersData = useCallback(async (selectedIds: number[]) => {
     if (selectedIds.length === 0) return;
@@ -99,8 +114,18 @@ export const useStrollerComparison = (strollersIdsToCompare: number[]) => {
   );
 
   useEffect(() => {
+    // Whatever is already in state — seeded from the server, or fetched for a
+    // previous selection — may already answer this one. Removing a column, for
+    // instance, needs no new request.
+    const covered =
+      strollersIdsToCompare.length > 0 &&
+      strollersIdsToCompare.every((id) =>
+        strollerData.some((stroller) => stroller.strollerId === id)
+      );
+    if (covered) return;
+
     fetchStrollersData(strollersIdsToCompare);
-  }, [fetchStrollersData, strollersIdsToCompare]);
+  }, [fetchStrollersData, strollersIdsToCompare, strollerData]);
 
   useEffect(() => {
     if (strollerData.length > 0) {

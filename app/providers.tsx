@@ -1,8 +1,12 @@
+"use client";
+
 import { Global, ThemeProvider, css } from "@emotion/react";
 import { CssBaseline, createTheme } from "@mui/material";
-import { Outlet } from "react-router-dom";
-import { color, font } from "../../styles/tokens";
+import { StrollersProvider } from "../src/context/StrollersProvider";
+import { color, font } from "../src/styles/tokens";
 
+// Ported from the old src/views/Root. MUI is kept for CssBaseline's reset —
+// two styled files rely on `box-sizing: border-box` coming from it.
 const theme = createTheme({
   palette: {
     primary: {
@@ -66,10 +70,10 @@ const globalStyles = css`
   }
 `;
 
-export const Root = () => (
+export const Providers = ({ children }: { children: React.ReactNode }) => (
   <ThemeProvider theme={theme}>
     <CssBaseline />
     <Global styles={globalStyles} />
-    <Outlet />
+    <StrollersProvider>{children}</StrollersProvider>
   </ThemeProvider>
 );

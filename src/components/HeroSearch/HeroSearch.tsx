@@ -1,7 +1,9 @@
+"use client";
+
 import styled from "@emotion/styled";
 import { Search } from "lucide-react";
 import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import {
   StrollerSummary,
   comparePath,
@@ -107,7 +109,7 @@ type Props = {
 export const HeroSearch: React.FC<Props> = ({ strollers }) => {
   const [query, setQuery] = useState("");
   const [focused, setFocused] = useState(false);
-  const navigate = useNavigate();
+  const router = useRouter();
   const blurTimer = useRef<number>();
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -116,7 +118,7 @@ export const HeroSearch: React.FC<Props> = ({ strollers }) => {
   // The first pick hands straight off to the comparison page, which carries
   // its own search for adding the second and third.
   const pick = (stroller: StrollerSummary) =>
-    navigate(comparePath(strollers, stroller.strollerId));
+    router.push(comparePath(strollers, stroller.strollerId));
 
   // Enter and the arrow both take the top result, so neither ever feels dead.
   const submit = () => {

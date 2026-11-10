@@ -28,3 +28,13 @@ eslint.config.js
 .env
 
 CLAUDE.md
+
+# Next
+.next
+next-env.d.ts
+out
+
+# Build-time SEO payload cache
+.cache
+
+*.tsbuildinfo

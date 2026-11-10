@@ -1,6 +1,9 @@
+"use client";
+
 import styled from "@emotion/styled";
 import { Baby } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { color, layout } from "../../styles/tokens";
 
 const Header = styled.header`
@@ -68,11 +71,11 @@ type Props = {
 };
 
 export const SiteHeader: React.FC<Props> = ({ children }) => {
-  const { pathname } = useLocation();
+  const pathname = usePathname();
 
   return (
     <Header>
-      <Logo to="/">
+      <Logo href="/">
         <Baby size={26} strokeWidth={1.75} aria-hidden />
         <span>
           <b style={{ fontWeight: 800 }}>Compare</b>
@@ -86,7 +89,7 @@ export const SiteHeader: React.FC<Props> = ({ children }) => {
         {PAGES.map((page) => (
           <NavLink
             key={page.to}
-            to={page.to}
+            href={page.to}
             $active={pathname === page.to}
             aria-current={pathname === page.to ? "page" : undefined}
           >
